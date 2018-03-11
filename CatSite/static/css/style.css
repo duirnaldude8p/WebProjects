@@ -10,7 +10,7 @@ body {
 
 @media (min-width: 992px) {
   body {
-    padding-top: 56px;
+     padding-top: 56px;
   }
 }
 
@@ -51,9 +51,73 @@ body {
 
 #login{
 	width: 500px;
-	height :250px;	
+	height: 250px;	
 }
 #outer_login{
 	margin-left: 30%;
-	background-color: orange;
+	/*background-color: orange;*/
+}
+
+#signup-form{
+	width: 500px;
+	height: 400px;	
+}
+
+#outer_signup{
+	margin-left: 30%;
+	/*background-color: orange;*/
+}
+
+
+#outer_account{
+	margin-left: 30%;
+	height: 700px;
+	
+}
+
+.account_expand{
+	width: 500px;
+	height: 600px;
+}
+
+div #account_form{
+	margin-top: 15px;
+}
+
+.account_shrink{
+	width: 500px;
+	height: 120px;
+}
+
+#cat_list_button{
+	margin-bottom: 30px;
+	margin-left: 30px;
+}
+
+#cat_list{
+	margin-bottom: 30px;
+	margin-left: 30px;
+}
+
+.cat_image{
+	width: 1100px;
+	height: 460px;
+	margin-top: -150px;
+}
+
+.image_rectangle{
+	width: 1055px;
+	height: 100px;
+	overflow: hidden;
+	border: 5px dashed black;
+	position: relative;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 60px;
 }

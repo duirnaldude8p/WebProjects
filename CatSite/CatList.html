@@ -55,52 +55,47 @@
     <div class="container">
 
       <div class="row">
-          </div>
-          <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="http://placehold.it/1200x500" alt="">
-            <div class="card-body">
-              <h3 class="card-title">Hey there</h3>
-              <p class="card-text">Welcome to our lovely site where you may share cat stories or anything else you like enjoy!</p>
-              
-            </div>
-          </div>
           
           <div class="card card-outline-secondary my-4">
             <div class="card-header">
-              Comments
+              Cats
             </div>
             <div class="card-body">
+              <button id="cat_list_button" href="#" class="btn btn-success">Add Cat</button>
+              <div id="cat_list" class="collapse card-body">
+                  <div class="form-group">
+                      <label for="exampleInputText4">Cat's Name</label>
+                      <input type="text" class="form-control" id="exampleInputText4" placeholder="Enter name">
+                  </div>
+                  <div class="form-group">
+                      <label for="exampleInputText5">Breed</label>
+                      <input type="text" class="form-control" id="exampleInputText5" placeholder="Enter breed">
+                  </div>
+                  <div class="form-group">
+                      <label for="exampleInputFile" >Upload Cat Pic  </label>
+                      <input type="file" class="" id="exampleInputFile" accept="image/*">
+                  </div>
+                  <div class="form-group">
+                      <textarea class="form-control"></textarea>
+                  </div> 
+                  <button href="#" class="btn btn-success">Add New Cat</button>
+              </div>
               <ul id="home-page-comments">
                 <li>
-                  <div class="card-pic" >
-                    <div class="image_circle">
-                      <img class="my_image img-fluid" src="static/pics/profile_pic.jpeg" alt="">
-                    </div>
+                  <div class="image_rectangle">
+                      <img class="cat_image img-fluid" src="static/pics/classic.jpeg" alt="">
+                      <div class="centered">Fluffy</div>
                   </div>
-                  <div class="card-comment">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  </div>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
                   <hr>
                 </li>
                 <li>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                  <hr>
-                </li>
-                <li>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                  <div class="image_rectangle">
+                      <img class="cat_image img-fluid" src="static/pics/babes.jpeg" alt="">
+                      <div class="centered">cuties</div>
+                  </div>
                   <hr>
                 </li>
               </ul>
-              <button href="#" class="btn btn-success">Leave a Comment</button>
-              <div class="collapse.show card-body">
-                  <div class="form-group">
-                      <textarea class="form-control"></textarea>
-                      <button href="#" class="btn btn-success">Add Comment</button>
-                  </div> 
-              </div>
             </div>
           </div>
           <!-- /.card -->
