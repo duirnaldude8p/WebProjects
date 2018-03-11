@@ -17,11 +17,14 @@ body {
 .card-pic{
 	width: 7%;
 	display: inline-block;
+	position: relative;
+	margin-right: 15px;
 }
 
 .card-comment{
 	width: 90%;
 	display: inline-block;
+	position: relative;
 }
 
 .image_circle{
@@ -38,4 +41,19 @@ body {
 
 #home-page-comments{
 	list-style: none;
+}
+
+.my_footer{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+#login{
+	width: 500px;
+	height :250px;	
+}
+#outer_login{
+	margin-left: 30%;
+	background-color: orange;
 }
