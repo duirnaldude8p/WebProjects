@@ -1,21 +1,21 @@
 from rest_framework import serializers
 
+import json
+
 from .models import Cat
-from .models import Cat_Comment
-from .models import Comment
 from .models import Account
 from .models import Main
 from .models import User
 
-class CommentSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Comment
-		fields = ('__all__')
+# class CommentSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = Comment
+# 		fields = ('__all__')
 
-class CatCommentSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Cat_Comment
-		fields = ('__all__')
+# class CatCommentSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = Cat_Comment
+# 		fields = ('__all__')
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -23,44 +23,71 @@ class UserSerializer(serializers.ModelSerializer):
 		fields = ('__all__')
 
 class CatSerializer(serializers.ModelSerializer):
+
 	class Meta:
 		model = Cat
 
 		fields = ('__all__')
-
-		def create(validated_data):
-			cat_comment_data = validated_data.pop('cat_comments')
+		print("in cat serializer")
+	
+	def create(self, validated_data):
+		print("in cat create serializer")
+		section = validated_data['section']
+		print("section: %s"%section)
+		cat_comment = validated_data['cat_comments']
+		#cat_comment = str(cat_comment)
+		cat_comment = json.dumps([{"cat_comment": cat_comment }])
+		cat_comment = json.loads(cat_comment)
+		#cat_comment = cat_comment.replace('\"', '"')
+		print("in cat create serializers")
+		cat = Cat.objects.all()
+		if section == 'new':
+			print("in new")
 			cat = Cat.objects.create(
-        								cat_id = validated_data.cat_id,
-            							user = validated_data['user'],
-            							cat_name = validated_data['cat_name'],
-            	       					breed = validated_data['breed'],
-            							story = validated_data['story'],
-            							cat_pic = validated_data['cat_pic'],
-            							cat_comments = []
-									)
-
-			for cat_comment in cat_comment_data:
-				cat_comment, created = Cat_Comment.objects.get_or_create(cat_comment=cat_comment['cat_comment'])
-				cat.cat_comments.add(cat_comment)
-
+   	        							user = validated_data['user'],
+             							cat_name = validated_data['cat_name'],
+             	       					breed = validated_data['breed'],
+             							story = validated_data['story'],
+             							cat_pic = validated_data['cat_pic'],
+             							section = 'new',
+             							category = 'cat',
+             							cat_comments = cat_comment
+			 						)
+			return cat
+				
+		if section == 'update':				
+			print("in update")
+			recieved_id = validated_data['get_id']
+			print("recieved id: %s"%recieved_id)
+			for obj in cat:
+				print("cat ids: %s"%obj.id)
+				print("cat ids: %s"%obj)
+				# if obj.id == 5:
+				# 	# print("update id match")
+				# 	# catComments = obj.cat_comments
+				# 	# print("recived info %s"%catComments)
+				# 	# catComments = catComments.replace('\"', '"')
+				# 	# print("recived info2 %s"%catComments)
+				# 	# catComments = json.dumps(catComments)
+				# 	# print("recived info3 %s"%catComments)
+				# 	# catComments = json.loads(catComments)
+				# 	# print("recived info4 %s"%catComments)
+				# 	# #new_cat_comment = json.dumps({"cat_comment": validated_data['cat_comments'] })
+				# 	# #new_cat_comment = json.loads(new_cat_comment)
+				# 	# #catComments.append({"cat_comment": validated_data['cat_comments'] })
+				# 	# obj.cat_comments = catComments
+				# 	# break
+					
+			 	
 			return cat
 
+		return cat
 
-		def update(instance, validated_data):
-			cat_comment_data = validated_data.pop('cat_comments')
-			instance.cat_id = validated_data.cat_id
-			instance.user = validated_data['user']
-			instance.cat_name = validated_data['cat_name']
-			instance.breed = validated_data['breed']
-			instance.story = validated_data['story']
-			instance.cat_pic = validated_data['cat_pic']
+	
 
-			for cat_comment in cat_comment_data:
-				cat_comment, created = Cat_Comment.objects.get_or_create(cat_comment=cat_comment['cat_comment'])
-				instance.cat_comments.add(cat_comment)
 
-			return instance
+
+		
 
 		
 
