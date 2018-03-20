@@ -22,65 +22,24 @@ from itertools import chain
 def main(request):
 	return render(request, "index.html", {})
 
+def account(request):
+	return render(request, "Account.html", {})
 
+def catlist(request):
+	return render(request, "CatList.html", {})
 
-# class CommentGetData(generics.RetrieveAPIView):
-# 	queryset = Comment.objects.all()
-# 	serializer_class = CommentSerializer
+def catpage(request):
+	return render(request, "CatPage.html", {})
 
-# 	def get(self, request):
-# 		queryset = Comment.objects.all()
-# 		serializer_class = CommentSerializer(queryset, many=True)
-		
-# 		return Response(serializer_class.data)
+def login(request):
+	return render(request, "login.html", {})
 
+def register(request):
+	return render(request, "Register.html", {})
 
-# class CommentPostData(generics.CreateAPIView):
-# 	queryset = Comment.objects.all()
-# 	serializer_class = CommentSerializer
-
-# 	def post(self, request):
-# 		serializer_class = CommentSerializer(data=request.data)
-# 		if serializer_class.is_valid():
-# 			Comment.objects.create(
-# 				comment = request.POST.get('comment'),
-# 			)
-# 			serializer_class.save()
-# 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-# 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# class CatCommentGetData(generics.RetrieveUpdateAPIView):
-# 	queryset = Cat_Comment.objects.all()
-# 	serializer_class = CatCommentSerializer
-# 	#print("cat comment queryset %s"%queryset)
-
-# 	def get(self, request):
-# 		queryset = Cat_Comment.objects.all()
-# 		serializer_class = CatCommentSerializer(queryset, many=True)
-		
-# 		return Response(serializer_class.data)
-
-
-# class CatCommentPostData(generics.CreateAPIView):
-# 	queryset = Cat_Comment.objects.all()
-# 	serializer_class = CatCommentSerializer
-# 	#print("cat comment queryset %s"%queryset)
-
-# 	def post(self, request):
-# 		serializer_class = CatCommentSerializer(data=request.data)
-# 		if serializer_class.is_valid():
-# 			Cat_Comment.objects.create(
-# 				cat_comment = request.POST.get('cat_comment'),
-# 			)
-# 			serializer_class.save()
-
-# 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-# 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserGetData(generics.RetrieveUpdateAPIView):
-	def get_queryset(self):
-		return User.objects.all()
+	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	#print("cat comment queryset %s"%queryset)
 
@@ -92,8 +51,7 @@ class UserGetData(generics.RetrieveUpdateAPIView):
 
 
 class UserPostData(generics.CreateAPIView):
-	def get_queryset(self):
-		return User.objects.all()
+	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	#print("cat comment queryset %s"%queryset)
 
@@ -132,57 +90,50 @@ class CatPostData(generics.CreateAPIView):
 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class AccountData(generics.RetrieveUpdateAPIView):
-# 	queryset = Account.objects.all()
-# 	serializer_class = AccountSerializer
+class AccountGetData(generics.RetrieveAPIView):
+	queryset = Account.objects.all()
+	serializer_class = AccountSerializer
 
-# 	def get(self, request):
-# 		queryset = Account.objects.all()
-# 		serializer_class = AccountSerializer(queryset, many=True)
+	def get(self, request):
+		queryset = Account.objects.all()
+		serializer_class = AccountSerializer(queryset, many=True)
 		
-# 		return Response(serializer_class.data)
+		return Response(serializer_class.data)
 
-# 	def post(self, request):
-# 		serializer_class = AccountSerializer(data=request.data)
-# 		if serializer_class.is_valid():
-# 			Account.objects.create(
-# 				name = request.POST.get('name'),
-# 				profile_pic = request.POST.get('profile_pic'),
-# 				cats = request.POST.get('cats'),
-# 				cat_comments = request.POST.get('cat_comments'),
-# 				comments = request.POST.get('comments'),
-# 				user = request.POST.get('user'),
-# 				account_id = request.POST.get('account_id')
-# 			)
-# 			serializer_class.save()
-# 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-# 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+	
+class AccountPostData(generics.CreateAPIView):
+	queryset = Account.objects.all()
+	serializer_class = AccountSerializer
 
-# class MainData(generics.RetrieveUpdateAPIView):
-# 	queryset = Main.objects.all()
-# 	serializer_class = MainSerializer
+	def post(self, request):
+		serializer_class = AccountSerializer(data=request.data)
+		if serializer_class.is_valid():
+			serializer_class.save()
+			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MainGetData(generics.RetrieveAPIView):
+	queryset = Main.objects.all()
+	serializer_class = MainSerializer
 
 
-# 	def get(self, request):
-# 		queryset = Main.objects.all()
-# 		serializer_class = MainSerializer(queryset, many=True)
+	def get(self, request):
+		queryset = Main.objects.all()
+		serializer_class = MainSerializer(queryset, many=True)
 		
-# 		return Response(serializer_class.data)
+		return Response(serializer_class.data)
 
-# 	def post(self, request):
-# 		# serializer_class = MainSerializer(data=request.data)
-# 		# if serializer_class.is_valid():
-# 		# 	# Main.objects.create(
-# 		# 	# 	home_pic = request.POST.get('home_pic'),
-# 		# 	# 	cats = request.POST.get('cats'),
-# 		# 	# 	cat_comments = request.POST.get('cat_comments'),
-# 		# 	# 	comments = request.POST.get('comments'),
-# 		# 	# 	accounts = request.POST.get('accounts')
-# 		# 	# )
-# 		# 	serializer_class.save()
-# 		# 	return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-# 		# return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
-# 		return Response(serializer_class.data)
 
-# # Create your views here.
+class MainPostData(generics.CreateAPIView):
+	queryset = Main.objects.all()
+	serializer_class = MainSerializer
+
+	def post(self, request):
+		serializer_class = MainSerializer(data=request.data)
+		if serializer_class.is_valid():
+			serializer_class.save()
+			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Create your views here.
 
