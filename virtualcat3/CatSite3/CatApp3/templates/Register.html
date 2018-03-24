@@ -17,7 +17,6 @@
   </head>
 
   <body>
-
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -44,7 +43,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Log In</a>
             </li>
-            <li class="nav-item">
+            <li class="nasv-item">
               <a class="nav-link" href="#">Log Out</a>
             </li>
           </ul>
@@ -56,24 +55,25 @@
     <div class="container">
       <div  class="row">
           <div id="outer_signup" class="card mt-4">
-            <form id="signup-form" class="container">
+            <form id="signup-form" class="form container" method="post" action="">
+                {% csrf_token %}
                 <div class="form-group">
-                  <label for="exampleInputText">Name</label>
-                  <input type="text" class="form-control" id="exampleInputText" placeholder="Enter name">
+                  <label for="name_in">Name</label>
+                  <input type="text" class="form-control" id="name_in" placeholder="Enter name">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputText" >Upload Profile Picture  </label>
-                  <input type="file" class="" id="exampleInputText" accept="image/*" placeholder="Put picture">
+                  <label for="pic_in" >Upload Profile Picture  </label> <!--accept="image/*"--> 
+                  <input type="file" class="" id="pic_in" placeholder="Put picture">
                 </div>
   					   <div class="form-group">
-    					   <label for="exampleInputEmail1">Username</label>
-    						  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    					   <label for="usrnm_in">Username</label>
+    						  <input type="email" class="form-control" id="usrnm_in" aria-describedby="emailHelp" placeholder="Enter email">
   				    	</div>
  					      <div class="form-group">
-    					     <label for="exampleInputPassword1">Password</label>
-    						    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    					     <label for="pwd_in">Password</label>
+    						    <input type="password" class="form-control" id="pwd_in" placeholder="Password">
   					    </div>
-  					    <button type="submit" class="btn btn-success">Add Account</button>
+  					    <button id="reg_btn" type="submit" class="btn btn-success">Add Account</button>
 				    </form>
           </div>
       </div>
@@ -91,7 +91,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src='{% static "js/jquery.min.js" %}'></script>
     <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
-
+    <script src='{% static "js/register.js" %}'></script>
   </body>
 
 </html>

@@ -5,13 +5,7 @@ import json
 from .models import Cat
 from .models import Account
 from .models import Main
-from .models import User
 
-
-class UserSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = User
-		fields = ('__all__')
 
 class CatSerializer(serializers.ModelSerializer):
 
@@ -19,7 +13,7 @@ class CatSerializer(serializers.ModelSerializer):
 		model = Cat
 
 		fields = ('__all__')
-		print("in cat serializer")
+		print("in the cat serializer")
 	
 	def create(self, validated_data):
 		print("in cat create serializer")
@@ -64,13 +58,9 @@ class CatSerializer(serializers.ModelSerializer):
 	
 
 class AccountSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Account
-
-		fields = ('__all__')
-
+	
 	def create(self, validated_data):
-		print("in cat create serializer")
+		print("in account create serializer")
 		section = validated_data['section']
 		acc_comment = json.dumps([])
 		acc_comment = json.loads(acc_comment)
@@ -80,15 +70,17 @@ class AccountSerializer(serializers.ModelSerializer):
 		acc_cat = json.loads(acc_cat)
 		account = Account.objects.all()
 		if section == 'new':
+			print("in new account")
 			account = Account.objects.create(
-											account_user = validated_data['account_user'],
 											account_name = validated_data['account_name'],
 											profile_pic = validated_data['profile_pic'],
+											username = validated_data['username'],
+											password = validated_data['password'],
 											cats = acc_cat,
 											cat_comments = acc_cat_comment,
 											comments = acc_comment,
 											section = 'new',
-             								category = 'cat'
+             								category = 'account'
         								)
 			return account
 			
@@ -146,6 +138,14 @@ class AccountSerializer(serializers.ModelSerializer):
 			return account
             	
 		return account
+
+	class Meta:
+		model = Account
+
+		fields = ('__all__')
+		print("in account serializer")
+
+	
 
 		
 class MainSerializer(serializers.ModelSerializer):

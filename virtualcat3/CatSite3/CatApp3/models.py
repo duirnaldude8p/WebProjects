@@ -15,15 +15,6 @@ def image_path(instance, filename):
     return os.path.join('CatApp3\static\pics\main', str(instance.id), filename)
 
 
-class User(models.Model):
-	username = models.CharField(max_length=20, null=True)
-	password = models.CharField(max_length=20, null=True)
-
-	def __str__(self):
-		return self.username
-
-	def user_id(self):
-		return self.id
 
 class Cat(models.Model):
 	cat_name = models.CharField(max_length=20, null=True)
@@ -53,7 +44,8 @@ class Cat(models.Model):
 		return self.id
 
 class Account(models.Model):
-	account_user = models.IntegerField(default=1, null=True)
+	username = models.CharField(max_length=20, null=True)
+	password = models.CharField(max_length=20, null=True)
 	profile_pic = models.ImageField(upload_to=profile_image_path, blank=True, null=True)
 	cats = models.CharField(max_length=1000, null=True)
 	cat_comments = models.CharField(max_length=1000, null=True)
@@ -71,7 +63,7 @@ class Account(models.Model):
 			self.profile_pic = saved_image
 			kwargs.pop('force_insert')
 
-			super(Picture, self).save(*args, **kwargs)
+			super(Account, self).save(*args, **kwargs)
 
 	def __str__(self):
 		return self.account_name

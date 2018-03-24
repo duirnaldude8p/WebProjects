@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.shortcuts import render
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
@@ -10,12 +10,12 @@ from rest_framework import status
 from .models import Cat
 from .models import Account
 from .models import Main
-from .models import User
 
 from .serializers import CatSerializer
 from .serializers import AccountSerializer
 from .serializers import MainSerializer
-from .serializers import UserSerializer
+
+import json
 
 # Create your views here.
 
@@ -35,32 +35,8 @@ def login(request):
 	return render(request, "login.html", {})
 
 def register(request):
-	return render(request, "Register.html", {})
+	return render(request, "Register.html")
 
-
-class UserGetData(generics.RetrieveUpdateAPIView):
-	queryset = User.objects.all()
-	serializer_class = UserSerializer
-	#print("cat comment queryset %s"%queryset)
-
-	def get(self, request):
-		queryset = User.objects.all()
-		serializer_class = UserSerializer(queryset, many=True)
-		
-		return Response(serializer_class.data)
-
-
-class UserPostData(generics.CreateAPIView):
-	queryset = User.objects.all()
-	serializer_class = UserSerializer
-	#print("cat comment queryset %s"%queryset)
-
-	def post(self, request):
-		serializer_class = UserSerializer(data=request.data)
-		if serializer_class.is_valid():
-			serializer_class.save()
-			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CatGetData(generics.RetrieveAPIView):
 	queryset = Cat.objects.all()
@@ -79,7 +55,7 @@ class CatPostData(generics.CreateAPIView):
 	serializer_class = CatSerializer
 
 	def post(self, request):
-		serializer_class = CatSerializer(data=request.data)
+		serializer_class = CatSerializer(data=request.data, many=True)
 		if serializer_class.is_valid():
 			serializer_class.save()
 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
@@ -99,10 +75,11 @@ class AccountGetData(generics.RetrieveAPIView):
 class AccountPostData(generics.CreateAPIView):
 	queryset = Account.objects.all()
 	serializer_class = AccountSerializer
-
+	print("in postdata")
 	def post(self, request):
-		serializer_class = AccountSerializer(data=request.data)
+		serializer_class = AccountSerializer(data=request.data,  many=True)
 		if serializer_class.is_valid():
+			print("in is valid ")
 			serializer_class.save()
 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
