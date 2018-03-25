@@ -5,6 +5,7 @@ import json
 from .models import Cat
 from .models import Account
 from .models import Main
+from .models import CurrentAccount
 
 
 class CatSerializer(serializers.ModelSerializer):
@@ -149,6 +150,127 @@ class AccountSerializer(serializers.ModelSerializer):
 
 		fields = ('__all__')
 		print("in account serializer")
+
+class CurrentAccountSerializer(serializers.ModelSerializer):
+	
+	def create(self, validated_data):
+		print("in current account create serializer")
+		section = validated_data['section']
+		current_account = CurrentAccount.objects.all()
+		account = Account.objects.all()
+		myaccount = None
+		myid = 1
+		if not current_account:
+			if section == 'login':
+				myusr = validated_data['username']
+				mypwd = validated_data['password']
+				for obj in account.iterator():
+					if obj.username == myusr and obj.password == mypwd:
+						myaccount = Account.objects.filter(pk=obj.id)
+						myid = obj.id
+						break
+				
+
+				if myaccount:	
+					current_account = CurrentAccount.objects.create(
+											account_name = myaccount[0].account_name,
+											profile_pic = myaccount[0].profile_pic,
+											username = myaccount[0].username,
+											password = myaccount[0].password,
+											cats = myaccount[0].cats,
+											cat_comments = myaccount[0].cat_comments,
+											comments = myaccount[0].comments,
+											section = 'new',
+             								category = 'current account',
+             								current_id = myid,
+             								is_verified = "true"
+             								)
+				return current_account
+			return current_account	
+		else: 
+			if section == 'login':
+				myusr = validated_data['username']
+				mypwd = validated_data['password']
+				for obj in account.iterator():
+					if obj.username == myusr and obj.password == mypwd:
+						myaccount = Account.objects.filter(pk=obj.id)
+						myid = obj.id
+						break
+				
+
+				if myaccount:
+					CurrentAccount.objects.all().delete()	
+					current_account = CurrentAccount.objects.create(
+											account_name = myaccount[0].account_name,
+											profile_pic = myaccount[0].profile_pic,
+											username = myaccount[0].username,
+											password = myaccount[0].password,
+											cats = myaccount[0].cats,
+											cat_comments = myaccount[0].cat_comments,
+											comments = myaccount[0].comments,
+											section = 'new',
+             								category = 'current account',
+             								current_id = myid,
+             								is_verified = "true"
+             								)
+				return current_account
+			if section == 'update comments':
+				print("in update")
+				recieved_id = validated_data['get_id']
+				for obj in current_account.iterator():
+					if obj.id == int(recieved_id):
+						print("each obj: %s"%obj)
+						comments = obj.comments
+						comments = comments.replace("'", '\"')
+						comments = json.loads(comments)
+						new_comment = json.dumps({"comment": validated_data['comments']})
+						new_comment = json.loads(new_comment)
+						comments.append(new_comment)
+						CurrentAccount.objects.filter(pk=recieved_id).update(comments=comments)
+						break
+			
+				return current_account
+
+			if section == 'update cat comments':
+				print("in update")
+				recieved_id = validated_data['get_id']
+				for obj in current_account.iterator():
+					if obj.id == int(recieved_id):
+						print("each obj: %s"%obj)
+						ac_catcomments = obj.cat_comments
+						ac_catcomments = ac_catcomments.replace("'", '\"')
+						ac_catcomments = json.loads(ac_catcomments)
+						ac_new_catcomment = json.dumps({"cat_comment": validated_data['cat_comments']})
+						ac_new_catcomment = json.loads(ac_new_catcomment)
+						ac_catcomments.append(ac_new_catcomment)
+						CurrentAccount.objects.filter(pk=recieved_id).update(cat_comments=ac_catcomments)
+						break
+
+				return current_account
+			if section == 'update cats':
+				recieved_id = validated_data['get_id']
+				for obj in current_account.iterator():
+					if obj.id == int(recieved_id):
+						print("each obj: %s"%obj)
+						# 	# add cats
+						ac_cats = obj.cats
+						ac_cats = ac_cats.replace("'", '\"')
+						ac_cats = json.loads(ac_cats)
+						ac_new_cat = json.dumps({"cat": validated_data['cats']})
+						ac_new_cat = json.loads(ac_new_cat)
+						ac_cats.append(ac_new_cat)
+						CurrentAccount.objects.filter(pk=recieved_id).update(cats=ac_cats)
+						break
+	
+				return current_account
+  
+			return current_account
+	class Meta:
+		model = CurrentAccount
+
+		fields = ('__all__')
+		print("in account serializer")
+
 
 	
 

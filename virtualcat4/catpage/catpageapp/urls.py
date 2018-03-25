@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^postmaindata/$', views.MainPostData.as_view(), name='postmaindata'),
     url(r'^getaccountdata/$', views.AccountGetData.as_view(), name='getaccountdata'),
     url(r'^postaccountdata/$', views.AccountPostData.as_view(), name='postaccountdata'),
+    url(r'^getlogindata/$', views.CurrentAccountGetData.as_view(), name='getlogindata'),
+    url(r'^postlogindata/$', views.CurrentAccountPostData.as_view(), name='postlogindata'),
     url(r'^getcatdata/$', views.CatGetData.as_view(), name='getcatdata'),
     url(r'^postcatdata/$', views.CatPostData.as_view(), name='postcatdata'),
 ]

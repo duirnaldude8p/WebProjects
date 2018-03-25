@@ -70,6 +70,36 @@ class Account(models.Model):
 
 	def account_id(self):
 		return self.id
+
+class CurrentAccount(models.Model):
+	username = models.CharField(max_length=20, null=True)
+	password = models.CharField(max_length=20, null=True)
+	profile_pic = models.ImageField(upload_to=profile_image_path, blank=True, null=True)
+	cats = models.CharField(max_length=1000, null=True)
+	cat_comments = models.CharField(max_length=1000, null=True)
+	comments = models.CharField(max_length=1000, null=True)
+	account_name = models.CharField(max_length=20, null=True)
+	get_id = models.CharField(max_length=10, null=True)
+	current_id = models.CharField(max_length=10, null=True)
+	is_verified = models.CharField(max_length=10, null=True)
+	section = models.CharField(max_length=20, null=True)
+	category = models.CharField(max_length=20, null=True)
+
+	def save(self, *args, **kwargs):
+		if self.id is None:
+			saved_image = self.profile_pic
+			self.profile_pic = None
+			super(CurrentAccount, self).save(*args, **kwargs)
+			self.profile_pic = saved_image
+			kwargs.pop('force_insert')
+
+			super(CurrentAccount, self).save(*args, **kwargs)
+
+	def __str__(self):
+		return self.account_name
+
+	def account_id(self):
+		return self.id
 	
 class Main(models.Model):
 	home_pic = models.ImageField(upload_to=image_path, blank=True, null=True)
