@@ -54,7 +54,7 @@
     <!-- Page Content -->
     <div class="container">
       <div  class="row">
-          <div id="outer_signup" class="card mt-4">
+          <div id="outer_signup" class="card mt-4"><!--enctype must be "multipart/form-data" -->
             <form id="signup-form" class="form container" method="post" action="" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">

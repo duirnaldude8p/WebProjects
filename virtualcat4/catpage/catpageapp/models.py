@@ -6,13 +6,13 @@ import os
 # Create your models here.
 
 def cat_image_path(instance, filename):
-    return os.path.join('CatApp3\static\pics\cats', str(instance.id), filename)
+    return os.path.join('catpageapp\static\pics\cats', str(instance.id), filename)
 
 def profile_image_path(instance, filename):
-    return os.path.join('CatApp3\static\pics\profile', str(instance.id), filename)
+    return os.path.join('catpageapp\static\pics\profile', str(instance.id), filename)
 
 def image_path(instance, filename):
-    return os.path.join('CatApp3\static\pics\main', str(instance.id), filename)
+    return os.path.join('catpageapp\static\pics\main', str(instance.id), filename)
 
 
 

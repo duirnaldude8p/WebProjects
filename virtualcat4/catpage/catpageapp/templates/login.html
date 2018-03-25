@@ -56,16 +56,17 @@
     <div class="container">
       <div  class="row">
           <div id="outer_login" class="card mt-4">
-            <form id="login" class="container">
-  					   <div class="form-group">
-    					   <label for="exampleInputEmail1">Username</label>
-    						  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <form id="login" class="form container" method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+  					    <div class="form-group">
+    					   <label for="usr_nm">Username</label>
+    						  <input type="email" class="form-control" id="usr_nm" aria-describedby="emailHelp" placeholder="Enter email">
   				    	</div>
  					      <div class="form-group">
-    					     <label for="exampleInputPassword1">Password</label>
-    						    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    					     <label for="pwd">Password</label>
+    						    <input type="password" class="form-control" id="pwd" placeholder="Password">
   					    </div>
-  					    <button type="submit" class="btn btn-success">log In</button>
+  					    <button id="login_btn" type="submit" class="btn btn-success">log In</button>
 				    </form>
           </div>
       </div>
@@ -83,7 +84,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src='{% static "js/jquery.min.js" %}'></script>
     <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
-
+    <script src='{% static "js/login.js" %}'></script>
   </body>
 
 </html>

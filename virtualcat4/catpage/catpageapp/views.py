@@ -20,7 +20,7 @@ import json
 # Create your views here.
 
 def main(request):
-	return render(request, "index.html", {})
+	return render(request, "Index.html", {})
 
 def account(request):
 	return render(request, "Account.html", {})
@@ -32,7 +32,7 @@ def catpage(request):
 	return render(request, "CatPage.html", {})
 
 def login(request):
-	return render(request, "login.html", {})
+	return render(request, "Login.html", {})
 
 def register(request):
 	return render(request, "Register.html")
@@ -75,6 +75,7 @@ class AccountGetData(generics.RetrieveAPIView):
 class AccountPostData(generics.CreateAPIView):
 	queryset = Account.objects.all()
 	serializer_class = AccountSerializer
+	
 	print("in postdata")
 	def post(self, request):
 		serializer_class = AccountSerializer(data=request.data)
