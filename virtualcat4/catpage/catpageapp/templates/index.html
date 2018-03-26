@@ -17,7 +17,7 @@
   </head>
 
   <body>
-    {% csrf_token %}
+    
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -55,8 +55,7 @@
     <!-- Page Content -->
     <div class="container">
 
-      <div class="row">
-          </div>
+      <!-- <div class="row"> -->
           <div class="card mt-4">
             <img class="card-img-top img-fluid" src="http://placehold.it/1200x500" alt="">
             <div class="card-body">
@@ -73,35 +72,26 @@
             <div class="card-body">
               <ul id="home-page-comments">
                 <li>
-                  <div class="card-pic" >
-                    <div class="image_circle">
-                      <img class="my_image img-fluid" src="static/pics/profile_pic.jpeg" alt="">
+                    <div class="card-pic" >
+                        <div class="image_circle">
+                            <img class="my_image img-fluid" src='{% static "pics/profile/29/pexels-photo-64385.jpeg" %}' alt="">
+                        </div>
                     </div>
-                  </div>
+                    <small class="text-muted">dude</small>
                   <div class="card-comment">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                    <p>hello</p>
                   </div>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                  <hr>
-                </li>
-                <li>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                  <hr>
-                </li>
-                <li>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
                   <hr>
                 </li>
               </ul>
-              <button href="#" class="btn btn-success">Leave a Comment</button>
-              <div class="collapse.show card-body">
+              <button id="main_comment_form_btn" class="btn btn-success">Leave a Comment</button>
+              <form id="main_comment_form" class="form collapse.show card-body"  method="post" action="" enctype="multipart/form-data">
+                  {% csrf_token %}
                   <div class="form-group">
                       <textarea id="comment_text" class="form-control"></textarea>
-                      <button href="#" class="btn btn-success">Add Comment</button>
+                      <button id="main_submit_comment_btn" type="submit" class="btn btn-success">Add Comment</button>
                   </div> 
-              </div>
+              </form>
             </div>
           </div>
           <!-- /.card -->
@@ -109,7 +99,7 @@
         <!-- </div> -->
         <!-- /.col-lg-9 -->
 
-      </div>
+      <!-- </div> -->
 
     </div>
     <!-- /.container -->
@@ -125,7 +115,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src='{% static "js/jquery.min.js" %}'></script>
     <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
-
+    <script src='{% static "js/main.js" %}'></script>
   </body>
 
 </html>

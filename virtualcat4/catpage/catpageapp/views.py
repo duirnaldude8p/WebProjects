@@ -57,7 +57,7 @@ class CatPostData(generics.CreateAPIView):
 	serializer_class = CatSerializer
 
 	def post(self, request):
-		serializer_class = CatSerializer(data=request.data, many=True)
+		serializer_class = CatSerializer(data=request.data)
 		if serializer_class.is_valid():
 			serializer_class.save()
 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
@@ -134,6 +134,7 @@ class MainPostData(generics.CreateAPIView):
 		if serializer_class.is_valid():
 			serializer_class.save()
 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+		print("errors: %s"%serializer_class._errors)
 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Create your views here.

@@ -8,7 +8,6 @@ $(function(){
 
     $("#reg_btn").on('click', function(e){
         e.preventDefault();
-        
         var form_data = new FormData();
         form_data.append('username', $usr.val());
         form_data.append('password', $pwd.val());

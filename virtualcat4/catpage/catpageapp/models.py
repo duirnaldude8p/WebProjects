@@ -22,7 +22,6 @@ class Cat(models.Model):
 	story = models.CharField(max_length=140, null=True)
 	cat_pic = models.ImageField(upload_to=cat_image_path, blank=True, null=True)
 	cat_comments = models.CharField(max_length=1000, null=True)
-	cat_user = models.IntegerField(default=1, null=True)
 	get_id = models.CharField(max_length=10, null=True)
 	section = models.CharField(max_length=20, null=True)
 	category = models.CharField(max_length=20, null=True)
@@ -103,13 +102,16 @@ class CurrentAccount(models.Model):
 	
 class Main(models.Model):
 	home_pic = models.ImageField(upload_to=image_path, blank=True, null=True)
-	cats = models.CharField(max_length=1000, null=True)
-	cat_comments = models.CharField(max_length=1000, null=True)
-	comments = models.CharField(max_length=1000, null=True)
-	accounts = models.CharField(max_length=1000, null=True)
-	get_id = models.CharField(max_length=10, null=True)
-	section = models.CharField(max_length=20, null=True)
-	category = models.CharField(max_length=20, null=True)
+	cats = models.CharField(max_length=1000, blank=True, null=True)
+	cat_comments = models.CharField(max_length=1000, blank=True, null=True)
+	comments = models.CharField(max_length=1000, blank=True, null=True)
+	accounts = models.CharField(max_length=1000, blank=True, null=True)
+	get_id = models.CharField(max_length=10, blank=True, null=True)
+	name = models.CharField(max_length=10, blank=True, null=True)
+	picture = models.CharField(max_length=100, blank=True, null=True)
+	section = models.CharField(max_length=20, blank=True, null=True)
+	category = models.CharField(max_length=20, blank=True, null=True)
+
 
 	def save(self, *args, **kwargs):
 		if self.id is None:

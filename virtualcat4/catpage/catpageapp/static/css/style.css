@@ -44,8 +44,8 @@ body {
 }
 
 .my_footer{
-	position: fixed;
-	bottom: 0;
+	/*position: fixed;*/
+	bottom: auto;
 	width: 100%;
 }
 
@@ -94,7 +94,7 @@ div #account_form{
 	margin-left: 30px;
 }
 
-#cat_list{
+#cat_list_form{
 	margin-bottom: 30px;
 	margin-left: 30px;
 }
