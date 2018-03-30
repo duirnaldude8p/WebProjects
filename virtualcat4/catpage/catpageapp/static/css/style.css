@@ -39,7 +39,11 @@ body {
 	width: 115px;
 }
 
-#home-page-comments{
+#home_page_comments{
+	list-style: none;
+}
+
+#cat_list_objects{
 	list-style: none;
 }
 
@@ -124,4 +128,9 @@ div #account_form{
 
 #comment_text{
 	margin-bottom: 10px;
+}
+
+.soft_text{
+	margin-left: 5%;
+	font-size: 90%;
 }

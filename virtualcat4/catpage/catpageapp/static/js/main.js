@@ -1,30 +1,26 @@
 $(function(){
     $text = $('#comment_text');
-    $list = $("#home-page-comments");
+    $list = $("#home_page_comments");
     var form = document.getElementById("main_comment_form");
     var is_verified = "false";
     var name = '';
     var pic = null;
+    
 
     function commentListItem(comment, image, name){
-        var mystring = image.substring(0, 11);
-        var mystring2 = image.replace(mystring, "");
-        //console.log("mystring: "+mystring2);
-        var hi = "static/hello";
-        var myimage = "'{% static "+'"'+hi+'"'+" %}'"
         var new_comment = '<li>\n'+
             '<div class="card-pic" >\n'+
                 '<div class="image_circle">\n'+
-                    '<img class="my_image img-fluid" src='+mystring2+' alt="">\n'+
+                    '<img class="my_image img-fluid" src="'+image+'"  alt="">\n'+
                 '</div>\n'+
             '</div>\n'+
-            '<small class="text-muted">'+name+'</small>\n'+
+            '<small class="text-muted soft_text">'+name+'</small>\n'+
             '<div class="card-comment">\n'+
                 '<p>'+comment+'</p>\n'+
             '</div>\n'+
             '<hr>\n'+
-        '</li>'
-        return new_comment
+        '</li>';
+        return new_comment;
     }
 
     $("#main_comment_form_btn").on('click', function(e){
@@ -64,9 +60,16 @@ $(function(){
             var mycomments = item[0].comments;
             mycomments = mycomments.replace(/'/g, '"');
             mycomments = JSON.parse(mycomments);
+           
             $.each(mycomments, function(i, val){
-                console.log("comments: "+commentListItem(val.comment.comm, val.comment.picture, val.comment.name));
-                $list.append(commentListItem(val.comment.comm, val.comment.picture, val.comment.name));
+                var myurl = "http://localhost:8000/";
+                var image = val.comment.picture
+                var mystring = image.substring(0,11);
+                var mystring2 = image.replace(mystring, "");
+                myurl = myurl+mystring2;
+                //console.log("my url: "+myurl);
+                //console.log("comments: "+commentListItem(val.comment.comm, myurl, val.comment.name));
+                $list.append(commentListItem(val.comment.comm, myurl, val.comment.name));
             });
             console.log("main get success");
         },
@@ -74,29 +77,38 @@ $(function(){
             console.log("main get error");
         }
     });
+    
     //id of the only main object should be one but can check in getmaindata
-    // $("#main_submit_comment_btn").on('click', function(e){
-    //     e.preventDefault();
-    //     var form_data = new FormData();
-    //     form_data.append('comments', $text.val());
-    //     form_data.append('name', name);
-    //     form_data.append('picture', pic);
-    //     form_data.append('get_id', 2);
-    //     form_data.append('section', 'update comments');
-    //     form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: '/catpageapp/postmaindata/',
-    //         dataType: 'json',
-    //         contentType: false,
-    //         processData: false,
-    //         data: form_data,
-    //         success: function(item){
-    //             console.log('main post success: ');
-    //         },
-    //         error: function(){
-    //             console.log('main post error');
-    //         }         
-    //     });  
-    // });
+    $("#main_submit_comment_btn").on('click', function(e){
+        e.preventDefault();
+        var form_data = new FormData();
+        form_data.append('comments', $text.val());
+        form_data.append('name', name);
+        form_data.append('picture', pic);
+        form_data.append('get_id', 4);
+        form_data.append('section', 'update comments');
+        form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+        $.ajax({
+            type: 'POST',
+            url: '/catpageapp/postmaindata/',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            data: form_data,
+            success: function(item){
+                var myurl = "http://localhost:8000/";
+                var image = pic
+                var mystring = image.substring(0,11);
+                var mystring2 = image.replace(mystring, "");
+                myurl = myurl+mystring2;
+                //console.log("my url: "+myurl);
+                //console.log("commments: "+commentListItem(, myurl, val.comment.name));
+                $list.append(commentListItem($text.val(), myurl, name));
+                console.log('main post success: ');
+            },
+            error: function(){
+                console.log('main post error');
+            }         
+        });  
+    });
 });

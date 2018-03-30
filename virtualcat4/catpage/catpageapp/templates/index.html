@@ -57,7 +57,7 @@
 
       <!-- <div class="row"> -->
           <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="http://placehold.it/1200x500" alt="">
+            <img id="page_image" class="card-img-top img-fluid" src='{% static "pics/main/1/cat-sweet-kitty-animals-57416.jpeg" %}' alt="http://placehold.it/1200x500">
             <div class="card-body">
               <h3 class="card-title">Hey there</h3>
               <p class="card-text">Welcome to our lovely site where you may share cat stories or anything else you like enjoy!</p>
@@ -70,22 +70,10 @@
               Comments
             </div>
             <div class="card-body">
-              <ul id="home-page-comments">
-                <li>
-                    <div class="card-pic" >
-                        <div class="image_circle">
-                            <img class="my_image img-fluid" src='{% static "pics/profile/29/pexels-photo-64385.jpeg" %}' alt="">
-                        </div>
-                    </div>
-                    <small class="text-muted">dude</small>
-                  <div class="card-comment">
-                    <p>hello</p>
-                  </div>
-                  <hr>
-                </li>
+              <ul id="home_page_comments">
               </ul>
               <button id="main_comment_form_btn" class="btn btn-success">Leave a Comment</button>
-              <form id="main_comment_form" class="form collapse.show card-body"  method="post" action="" enctype="multipart/form-data">
+              <form id="main_comment_form" class="form collapse card-body"  method="post" action="" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="form-group">
                       <textarea id="comment_text" class="form-control"></textarea>

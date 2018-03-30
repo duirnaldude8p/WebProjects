@@ -6,7 +6,8 @@ from .models import Cat
 from .models import Account
 from .models import Main
 from .models import CurrentAccount
-
+from .models import CatUniqueId
+from random import randint
 
 class CatSerializer(serializers.ModelSerializer):
 
@@ -289,7 +290,8 @@ class MainSerializer(serializers.ModelSerializer):
 		mn_account = json.dumps([])
 		mn_account = json.loads(mn_account)
 		main = Main.objects.all()
-
+		cat = Cat.objects.all()
+		cat_unique_id = CatUniqueId.objects.all()
 		if not main:
 			if section == 'new':
 				main = Main.objects.create(
@@ -305,11 +307,13 @@ class MainSerializer(serializers.ModelSerializer):
 			return main	
 		else:
 			if section == 'update comments':
-				print("in update")
+				print("in comment update")
 				recieved_id = validated_data['get_id']
+				print("my id %s"%validated_data['get_id'])
 				for obj in main.iterator():
 					if obj.id == int(recieved_id):
-						print("each obj: %s"%obj)
+
+						print("hello obj: %s"%obj)
 				 		# add comment
 						comments = obj.comments
 						comments = comments.replace("'", '\"')
@@ -338,19 +342,63 @@ class MainSerializer(serializers.ModelSerializer):
 						break
 				return main
 			if section == 'update cats':
-				print("in update")
+				print("in cat update")
 				recieved_id = validated_data['get_id']
-				for obj in main.iterator():
+				print("cat id: %s"%validated_data['get_id'])
+				def random_with_N_digits(n):
+					range_start = 10**(n-1)
+					range_end = (10**n)-1
+					return randint(range_start, range_end)
+				for obj in Main.objects.all():
 					if obj.id == int(recieved_id):
-						print("each obj: %s"%obj)
-				 		# add cat
-						ac_cats = obj.cats
-						ac_cats = ac_cats.replace("'", '\"')
-						ac_cats = json.loads(ac_cats)
-						ac_new_cat = json.dumps({"cat": validated_data['cats']})
-						ac_new_cat = json.loads(ac_new_cat)
-						ac_cats.append(ac_new_cat)
-						Main.objects.filter(pk=recieved_id).update(cats=ac_cats)
+						numbers = range(1, 10)
+						isfound = False
+						while not isfound:
+							randnum = random_with_N_digits(10)
+							my_unique_cat_id = 0
+							my_count = 0
+							if cat_unique_id:
+								for cid in cat_unique_id.iterator():
+									if int(cid.cat_id) == randnum:
+										break
+									else:
+										my_count = my_count + 1
+								if my_count == cat_unique_id.count():
+									my_unique_cat_id = str(randnum)
+									CatUniqueId.objects.create(
+										cat_id = my_unique_cat_id
+									)
+									isfound = True
+								break
+							else:
+								my_unique_cat_id = str(randnum)
+								CatUniqueId.objects.create(
+									cat_id = my_unique_cat_id
+								)
+								break
+
+						my_cats = obj.cats
+						my_cats = my_cats.replace("'", '\"')
+						my_cats = json.loads(my_cats)
+						print("a after cats: %s"%my_cats)
+						cat_comment = json.dumps([])
+						cat_comment = json.loads(cat_comment)
+						Cat.objects.create(
+             							cat_name = validated_data['cat_name'],
+             	       					breed = validated_data['breed'],
+             							story = validated_data['story'],
+             							cat_pic = validated_data['cat_pic'],
+             							section = 'update cats',
+             							category = 'cat',
+             							cat_unique_id = my_unique_cat_id,
+             							cat_comments = cat_comment
+			 						)
+		
+						
+						my_new_cat = Cat.objects.filter(cat_unique_id=my_unique_cat_id).values()[0]
+						print("my new cat %s"%my_new_cat)
+						my_cats.append(my_new_cat)
+						Main.objects.filter(pk=recieved_id).update(cats=my_cats)
 						break
 				return main
 

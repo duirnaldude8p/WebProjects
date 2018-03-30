@@ -109,7 +109,7 @@ class CurrentAccountPostData(generics.CreateAPIView):
 		if serializer_class.is_valid():
 			serializer_class.save()
 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-		print("errors: %s"%serializer_class._errors)
+		print("my errors: %s"%serializer_class._errors)
 		return Response(serializer_class._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -133,8 +133,9 @@ class MainPostData(generics.CreateAPIView):
 		serializer_class = MainSerializer(data=request.data)
 		if serializer_class.is_valid():
 			serializer_class.save()
+			#print("main errors: %s"%serializer_class._errors)
 			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-		print("errors: %s"%serializer_class._errors)
+		print("main after errors: %s"%serializer_class._errors)
 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Create your views here.
