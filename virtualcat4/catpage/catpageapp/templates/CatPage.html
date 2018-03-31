@@ -57,52 +57,28 @@
 
       <div class="row">
           </div>
-          <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="static/pics/classic.jpeg" alt="">
+          <div id="cat_page_details" class="card mt-4">
+            <img class="card-img-top img-fluid" src="static/pics/3/classic.jpeg" alt="">
             <div class="card-body">
               <h3 class="card-title">Fluffy</h3>
-              <p class="card-text">Breed: Sebrian Forest Cat</p>
+              <p class="card-text">Breed: Serbian Forest Cat</p>
               <p class="card-text">This cat has been my rock for a long I cant remember life without him</p>
-              
             </div>
-          </div>
-          
+          </div>         
           <div class="card card-outline-secondary my-4">
             <div class="card-header">
               Comments
             </div>
             <div class="card-body">
-              <ul id="home-page-comments">
-                <li>
-                  <div class="card-pic" >
-                    <div class="image_circle">
-                      <img class="my_image img-fluid" src="static/pics/profile_pic.jpeg" alt="">
-                    </div>
-                  </div>
-                  <div class="card-comment">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  </div>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                  <hr>
-                </li>
-                <li>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                  <hr>
-                </li>
-                <li>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                  <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                  <hr>
-                </li>
+              <ul id="cat_page_comments">
               </ul>
-              <button href="#" class="btn btn-success">Leave a Comment</button>
-              <div class="collapse card-body">
+              <button id="catpage_comment_btn" class="btn btn-success">Leave a Comment</button>
+              <form id="cat_form" class="form collapse card-body"  method="post" action="" enctype="multipart/form-data">
                   <div class="form-group">
                       <textarea id="comment_text" class="form-control"></textarea>
-                      <button href="#" class="btn btn-success">Add Comment</button>
+                      <button  id="cat_comment_form_btn" class="btn btn-success" >Add Comment</button>
                   </div> 
-              </div>
+              </form>
             </div>
           </div>
           
@@ -119,7 +95,7 @@
 
     <script src='{% static "js/jquery.min.js" %}'></script>
     <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
-
+    <script src='{% static "js/catpage.js" %}'></script>
   </body>
 
 </html>

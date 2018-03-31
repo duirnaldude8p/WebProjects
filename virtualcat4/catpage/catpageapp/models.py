@@ -121,6 +121,7 @@ class Main(models.Model):
 	section = models.CharField(max_length=20, blank=True, null=True)
 	category = models.CharField(max_length=20, blank=True, null=True)
 	cat_unique_id = models.CharField(max_length=20, null=True, default="")
+	my_cat_id = models.CharField(max_length=10, blank=True, null=True, default='')
 
 
 	def save(self, *args, **kwargs):

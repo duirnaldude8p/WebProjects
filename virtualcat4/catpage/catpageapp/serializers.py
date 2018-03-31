@@ -330,15 +330,30 @@ class MainSerializer(serializers.ModelSerializer):
 				recieved_id = validated_data['get_id']
 				for obj in main.iterator():
 					if obj.id == int(recieved_id):
-						print("each obj: %s"%obj)
-			 			# add cat_comment
-						ac_catcomments = obj.cat_comments
-						ac_catcomments = ac_catcomments.replace("'", '\"')
-						ac_catcomments = json.loads(ac_catcomments)
-						ac_new_catcomment = json.dumps({"cat_comment": validated_data['cat_comments']})
-						ac_new_catcomment = json.loads(ac_new_catcomment)
-						ac_catcomments.append(ac_new_catcomment)
-						Main.objects.filter(pk=recieved_id).update(cat_comments=ac_catcomments)
+						print("in main cat part1 update%s"%recieved_id)
+						recieved_cat_id = validated_data['my_cat_id']
+						for item in cat.iterator():
+							if item.id == int(recieved_cat_id):
+								print("in main cat update%s"%recieved_cat_id)
+								catComments = obj.cat_comments
+								catComments = catComments.replace("'", '\"')
+								catComments = json.loads(catComments)
+								new_cat_comment = json.dumps({"cat_comment": {"comm": validated_data['cat_comments'], "name": validated_data['name'], "picture": validated_data['picture']}})
+								new_cat_comment = json.loads(new_cat_comment)
+								catComments.append(new_cat_comment)
+								Cat.objects.filter(pk=recieved_cat_id).update(cat_comments=catComments)
+								break
+
+						my_cats = obj.cats
+						print("before  cats: %s"%my_cats)	
+						my_cats = my_cats.replace("'", '\"')
+						#my_cats = json.loads(my_cats)
+						#print("a after cats: %s"%my_cats)	
+						
+						# my_new_cat = Cat.objects.filter(pk=recieved_cat_id).values()[0]
+						# print("my new cat %s"%my_new_cat)
+						# my_cats.append(my_new_cat)
+						# Main.objects.filter(pk=recieved_id).update(cats=my_cats)
 						break
 				return main
 			if section == 'update cats':
@@ -379,14 +394,18 @@ class MainSerializer(serializers.ModelSerializer):
 
 						my_cats = obj.cats
 						my_cats = my_cats.replace("'", '\"')
+						print("before cats: %s"%my_cats)
 						my_cats = json.loads(my_cats)
-						print("a after cats: %s"%my_cats)
-						#cat_comment = json.dumps([])
-						#cat_comment = json.loads(cat_comment)
+						print("after cats: %s"%my_cats)
+						cat_story = validated_data['story']
+						print("before cat story: %s"%cat_story)
+						cat_story = json.dumps(cat_story)
+						cat_story = json.loads(cat_story)
+						print("cat story: %s"%cat_story)
 						Cat.objects.create(
              							cat_name = validated_data['cat_name'],
              	       					breed = validated_data['breed'],
-             							story = validated_data['story'],
+             							story = cat_story,
              							cat_pic = validated_data['cat_pic'],
              							section = 'update cats',
              							category = 'cat',
