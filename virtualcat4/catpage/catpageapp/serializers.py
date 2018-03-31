@@ -344,7 +344,7 @@ class MainSerializer(serializers.ModelSerializer):
 			if section == 'update cats':
 				print("in cat update")
 				recieved_id = validated_data['get_id']
-				print("cat id: %s"%validated_data['get_id'])
+				print("my cat id: %s"%validated_data['get_id'])
 				def random_with_N_digits(n):
 					range_start = 10**(n-1)
 					range_end = (10**n)-1
@@ -381,8 +381,8 @@ class MainSerializer(serializers.ModelSerializer):
 						my_cats = my_cats.replace("'", '\"')
 						my_cats = json.loads(my_cats)
 						print("a after cats: %s"%my_cats)
-						cat_comment = json.dumps([])
-						cat_comment = json.loads(cat_comment)
+						#cat_comment = json.dumps([])
+						#cat_comment = json.loads(cat_comment)
 						Cat.objects.create(
              							cat_name = validated_data['cat_name'],
              	       					breed = validated_data['breed'],
@@ -391,7 +391,7 @@ class MainSerializer(serializers.ModelSerializer):
              							section = 'update cats',
              							category = 'cat',
              							cat_unique_id = my_unique_cat_id,
-             							cat_comments = cat_comment
+             							cat_comments = "[]"
 			 						)
 		
 						

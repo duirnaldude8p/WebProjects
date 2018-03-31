@@ -44,6 +44,7 @@ body {
 }
 
 #cat_list_objects{
+	margin-top: 5%;
 	list-style: none;
 }
 

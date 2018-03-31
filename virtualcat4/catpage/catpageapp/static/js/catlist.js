@@ -3,6 +3,7 @@ $(function(){
     $breed = $('#breed');
     $pic = $('#pic');
     $cat_text = $('#cat_text');
+    $list = $("#cat_list_objects");
     var form = document.getElementById("cat_list_form");
     var is_verified = "false";
     //console.log("collapsssable");
@@ -31,24 +32,24 @@ $(function(){
 
     $.ajax({
         type: 'GET',
-        url: '/catpageapp/getlogindata/',
+        url: '/catpageapp/getmaindata/',
         dataType: 'json',
         success: function(item){
             is_verified = item[0].is_verified;
-            // var mycomments = item[0].comments;
-            // mycomments = mycomments.replace(/'/g, '"');
-            // mycomments = JSON.parse(mycomments);
+            var mycats = item[0].cats;
+            mycats = mycats.replace(/'/g, '"');
+            mycats = JSON.parse(mycats);
            
-            // $.each(mycomments, function(i, val){
-            //     var myurl = "http://localhost:8000/";
-            //     var image = val.comment.picture
-            //     var mystring = image.substring(0,11);
-            //     var mystring2 = image.replace(mystring, "");
-            //     myurl = myurl+mystring2;
-            //     //console.log("my url: "+myurl);
-            //     //console.log("comments: "+commentListItem(val.comment.comm, myurl, val.comment.name));
-            //     $list.append(commentListItem(val.comment.comm, myurl, val.comment.name));
-            // });
+            $.each(mycats, function(i, val){
+                var myurl = "http://localhost:8000/";
+                var image = val.cat_pic;
+                var mystring = image.substring(0,11);
+                var mystring2 = image.replace(mystring, "");
+                myurl = myurl+mystring2;
+                console.log("my url: "+myurl);
+                //console.log("comments: "+commentListItem(val.comment.comm, myurl, val.comment.name));
+                $list.append(objectListItem(val.id, myurl, val.cat_name));
+            });
 
             console.log("catlist get success");
         },
@@ -67,7 +68,7 @@ $(function(){
         form_data.append('cat_pic', $pic.get(0).files[0]);
         form_data.append('section', 'update cats');
         form_data.append('cat_comments', 'hello');
-        form_data.append('get_id', 2);
+        form_data.append('get_id', 8);
         form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
         //console.log("form datas: "+form_data.get("profile_pic"));
         $.ajax({
@@ -96,7 +97,7 @@ $(function(){
         form_data.append('story', $cat_text.val());
         form_data.append('cat_pic', $pic.get(0).files[0]);
         form_data.append('section', 'update cats');
-        form_data.append('get_id', 4);
+        form_data.append('get_id', 5);
         form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
         //console.log("form datas: "+form_data.get("profile_pic"));
         $.ajax({
