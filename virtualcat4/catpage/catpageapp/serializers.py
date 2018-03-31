@@ -347,13 +347,13 @@ class MainSerializer(serializers.ModelSerializer):
 						my_cats = obj.cats
 						print("before  cats: %s"%my_cats)	
 						my_cats = my_cats.replace("'", '\"')
-						#my_cats = json.loads(my_cats)
-						#print("a after cats: %s"%my_cats)	
+						my_cats = json.loads(my_cats)
+						print("a after cats: %s"%my_cats)	
 						
-						# my_new_cat = Cat.objects.filter(pk=recieved_cat_id).values()[0]
-						# print("my new cat %s"%my_new_cat)
-						# my_cats.append(my_new_cat)
-						# Main.objects.filter(pk=recieved_id).update(cats=my_cats)
+						my_new_cat = Cat.objects.filter(pk=recieved_cat_id).values()[0]
+						print("my new cat %s"%my_new_cat)
+						my_cats.append(my_new_cat)
+						Main.objects.filter(pk=recieved_id).update(cats=my_cats)
 						break
 				return main
 			if section == 'update cats':
