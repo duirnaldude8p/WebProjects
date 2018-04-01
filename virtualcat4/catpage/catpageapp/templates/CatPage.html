@@ -68,9 +68,10 @@
               </ul>
               <button id="catpage_comment_btn" class="btn btn-success">Leave a Comment</button>
               <form id="cat_form" class="form collapse card-body"  method="post" action="" enctype="multipart/form-data">
+                  {% csrf_token %}
                   <div class="form-group">
                       <textarea id="comment_text" class="form-control"></textarea>
-                      <button  id="cat_comment_form_btn" class="btn btn-success" >Add Comment</button>
+                      <input  id="cat_comment_form_btn" type="submit" class="btn btn-success" value="Add Comment"/>
                   </div> 
               </form>
             </div>

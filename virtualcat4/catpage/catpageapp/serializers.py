@@ -217,12 +217,6 @@ class MainSerializer(serializers.ModelSerializer):
 		section = validated_data['section']
 		mn_comment = json.dumps([])
 		mn_comment = json.loads(mn_comment)
-		mn_cat_comment = json.dumps([])
-		mn_cat_comment = json.loads(mn_cat_comment)
-		mn_cat = json.dumps([])
-		mn_cat = json.loads(mn_cat)
-		mn_account = json.dumps([])
-		mn_account = json.loads(mn_account)
 		mn_cat_id = json.dumps([])
 		mn_cat_id = json.loads(mn_cat_id)
 		main = Main.objects.all()
@@ -231,10 +225,7 @@ class MainSerializer(serializers.ModelSerializer):
 		if not main:
 			if section == 'new':
 				main = Main.objects.create(
-											accounts = mn_account,
 											home_pic = validated_data['home_pic'],
-											cats = mn_cat,
-											cat_comments = mn_cat_comment,
 											comments = mn_comment,
 											section = 'new',
              								category = 'main',

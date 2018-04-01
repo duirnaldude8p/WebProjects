@@ -43,6 +43,10 @@ body {
 	list-style: none;
 }
 
+#cat_page_comments{
+	list-style: none;
+}
+
 #cat_list_objects{
 	margin-top: 5%;
 	list-style: none;
