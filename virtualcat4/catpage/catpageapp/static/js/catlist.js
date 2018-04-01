@@ -93,16 +93,15 @@ $(function(){
             success: function(items){
                 var mycats = items;
                 console.log("item length: "+items.length);
+                my_item = items[items.length-1];
                     
-                    // var myurl = "http://localhost:8000/";
-                    // var image = val.cat_pic;
-                    // var mystring = image.substring(0,11);
-                    // var mystring2 = image.replace(mystring, "");
-                    // myurl = myurl+mystring2;
-                    // console.log("my url: "+myurl);
-                    // $list.append(objectListItem(val.id, myurl, val.cat_name));
-            
-
+                var myurl = "http://localhost:8000/";
+                var image = my_item.cat_pic;
+                var mystring = image.substring(0,11);
+                var mystring2 = image.replace(mystring, "");
+                myurl = myurl+mystring2;
+                console.log("my url: "+myurl);
+                $list.append(objectListItem(my_item.id, myurl, my_item.cat_name));
                 console.log("catlist get success");
             },
             error:function(){
@@ -134,7 +133,7 @@ $(function(){
                 cache: false,
                 success: function(item){
                     console.log('catlists post success: ');
-                    // getcats();
+                    getlastcat();
                 },
                 error: function(){
                     console.log('catlist post error');
