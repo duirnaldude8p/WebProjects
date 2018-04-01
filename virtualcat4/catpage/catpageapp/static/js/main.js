@@ -85,7 +85,7 @@ $(function(){
         form_data.append('comments', $text.val());
         form_data.append('name', name);
         form_data.append('picture', pic);
-        form_data.append('get_id', 8);
+        form_data.append('get_id', 23);
         form_data.append('section', 'update comments');
         form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
         $.ajax({

@@ -30,6 +30,8 @@ class Cat(models.Model):
 	section = models.CharField(max_length=20, null=True)
 	category = models.CharField(max_length=20, null=True)
 	cat_unique_id = models.CharField(max_length=20, null=True, default="")
+	name = models.CharField(max_length=30, blank=True, null=True)
+	picture = models.CharField(max_length=100, blank=True, null=True)
 
 	def save(self, *args, **kwargs):
 		if self.id is None:
@@ -51,9 +53,6 @@ class Account(models.Model):
 	username = models.CharField(max_length=20, null=True)
 	password = models.CharField(max_length=20, null=True)
 	profile_pic = models.ImageField(upload_to=profile_image_path, blank=True, null=True)
-	cats = models.CharField(max_length=100000, null=True)
-	cat_comments = models.CharField(max_length=100000, null=True)
-	comments = models.CharField(max_length=100000, null=True)
 	account_name = models.CharField(max_length=20, null=True)
 	get_id = models.CharField(max_length=10, null=True, default='')
 	section = models.CharField(max_length=20, null=True)
@@ -79,9 +78,6 @@ class CurrentAccount(models.Model):
 	username = models.CharField(max_length=20, null=True)
 	password = models.CharField(max_length=20, null=True)
 	profile_pic = models.ImageField(upload_to=profile_image_path, blank=True, null=True)
-	cats = models.CharField(max_length=100000, null=True)
-	cat_comments = models.CharField(max_length=100000, null=True)
-	comments = models.CharField(max_length=100000, null=True)
 	account_name = models.CharField(max_length=20, null=True)
 	get_id = models.CharField(max_length=10, null=True, default='')
 	current_id = models.CharField(max_length=10, null=True)
@@ -107,21 +103,18 @@ class CurrentAccount(models.Model):
 	
 class Main(models.Model):
 	home_pic = models.ImageField(upload_to=image_path, blank=True, null=True)
-	cats = models.CharField(max_length=100000, blank=True, null=True)
-	cat_comments = models.CharField(max_length=100000, blank=True, null=True)
 	comments = models.CharField(max_length=100000, blank=True, null=True)
 	cat_name = models.CharField(max_length=20, blank=True, null=True)
 	breed = models.CharField(max_length=20, blank=True, null=True)
 	story = models.CharField(max_length=140, blank=True, null=True)
 	cat_pic = models.ImageField(upload_to=cat_image_path, blank=True, null=True)
-	accounts = models.CharField(max_length=1000, blank=True, null=True)
 	get_id = models.CharField(max_length=10, blank=True, null=True, default='')
-	name = models.CharField(max_length=10, blank=True, null=True)
-	picture = models.CharField(max_length=100, blank=True, null=True)
 	section = models.CharField(max_length=20, blank=True, null=True)
 	category = models.CharField(max_length=20, blank=True, null=True)
 	cat_unique_id = models.CharField(max_length=20, null=True, default="")
-	my_cat_id = models.CharField(max_length=10, blank=True, null=True, default='')
+	my_cat_id = models.CharField(max_length=10000, blank=True, null=True, default='')
+	name = models.CharField(max_length=30, blank=True, null=True)
+	picture = models.CharField(max_length=100, blank=True, null=True)
 
 
 	def save(self, *args, **kwargs):

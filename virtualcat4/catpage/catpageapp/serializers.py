@@ -45,10 +45,10 @@ class CatSerializer(serializers.ModelSerializer):
 					catComments = obj.cat_comments
 					catComments = catComments.replace("'", '\"')
 					catComments = json.loads(catComments)
-					new_cat_comment = json.dumps({"cat_comment": validated_data['cat_comments'] })
+					new_cat_comment = json.dumps({'cat_comment': {'comm': validated_data['cat_comments'], 'name': validated_data['name'], 'picture': validated_data['picture']}})
 					new_cat_comment = json.loads(new_cat_comment)
 					catComments.append(new_cat_comment)
-					Cat.objects.filter(pk=recieved_id).update(cat_comments=catComments)
+					cat = Cat.objects.filter(pk=recieved_id).update(cat_comments=catComments)
 					break
 			
 			return cat
@@ -85,61 +85,26 @@ class AccountSerializer(serializers.ModelSerializer):
 			#Account.save()
 			return account
 			
-		if section == 'update comments':
-			print("in update")
-			recieved_id = validated_data['get_id']
-			for obj in account.iterator():
-				if obj.id == int(recieved_id):
-					print("each obj: %s"%obj)
-				# 	# add comments
-					comments = obj.comments
-					comments = comments.replace("'", '\"')
-					comments = json.loads(comments)
-					new_comment = json.dumps({"comment": validated_data['comments']})
-					new_comment = json.loads(new_comment)
-					comments.append(new_comment)
-					Account.objects.filter(pk=recieved_id).update(comments=comments)
-				# 	# add cats
-					break
-			#Account.save()
-			return account
+		# if section == 'update comments':
+		# 	print("in update")
+		# 	recieved_id = validated_data['get_id']
+		# 	for obj in account.iterator():
+		# 		if obj.id == int(recieved_id):
+		# 			print("each obj: %s"%obj)
+		# 		# 	# add comments
+		# 			comments = obj.comments
+		# 			comments = comments.replace("'", '\"')
+		# 			comments = json.loads(comments)
+		# 			new_comment = json.dumps({"comment": validated_data['comments']})
+		# 			new_comment = json.loads(new_comment)
+		# 			comments.append(new_comment)
+		# 			Account.objects.filter(pk=recieved_id).update(comments=comments)
+		# 		# 	# add cats
+		# 			break
+		# 	#Account.save()
+		# 	return account
 
-		if section == 'update cat comments':
-			print("in update")
-			recieved_id = validated_data['get_id']
-			for obj in account.iterator():
-				if obj.id == int(recieved_id):
-					print("each obj: %s"%obj)
-			# 		# add cat_comments	
-					ac_catcomments = obj.cat_comments
-					ac_catcomments = ac_catcomments.replace("'", '\"')
-					ac_catcomments = json.loads(ac_catcomments)
-					ac_new_catcomment = json.dumps({"cat_comment": validated_data['cat_comments']})
-					ac_new_catcomment = json.loads(ac_new_catcomment)
-					ac_catcomments.append(ac_new_catcomment)
-					Account.objects.filter(pk=recieved_id).update(cat_comments=ac_catcomments)
-
-					break
-			#Account.save()
-			return account
-		if section == 'update cats':
-			print("in update")
-			recieved_id = validated_data['get_id']
-			for obj in account.iterator():
-				if obj.id == int(recieved_id):
-					print("each obj: %s"%obj)
-					# 	# add cats
-					ac_cats = obj.cats
-					ac_cats = ac_cats.replace("'", '\"')
-					ac_cats = json.loads(ac_cats)
-					ac_new_cat = json.dumps({"cat": validated_data['cats']})
-					ac_new_cat = json.loads(ac_new_cat)
-					ac_cats.append(ac_new_cat)
-					Account.objects.filter(pk=recieved_id).update(cats=ac_cats)
-
-					break
-			#Account.save()
-			return account
+	
 		#Account.save()    	
 		return account
 
@@ -212,55 +177,24 @@ class CurrentAccountSerializer(serializers.ModelSerializer):
              								is_verified = "true"
              								)
 				return current_account
-			if section == 'update comments':
-				print("in update")
-				recieved_id = validated_data['get_id']
-				for obj in current_account.iterator():
-					if obj.id == int(recieved_id):
-						print("each obj: %s"%obj)
-						comments = obj.comments
-						comments = comments.replace("'", '\"')
-						comments = json.loads(comments)
-						new_comment = json.dumps({"comment": validated_data['comments']})
-						new_comment = json.loads(new_comment)
-						comments.append(new_comment)
-						CurrentAccount.objects.filter(pk=recieved_id).update(comments=comments)
-						break
+			# if section == 'update comments':
+			# 	print("in update")
+			# 	recieved_id = validated_data['get_id']
+			# 	for obj in current_account.iterator():
+			# 		if obj.id == int(recieved_id):
+			# 			print("each obj: %s"%obj)
+			# 			comments = obj.comments
+			# 			comments = comments.replace("'", '\"')
+			# 			comments = json.loads(comments)
+			# 			new_comment = json.dumps({"comment": validated_data['comments']})
+			# 			new_comment = json.loads(new_comment)
+			# 			comments.append(new_comment)
+			# 			CurrentAccount.objects.filter(pk=recieved_id).update(comments=comments)
+			# 			break
 			
-				return current_account
+			# 	return current_account
 
-			if section == 'update cat comments':
-				print("in update")
-				recieved_id = validated_data['get_id']
-				for obj in current_account.iterator():
-					if obj.id == int(recieved_id):
-						print("each obj: %s"%obj)
-						ac_catcomments = obj.cat_comments
-						ac_catcomments = ac_catcomments.replace("'", '\"')
-						ac_catcomments = json.loads(ac_catcomments)
-						ac_new_catcomment = json.dumps({"cat_comment": validated_data['cat_comments']})
-						ac_new_catcomment = json.loads(ac_new_catcomment)
-						ac_catcomments.append(ac_new_catcomment)
-						CurrentAccount.objects.filter(pk=recieved_id).update(cat_comments=ac_catcomments)
-						break
-
-				return current_account
-			if section == 'update cats':
-				recieved_id = validated_data['get_id']
-				for obj in current_account.iterator():
-					if obj.id == int(recieved_id):
-						print("each obj: %s"%obj)
-						# 	# add cats
-						ac_cats = obj.cats
-						ac_cats = ac_cats.replace("'", '\"')
-						ac_cats = json.loads(ac_cats)
-						ac_new_cat = json.dumps({"cat": validated_data['cats']})
-						ac_new_cat = json.loads(ac_new_cat)
-						ac_cats.append(ac_new_cat)
-						CurrentAccount.objects.filter(pk=recieved_id).update(cats=ac_cats)
-						break
-	
-				return current_account
+			
   
 			return current_account
 	class Meta:
@@ -289,6 +223,8 @@ class MainSerializer(serializers.ModelSerializer):
 		mn_cat = json.loads(mn_cat)
 		mn_account = json.dumps([])
 		mn_account = json.loads(mn_account)
+		mn_cat_id = json.dumps([])
+		mn_cat_id = json.loads(mn_cat_id)
 		main = Main.objects.all()
 		cat = Cat.objects.all()
 		cat_unique_id = CatUniqueId.objects.all()
@@ -301,7 +237,8 @@ class MainSerializer(serializers.ModelSerializer):
 											cat_comments = mn_cat_comment,
 											comments = mn_comment,
 											section = 'new',
-             								category = 'main'
+             								category = 'main',
+             								my_cat_id = mn_cat_id
         								)
 				return main
 			return main	
@@ -325,37 +262,6 @@ class MainSerializer(serializers.ModelSerializer):
 						break
 				return main
 
-			if section == 'update cat comments':
-				print("in update")
-				recieved_id = validated_data['get_id']
-				for obj in main.iterator():
-					if obj.id == int(recieved_id):
-						print("in main cat part1 update%s"%recieved_id)
-						recieved_cat_id = validated_data['my_cat_id']
-						for item in cat.iterator():
-							if item.id == int(recieved_cat_id):
-								print("in main cat update%s"%recieved_cat_id)
-								catComments = obj.cat_comments
-								catComments = catComments.replace("'", '\"')
-								catComments = json.loads(catComments)
-								new_cat_comment = json.dumps({"cat_comment": {"comm": validated_data['cat_comments'], "name": validated_data['name'], "picture": validated_data['picture']}})
-								new_cat_comment = json.loads(new_cat_comment)
-								catComments.append(new_cat_comment)
-								Cat.objects.filter(pk=recieved_cat_id).update(cat_comments=catComments)
-								break
-
-						my_cats = obj.cats
-						print("before  cats: %s"%my_cats)	
-						my_cats = my_cats.replace("'", '\"')
-						my_cats = json.loads(my_cats)
-						print("a after cats: %s"%my_cats)	
-						
-						my_new_cat = Cat.objects.filter(pk=recieved_cat_id).values()[0]
-						print("my new cat %s"%my_new_cat)
-						my_cats.append(my_new_cat)
-						Main.objects.filter(pk=recieved_id).update(cats=my_cats)
-						break
-				return main
 			if section == 'update cats':
 				print("in cat update")
 				recieved_id = validated_data['get_id']
@@ -392,11 +298,11 @@ class MainSerializer(serializers.ModelSerializer):
 								)
 								break
 
-						my_cats = obj.cats
-						my_cats = my_cats.replace("'", '\"')
-						print("before cats: %s"%my_cats)
-						my_cats = json.loads(my_cats)
-						print("after cats: %s"%my_cats)
+						my_cat_ids = obj.my_cat_id
+						my_cat_ids = my_cat_ids.replace("'", '\"')
+						print("before cats: %s"%my_cat_ids)
+						my_cat_ids = json.loads(my_cat_ids)
+						print("after cats: %s"%my_cat_ids)
 						cat_story = validated_data['story']
 						print("before cat story: %s"%cat_story)
 						cat_story = json.dumps(cat_story)
@@ -414,27 +320,14 @@ class MainSerializer(serializers.ModelSerializer):
 			 						)
 		
 						
-						my_new_cat = Cat.objects.filter(cat_unique_id=my_unique_cat_id).values()[0]
-						print("my new cat %s"%my_new_cat)
-						my_cats.append(my_new_cat)
-						Main.objects.filter(pk=recieved_id).update(cats=my_cats)
-						break
-				return main
-
-			if section == 'update accounts':
-				print("in update")
-				recieved_id = validated_data['get_id']
-				for obj in main.iterator():
-					if obj.id == int(recieved_id):
-						print("each obj: %s"%obj)
-				 		# add account
-						mn_accounts = obj.accounts
-						mn_accounts = mn_accounts.replace("'", '\"')
-						mn_accounts = json.loads(mn_accounts)
-						mn_new_account = json.dumps({"account": validated_data['accounts']})
-						mn_new_account = json.loads(mn_new_account)
-						mn_accounts.append(mn_new_account)
-						Main.objects.filter(pk=recieved_id).update(cats=mn_accounts)
+						my_new_cat_id = Cat.objects.filter(cat_unique_id=my_unique_cat_id)[0].id
+						#my_new_cats2 = [my_new_cat for my_new_cat in my_new_cats]
+						#print("my new cat %s"%my_new_cats2)
+						print("my new cat ids before %s"%my_cat_ids)
+						print("my new id before %s"%my_new_cat_id)
+						my_cat_ids.append(my_new_cat_id)
+						print("my new cat %s"%my_cat_ids)
+						Main.objects.filter(pk=recieved_id).update(my_cat_id=my_cat_ids)
 						break
 				return main
 			return main

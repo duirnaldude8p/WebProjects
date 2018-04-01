@@ -30,3 +30,17 @@ print("each obj: %s"%obj)
 									# 	unique_ids = CatUniqueId.objects.cat_id
 						# unique_ids = unique_ids.replace("'", '\"')
 						# unique_ids = json.loads(unique_ids)
+#print("new cat comment before: %s"%new_cat_comment)
+								#new_cat_comment = new_cat_comment.replace("'", '\"')
+								#new_cat_comment = json.loads(new_cat_comment)
+								#print("new cat comment: %s"%new_cat_comment)
+								#catComments.append(new_cat_comment)
+								#print("my new cat comment %s"%catComment
+
+								# my_new_cats2 = json.dumps(my_new_cats2)
+						# #print("my new cat %s"%my_new_cats2)
+						# my_new_cats2 = my_new_cats2.replace("'", '\"')
+						# my_new_cats2 = json.dumps(my_new_cats2)
+						# print("my new cat middle %s"%my_new_cats2)
+						# my_new_cats2 = json.loads(my_new_cats2)
+						# print("my new cat after after %s"%my_new_cats2)
