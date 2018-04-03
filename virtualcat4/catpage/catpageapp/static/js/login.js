@@ -17,6 +17,7 @@ $(function(){
         	contentType: false,
             processData: false,
             data: form_data,
+            cache: false,
         	success: function(items){
         		console.log("login post success");
         	},

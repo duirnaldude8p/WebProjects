@@ -11,8 +11,8 @@ $(function(){
         var form_data = new FormData();
         form_data.append('username', $usr.val());
         form_data.append('password', $pwd.val());
-        form_data.append('account_name', $name.val());
         form_data.append('profile_pic', $pic.get(0).files[0]);
+        form_data.append('account_name', $name.val());
         form_data.append('section', 'new');
         form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
         //console.log("form datas: "+form_data.get("profile_pic"));
@@ -23,6 +23,7 @@ $(function(){
             contentType: false,
             processData: false,
             data: form_data,
+            cache: false,
             success: function(item){
                 console.log("files: "+$pic.get(0).files+" - "+$pic.val()+" - "+form_data.get("profile_pic"));
                 console.log('register post success: ');

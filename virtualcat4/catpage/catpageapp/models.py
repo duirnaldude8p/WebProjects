@@ -84,9 +84,11 @@ class CurrentAccount(models.Model):
 	is_verified = models.CharField(max_length=10, null=True)
 	section = models.CharField(max_length=20, null=True)
 	category = models.CharField(max_length=20, null=True)
+	filename = models.CharField(max_length=20, null=True)
 
 	def save(self, *args, **kwargs):
 		if self.id is None:
+			print("hello save")
 			saved_image = self.profile_pic
 			self.profile_pic = None
 			super(CurrentAccount, self).save(*args, **kwargs)

@@ -9,6 +9,10 @@ from .models import CurrentAccount
 from .models import CatUniqueId
 from random import randint
 
+import os
+from django.core.files.storage import default_storage
+from pathlib import Path
+
 class CatSerializer(serializers.ModelSerializer):
 
 	class Meta:
@@ -61,14 +65,12 @@ class AccountSerializer(serializers.ModelSerializer):
 	def create(self, validated_data):
 		print("in account create serializer")
 		section = validated_data['section']
-		acc_comment = json.dumps([])
-		acc_comment = json.loads(acc_comment)
-		acc_cat_comment = json.dumps([])
-		acc_cat_comment = json.loads(acc_cat_comment)
-		acc_cat = json.dumps([])
-		acc_cat = json.loads(acc_cat)
 		account = Account.objects.all()
-		print("image: %s"%validated_data['profile_pic'])
+		#print("image: %s"%validated_data['profile_pic'])
+		def profile_image_path(acc_id, filename):
+			return os.path.join('catpageapp\static\pics\profile', acc_id, filename)
+		def profile_image_path2(acc_id):
+			return os.path.join('catpageapp\static\pics\profile', acc_id, "")
 		if section == 'new':
 			print("in new account")
 			account = Account.objects.create(
@@ -76,34 +78,42 @@ class AccountSerializer(serializers.ModelSerializer):
 											profile_pic = validated_data['profile_pic'],
 											username = validated_data['username'],
 											password = validated_data['password'],
-											cats = acc_cat,
-											cat_comments = acc_cat_comment,
-											comments = acc_comment,
 											section = 'new',
              								category = 'account'
         								)
 			#Account.save()
 			return account
 			
-		# if section == 'update comments':
-		# 	print("in update")
-		# 	recieved_id = validated_data['get_id']
-		# 	for obj in account.iterator():
-		# 		if obj.id == int(recieved_id):
-		# 			print("each obj: %s"%obj)
-		# 		# 	# add comments
-		# 			comments = obj.comments
-		# 			comments = comments.replace("'", '\"')
-		# 			comments = json.loads(comments)
-		# 			new_comment = json.dumps({"comment": validated_data['comments']})
-		# 			new_comment = json.loads(new_comment)
-		# 			comments.append(new_comment)
-		# 			Account.objects.filter(pk=recieved_id).update(comments=comments)
-		# 		# 	# add cats
-		# 			break
-		# 	#Account.save()
-		# 	return account
-
+		if section == 'update picture':
+				print("in update")
+				recieved_id = validated_data['get_id']
+				for obj in account.iterator():
+					if obj.id == int(recieved_id):
+						filename = validated_data['profile_pic'].name
+						acc_id = validated_data['get_id']
+						filepath = profile_image_path(acc_id, filename)
+						filepath2 = profile_image_path2(acc_id)
+						p = Path(filepath2)
+						my_pths = [pth for pth in p.iterdir() 
+									if pth.suffix == '.jpeg' or pth.suffix == '.jpg' or pth.suffix == '.png']
+						#print("my_pths: %s"%my_pths)
+						file_count = 0
+						for path in my_pths:
+							next_filename = os.path.basename(path)
+							file_count = file_count + 1
+							print("next name %s my name %s"%(next_filename, filename))
+							if next_filename == filename:
+								break
+						print("file found: %s"%file_count==len(my_pths))
+						print("file count: %s"%file_count)
+						print("my pth length: %s"%len(my_pths))
+						# Account.objects.filter(pk=recieved_id).update(profile_pic=filepath)
+						# file_obj = validated_data['profile_pic']
+						# with default_storage.open(filepath, 'wb+') as destination:
+						# 	for chunk in file_obj.chunks():
+						# 		destination.write(chunk)
+						# break	
+				return account
 	
 		#Account.save()    	
 		return account
@@ -115,14 +125,33 @@ class AccountSerializer(serializers.ModelSerializer):
 
 
 class CurrentAccountSerializer(serializers.ModelSerializer):
-	
-	def create(self, validated_data):
+
+	class Meta:
+		model = CurrentAccount
+		#print("hello curr acc ser meta")
+		fields = (
+					'id', 
+					'username', 
+					'password', 
+					'profile_pic', 
+					'account_name', 
+					'get_id', 
+					'current_id', 
+					'is_verified', 
+					'section',
+					'category',
+					'filename'
+				)
+
+	def create(self, validated_data, *args, **kwargs):
 		print("in current account create serializer")
 		section = validated_data['section']
 		current_account = CurrentAccount.objects.all()
 		account = Account.objects.all()
 		myaccount = None
 		myid = 1
+		def profile_image_path(acc_id, filename):
+			return os.path.join('catpageapp\static\pics\profile', acc_id, filename)
 		if not current_account:
 			if section == 'login':
 				myusr = validated_data['username']
@@ -140,9 +169,6 @@ class CurrentAccountSerializer(serializers.ModelSerializer):
 											profile_pic = myaccount[0].profile_pic,
 											username = myaccount[0].username,
 											password = myaccount[0].password,
-											cats = myaccount[0].cats,
-											cat_comments = myaccount[0].cat_comments,
-											comments = myaccount[0].comments,
 											section = 'new',
              								category = 'current account',
              								current_id = myid,
@@ -168,42 +194,37 @@ class CurrentAccountSerializer(serializers.ModelSerializer):
 											profile_pic = myaccount[0].profile_pic,
 											username = myaccount[0].username,
 											password = myaccount[0].password,
-											cats = myaccount[0].cats,
-											cat_comments = myaccount[0].cat_comments,
-											comments = myaccount[0].comments,
 											section = 'new',
              								category = 'current account',
              								current_id = myid,
              								is_verified = "true"
              								)
 				return current_account
-			# if section == 'update comments':
-			# 	print("in update")
-			# 	recieved_id = validated_data['get_id']
-			# 	for obj in current_account.iterator():
-			# 		if obj.id == int(recieved_id):
-			# 			print("each obj: %s"%obj)
-			# 			comments = obj.comments
-			# 			comments = comments.replace("'", '\"')
-			# 			comments = json.loads(comments)
-			# 			new_comment = json.dumps({"comment": validated_data['comments']})
-			# 			new_comment = json.loads(new_comment)
-			# 			comments.append(new_comment)
-			# 			CurrentAccount.objects.filter(pk=recieved_id).update(comments=comments)
-			# 			break
 			
-			# 	return current_account
+			if section == 'logout':
+				current_account = CurrentAccount.objects.all().delete()
+				return current_account	
 
+			if section == 'update picture':
+				print("in update")
+				recieved_id = validated_data['get_id']
+				for obj in current_account.iterator():
+					if obj.id == int(recieved_id):
+						filename = validated_data['profile_pic'].name
+						acc_id = validated_data['current_id']
+						filepath = profile_image_path(acc_id, filename)
+						CurrentAccount.objects.filter(pk=recieved_id).update(profile_pic=filepath)
+						file_obj = validated_data['profile_pic']
+						with default_storage.open(filepath, 'wb+') as destination:
+							for chunk in file_obj.chunks():
+								destination.write(chunk)
+						break	
+				return current_account		
 			
-  
 			return current_account
-	class Meta:
-		model = CurrentAccount
-
-		fields = ('__all__')
-
-
 	
+
+
 
 		
 class MainSerializer(serializers.ModelSerializer):
