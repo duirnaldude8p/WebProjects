@@ -87,6 +87,7 @@ class AccountSerializer(serializers.ModelSerializer):
 		if section == 'update picture':
 				print("in update")
 				recieved_id = validated_data['get_id']
+				print("acc recieved id: %s"%recieved_id)
 				for obj in account.iterator():
 					if obj.id == int(recieved_id):
 						filename = validated_data['profile_pic'].name
@@ -97,22 +98,28 @@ class AccountSerializer(serializers.ModelSerializer):
 						my_pths = [pth for pth in p.iterdir() 
 									if pth.suffix == '.jpeg' or pth.suffix == '.jpg' or pth.suffix == '.png']
 						#print("my_pths: %s"%my_pths)
+						Account.objects.filter(pk=recieved_id).update(profile_pic=filepath)
+					
 						file_count = 0
 						for path in my_pths:
 							next_filename = os.path.basename(path)
-							file_count = file_count + 1
-							print("next name %s my name %s"%(next_filename, filename))
+							#print("next name %s my name %s"%(next_filename, filename))
 							if next_filename == filename:
 								break
-						print("file found: %s"%file_count==len(my_pths))
-						print("file count: %s"%file_count)
-						print("my pth length: %s"%len(my_pths))
-						# Account.objects.filter(pk=recieved_id).update(profile_pic=filepath)
-						# file_obj = validated_data['profile_pic']
-						# with default_storage.open(filepath, 'wb+') as destination:
-						# 	for chunk in file_obj.chunks():
-						# 		destination.write(chunk)
-						# break	
+							file_count = file_count + 1
+						#print("file found: %s"%file_count==len(my_pths))
+						if file_count == len(my_pths):
+							print("file not found -")
+							file_obj = validated_data['profile_pic']
+							with default_storage.open(filepath, 'wb+') as destination:
+								for chunk in file_obj.chunks():
+									destination.write(chunk)
+						else:
+							print("file found -")
+						#print("file count: %s"%file_count)
+						#print("my pth length: %s"%len(my_pths))
+						
+						break	
 				return account
 	
 		#Account.save()    	
@@ -152,6 +159,8 @@ class CurrentAccountSerializer(serializers.ModelSerializer):
 		myid = 1
 		def profile_image_path(acc_id, filename):
 			return os.path.join('catpageapp\static\pics\profile', acc_id, filename)
+		def profile_image_path2(acc_id):
+			return os.path.join('catpageapp\static\pics\profile', acc_id, "")
 		if not current_account:
 			if section == 'login':
 				myusr = validated_data['username']
@@ -180,7 +189,9 @@ class CurrentAccountSerializer(serializers.ModelSerializer):
 			if section == 'login':
 				myusr = validated_data['username']
 				mypwd = validated_data['password']
+				#print("hello login")
 				for obj in account.iterator():
+					#print("my usr %s obj usr %s"%(obj.username, myusr))
 					if obj.username == myusr and obj.password == mypwd:
 						myaccount = Account.objects.filter(pk=obj.id)
 						myid = obj.id
@@ -208,17 +219,38 @@ class CurrentAccountSerializer(serializers.ModelSerializer):
 			if section == 'update picture':
 				print("in update")
 				recieved_id = validated_data['get_id']
+				print("login recieved id: %s"%recieved_id)
 				for obj in current_account.iterator():
 					if obj.id == int(recieved_id):
 						filename = validated_data['profile_pic'].name
 						acc_id = validated_data['current_id']
+						print("login acc id: %s"%acc_id)
 						filepath = profile_image_path(acc_id, filename)
+						filepath2 = profile_image_path2(acc_id)
+						p = Path(filepath2)
+						my_pths = [pth for pth in p.iterdir() 
+									if pth.suffix == '.jpeg' or pth.suffix == '.jpg' or pth.suffix == '.png']
+						#print("my_pths: %s"%my_pths)
 						CurrentAccount.objects.filter(pk=recieved_id).update(profile_pic=filepath)
-						file_obj = validated_data['profile_pic']
-						with default_storage.open(filepath, 'wb+') as destination:
-							for chunk in file_obj.chunks():
-								destination.write(chunk)
-						break	
+				
+						file_count = 0
+						for path in my_pths:
+							next_filename = os.path.basename(path)
+							
+							if next_filename == filename:
+								break
+							file_count = file_count + 1
+	
+						if file_count == len(my_pths):
+							print("file not found -")
+							
+							file_obj = validated_data['profile_pic']
+							with default_storage.open(filepath, 'wb+') as destination:
+								for chunk in file_obj.chunks():
+									destination.write(chunk)
+						else:
+							print("file found -")
+						break
 				return current_account		
 			
 			return current_account

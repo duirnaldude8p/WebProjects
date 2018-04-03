@@ -53,37 +53,29 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
-      <div id="outer_account" class="row">
-          <div  class="card mt-4 account_shrink">
-            <form id="account_form" class="container" >
-                <div class="form-group">
-                      <label for="exampleInputFile2" >Upload New Profile Picture  </label>
-                      <input type="file" class="" id="exampleInputFile" accept="image/*">
-                </div>
-                <button href="#" class="btn btn-success">Add Cat</button>
-                <div class="collapse card-body">
-                  <div class="form-group">
-                      <label for="exampleInputText4">Cat's Name</label>
-                      <input type="text" class="form-control" id="exampleInputText4" placeholder="Enter name">
-                  </div>
-                  <div class="form-group">
-                      <label for="exampleInputText5">Breed</label>
-                      <input type="text" class="form-control" id="exampleInputText5" placeholder="Enter breed">
-                  </div>
-                  <div class="form-group">
-                      <label for="exampleInputFile" >Upload Cat Pic  </label>
-                      <input type="file" class="" id="exampleInputFile" accept="image/*">
-                  </div>
-                  <div class="form-group">
-                      <textarea class="form-control"></textarea>
-                  </div> 
-                  <button href="#" class="btn btn-success">Add New Cat</button>
-                </div>
-  					  <button type="submit" class="btn btn-success">Add Account</button>
-				    </form>
+     <div class="container">
+
+      <!-- <div class="row"> -->
+          <div class="card my-4">
+              <div id="account_image_container">
+                  <img id="account_image" class="card-img-top img-fluid" src="http://placehold.it/1200x500">   
+              </div>
+              <div class="card-body">
+                <form id="pic_form" class="form container" method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="pic_in" >Change Profile Picture  </label> 
+                      <input type="file" class="" id="pic_in">
+                    </div>
+                    <button id="pic_btn" type="submit" class="btn btn-success">Change Picture</button>
+                </form>
+                <p id="account_name" class="card-text account_text"> </p>
+                <p id="account_email" class="card-text account_text"></p>
+            </div>
           </div>
-      </div>
+          
+        
+
     </div>
     <!-- /.container -->
 
@@ -98,7 +90,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src='{% static "js/jquery.min.js" %}'></script>
     <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
-
+    <script src='{% static "js/account.js" %}'></script>
   </body>
 
 </html>

@@ -44,3 +44,5 @@ print("each obj: %s"%obj)
 						# print("my new cat middle %s"%my_new_cats2)
 						# my_new_cats2 = json.loads(my_new_cats2)
 						# print("my new cat after after %s"%my_new_cats2)
+						for name in glob.iglob(filepath2):
+							print('file: %s' % name)
