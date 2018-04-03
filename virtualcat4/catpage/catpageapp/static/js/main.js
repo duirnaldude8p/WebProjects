@@ -5,6 +5,7 @@ $(function(){
     var is_verified = "false";
     var name = '';
     var pic = null;
+    $nav_list = $('#page_nav_list');
     
 
     function commentListItem(comment, image, name){
@@ -21,6 +22,39 @@ $(function(){
             '<hr>\n'+
         '</li>';
         return new_comment;
+    }
+
+    function homeNavObject(){
+        var new_home_nav =  '<li class="nav-item active">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp">Home\n'+
+                                    '<span class="sr-only">(current)</span>\n'+
+                                '</a>\n'+
+                            '</li>';
+        return new_home_nav;
+    }
+    function catlistNavObject(){
+        var new_catlist_nav =   '<li class="nav-item">\n'+
+                                    '<a class="nav-link" href="http://localhost:8000/catpageapp/catlist">See Cats</a>\n'+
+                                '</li>';
+        return new_catlist_nav;
+    }
+    function regNavObject(){
+        var new_reg_nav =   '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp/register">Register</a>\n'+
+                            '</li>';
+        return new_reg_nav;
+    }
+    function accountNavObject(){
+        var new_account_nav =   '<li class="nav-item">\n'+
+                                    '<a class="nav-link" href="http://localhost:8000/catpageapp/account">Account</a>\n'+
+                                '</li>';
+        return new_account_nav;
+    }
+    function loginNavObject(){
+        var new_login_nav =   '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp/login">Log In</a>\n'+
+                            '</li>';
+        return new_login_nav;
     }
 
     $("#main_comment_form_btn").on('click', function(e){
@@ -45,6 +79,7 @@ $(function(){
             pic = item[0].profile_pic;
             //console.log("pic: "+pic);
             console.log("verify get success");
+            createNavBar();
         },
         error:function(){
             console.log("verify get error");
@@ -78,6 +113,22 @@ $(function(){
         }
     });
     
+    function createNavBar(){
+        console.log("my is_verified: "+is_verified);
+        if(is_verified==="true"){
+            console.log("hello navbar");
+            $nav_list.append(homeNavObject());
+            $nav_list.append(catlistNavObject());
+            $nav_list.append(accountNavObject());
+            $nav_list.append(loginNavObject());
+        }else{
+            $nav_list.append(homeNavObject());
+            $nav_list.append(catlistNavObject());
+            $nav_list.append(regNavObject());
+            $nav_list.append(loginNavObject());
+        }
+        
+    }
     //id of the only main object should be one but can check in getmaindata
     $("#main_submit_comment_btn").on('click', function(e){
         e.preventDefault();

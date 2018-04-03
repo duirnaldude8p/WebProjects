@@ -15,6 +15,7 @@ $(function(){
     var form = document.getElementById("cat_list_form");
     var is_verified = "false";
     var id_count = 0;
+    $nav_list = $('#page_nav_list');
     //console.log("collapsssable");
 
 
@@ -27,6 +28,55 @@ $(function(){
                                 '<hr>\n'+
                             '</li>';
         return new_object;
+    }
+
+    function homeNavObject(){
+        var new_home_nav =  '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp">Home</a>\n'+
+                            '</li>';
+        return new_home_nav;
+    }
+    function catlistNavObject(){
+        var new_catlist_nav =   '<li class="nav-item active">\n'+
+                                    '<a class="nav-link" href="http://localhost:8000/catpageapp/catlist">See Cats\n'+
+                                        '<span class="sr-only">(current)</span>\n'+
+                                    '</a>\n'+
+                                '</li>';
+        return new_catlist_nav;
+    }
+    function regNavObject(){
+        var new_reg_nav =   '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp/register">Register</a>\n'+
+                            '</li>';
+        return new_reg_nav;
+    }
+    function accountNavObject(){
+        var new_account_nav =   '<li class="nav-item">\n'+
+                                    '<a class="nav-link" href="http://localhost:8000/catpageapp/account">Account</a>\n'+
+                                '</li>';
+        return new_account_nav;
+    }
+    function loginNavObject(){
+        var new_login_nav =   '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp/login">Log In</a>\n'+
+                            '</li>';
+        return new_login_nav;
+    }
+
+    function createNavBar(){
+        // console.log("my is_verified: "+is_verified);
+        if(is_verified==="true"){
+            console.log("hello navbar");
+            $nav_list.append(homeNavObject());
+            $nav_list.append(catlistNavObject());
+            $nav_list.append(accountNavObject());
+            $nav_list.append(loginNavObject());
+        }else{
+            $nav_list.append(homeNavObject());
+            $nav_list.append(catlistNavObject());
+            $nav_list.append(regNavObject());
+            $nav_list.append(loginNavObject());
+        }   
     }
 
 
@@ -50,6 +100,7 @@ $(function(){
             is_verified = item[0].is_verified;
             console.log("is_verified: "+is_verified);
             console.log("catlist get success");
+            createNavBar();
         },
         error:function(){
             console.log("catlist get error");
@@ -122,7 +173,7 @@ $(function(){
         form_data.append('get_id', 24);
         form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
         //console.log("form datas: "+form_data.get("profile_pic"));
-        if(is_verified="true"){
+        if(is_verified==="true"){
             $.ajax({
                 type: 'POST',
                 url: '../postmaindata/',

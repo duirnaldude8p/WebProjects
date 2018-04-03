@@ -9,7 +9,8 @@ $(function(){
     var id_count = 0;
     var login_id = 0;
     var account_id = 0;
-    //console.log("collapsssable");
+    var current_nav = '<span class="sr-only">(current)</span>';
+    $nav_list = $('#page_nav_list');
 
     function objectPictureItem(image){
         var new_picture =  '<img id="account_image"\n'+ 
@@ -17,6 +18,39 @@ $(function(){
                            'src="'+image+'"\n'+
                            'alt="http://placehold.it/1200x500">';   
         return new_picture;
+    }
+    
+    function homeNavObject(){
+        var new_home_nav =  '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp">Home</a>\n'+
+                            '</li>';
+        return new_home_nav;
+    }
+    function catlistNavObject(){
+        var new_catlist_nav =   '<li class="nav-item">\n'+
+                                    '<a class="nav-link" href="http://localhost:8000/catpageapp/catlist">See Cats</a>\n'+
+                                '</li>';
+        return new_catlist_nav;
+    }
+    function regNavObject(){
+        var new_reg_nav =   '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp/register">Register</a>\n'+
+                            '</li>';
+        return new_reg_nav;
+    }
+    function accountNavObject(){
+        var new_account_nav =   '<li class="nav-item active">\n'+
+                                    '<a class="nav-link" href="http://localhost:8000/catpageapp/account">Account\n'+
+                                        '<span class="sr-only">(current)</span>\n'+
+                                    '</a>\n'+
+                                '</li>';
+        return new_account_nav;
+    }
+    function loginNavObject(){
+        var new_login_nav =   '<li class="nav-item">\n'+
+                                '<a class="nav-link" href="http://localhost:8000/catpageapp/login">Log In</a>\n'+
+                            '</li>';
+        return new_login_nav;
     }
 
 
@@ -42,6 +76,7 @@ $(function(){
             $email.text("Email: "+email);
             console.log("is_verified: "+is_verified);
             console.log("account get success");
+            createNavBar();
         },
         error:function(){
             console.log("account get error");
@@ -50,27 +85,44 @@ $(function(){
 
     function changepicture(){
         $.ajax({
-        type: 'GET',
-        url: '/catpageapp/getlogindata/',
-        dataType: 'json',
-        cache: false,
-        success: function(item){
-            new_pic = item[0].profile_pic;
+            type: 'GET',
+            url: '/catpageapp/getlogindata/',
+            dataType: 'json',
+            cache: false,
+            success: function(item){
+                new_pic = item[0].profile_pic;
 
-            var my_url = "http://localhost:8000/";
-            var my_string = new_pic.substring(0,11);
-            var my_string2 = new_pic.replace(my_string, "");
-            my_url = my_url+my_string2;
-            $pic.html(objectPictureItem(my_url));
-            console.log("is_verified: "+is_verified);
-            console.log("account get success");
-        },
-        error:function(){
-            console.log("account get error");
-        }
-    });   
+                var my_url = "http://localhost:8000/";
+                var my_string = new_pic.substring(0,11);
+                var my_string2 = new_pic.replace(my_string, "");
+                my_url = my_url+my_string2;
+                $pic.html(objectPictureItem(my_url));
+                console.log("is_verified: "+is_verified);
+                console.log("account get success");
+            },
+            error:function(){
+                console.log("account get error");
+            }
+        });   
     }
-    
+    changepicture();
+
+    function createNavBar(){
+        console.log("my is_verified: "+is_verified);
+        if(is_verified==="true"){
+            console.log("hello navbar");
+            $nav_list.append(homeNavObject());
+            $nav_list.append(catlistNavObject());
+            $nav_list.append(accountNavObject());
+            $nav_list.append(loginNavObject());
+        }else{
+            $nav_list.append(homeNavObject());
+            $nav_list.append(catlistNavObject());
+            $nav_list.append(regNavObject());
+            $nav_list.append(loginNavObject());
+        }
+        
+    }
     
     $("#pic_btn").on('click', function(e){
         e.preventDefault();
