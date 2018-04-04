@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Cats</title>
+
+    <link href='{% static "css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/style.css" %}' rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Hello Cat Lovers</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul id="page_nav_list" class="navbar-nav ml-auto">
+            </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- <div class="row"> -->
+          <div class="card card-outline-secondary my-4">
+            <div class="card-header">
+              Cats
+            </div>
+            <div class="card-body">
+              <button id="cat_form_btn" href="#" class="btn btn-success">Cat Form</button>
+              <form id="cat_list_form" class="form collapse card-body"  method="post" action="" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="name">Cat's Name</label>
+                      <input type="text" class="form-control" id="name" placeholder="Enter name">
+                  </div>
+                  <div class="form-group">
+                      <label for="breed">Breed</label>
+                      <input type="text" class="form-control" id="breed" placeholder="Enter breed">
+                  </div>
+                  <div class="form-group">
+                      <label for="pic" >Upload Cat Pic  </label>
+                      <input type="file" class="" id="pic" accept="image/*">
+                  </div>
+                  <div class="form-group">
+                      <label for="cat_text" >Tell a short story </label>
+                      <textarea class="form-control" id="cat_text" placeholder="Enter text"></textarea>
+                  </div> 
+                  <button  id="cat_submit_btn" type="submit" href="#" class="btn btn-success">Add New Cat</button>
+              </form>
+              <ul id="cat_list_objects">
+              </ul>
+            </div>
+          </div>
+          <!-- /.card -->
+
+        <!-- </div> -->
+        <!-- /.col-lg-9 -->
+
+      <!-- </div> -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark my_footer">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; CatsAreTheBest 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src='{% static "js/jquery.min.js" %}'></script>
+    <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
+    <script src='{% static "js/catlist.js" %}'></script>
+  </body>
+
+</html>

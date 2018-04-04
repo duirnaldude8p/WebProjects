@@ -1,0 +1,161 @@
+/*!
+ * Start Bootstrap - Shop Item (https://startbootstrap.com/template-overviews/shop-item)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-item/blob/master/LICENSE)
+ */
+
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+     padding-top: 56px;
+  }
+}
+
+#account_image{
+	height: 400px;
+	width: 400px;
+	margin-left: 10%;
+	margin-top: 10%;
+	margin-bottom: 5%;
+}
+
+.account_text{
+	font-size: 20px;
+	margin-left: 7.5%;
+}
+
+#account_name{
+	margin-top: 5%;
+}
+
+#pic_form{
+	margin-left: 7.5%;
+}
+.card-pic{
+	width: 7%;
+	display: inline-block;
+	position: relative;
+	margin-right: 15px;
+}
+
+.card-comment{
+	width: 90%;
+	display: inline-block;
+	position: relative;
+}
+
+.image_circle{
+	height: 70px;
+	width : 70px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.my_image{
+	height: 80px;
+	width: 115px;
+}
+
+#home_page_comments{
+	list-style: none;
+}
+
+#cat_page_comments{
+	list-style: none;
+}
+
+#cat_list_objects{
+	margin-top: 5%;
+	list-style: none;
+}
+
+.my_footer{
+	/*position: fixed;*/
+	bottom: auto;
+	width: 100%;
+}
+
+#login{
+	width: 500px;
+	height: 250px;	
+}
+#outer_login{
+	margin-left: 30%;
+	/*background-color: orange;*/
+}
+
+#signup-form{
+	width: 500px;
+	height: 370px;	
+}
+
+#outer_signup{
+	margin-left: 30%;
+	/*background-color: orange;*/
+}
+
+
+#outer_account{
+	margin-left: 30%;
+	height: 700px;
+	
+}
+
+.account_expand{
+	width: 500px;
+	height: 600px;
+}
+
+div #account_form{
+	margin-top: 15px;
+}
+
+.account_shrink{
+	width: 500px;
+	height: 120px;
+}
+
+#cat_list_button{
+	margin-bottom: 30px;
+	margin-left: 30px;
+}
+
+#cat_list_form{
+	margin-bottom: 30px;
+	margin-left: 30px;
+}
+
+.cat_image{
+	width: 1100px;
+	height: 460px;
+	margin-top: -150px;
+}
+
+.image_rectangle{
+	width: 95%;
+	height: 100px;
+	overflow: hidden;
+	border: 5px dashed black;
+	position: relative;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 60px;
+}
+
+#comment_text{
+	margin-bottom: 10px;
+}
+
+.soft_text{
+	margin-left: 5%;
+	font-size: 90%;
+}

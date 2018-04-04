@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Profile</title>
+
+    <link href='{% static "css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "css/style.css" %}' rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Profile</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul id="page_nav_list" class="navbar-nav ml-auto">
+          
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+     <div class="container">
+
+      <!-- <div class="row"> -->
+          <div class="card my-4">
+              <div id="account_image_container">
+                  <img id="account_image" class="card-img-top img-fluid" src="http://placehold.it/1200x500">   
+              </div>
+              <div class="card-body">
+                <form id="pic_form" class="form container" method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="pic_in" >Change Profile Picture  </label> 
+                      <input type="file" class="" id="pic_in">
+                    </div>
+                    <button id="pic_btn" type="submit" class="btn btn-success">Change Picture</button>
+                </form>
+                <p id="account_name" class="card-text account_text"> </p>
+                <p id="account_email" class="card-text account_text"></p>
+            </div>
+          </div>
+          
+        
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark my_footer">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; CatsAreTheBest 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src='{% static "js/jquery.min.js" %}'></script>
+    <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
+    <script src='{% static "js/account.js" %}'></script>
+  </body>
+
+</html>
