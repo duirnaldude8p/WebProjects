@@ -1,0 +1,9 @@
+{
+	"StateData":{
+		"StateMatrix": "empty",
+		"ComputerMovesTo": "empty",
+		"ComputerChooses": "empty",
+		"COmpMadeMove": "N",
+		"Section": "StateData"
+	}
+}

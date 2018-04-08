@@ -1,0 +1,44 @@
+#box{
+	width: 300px;
+	height: 500px;
+	background-color: blue;
+
+}
+
+#box #input{
+	background-color: #7FFFD4;
+	height: 70px;
+	width:200px;
+	margin: 5%;
+}
+
+#box #textA{
+	background-color: coral;
+	height: 70px;
+	width:200px;
+	margin: 5%;
+}	
+
+#box #textB{
+	background-color: coral;
+	height: 70px;
+	width:200px;
+	margin: 5%;
+}
+
+#box #textC{
+	background-color: coral;
+	height: 70px;
+	width:200px;
+	margin: 5%;
+}
+
+#box #button{
+	height: 50px;
+	width:100px;
+	margin: 5%;
+}	
+
+
+ 
+

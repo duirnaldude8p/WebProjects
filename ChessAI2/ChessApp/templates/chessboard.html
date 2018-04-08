@@ -1,0 +1,356 @@
+<!doctype html>
+
+<head>
+	<title>Chess Board</title>
+	{% load staticfiles %}
+	<link rel='stylesheet' href='{% static "css/main.css" %}'/>
+</head>
+<body>
+	<header id= 'title'>
+		<h1>Chess</h1>
+	</header>
+	{% block content %}
+	{% csrf_token %}
+	<div id='board'>
+		<table id='tabl' onclick="robot();">
+		    <tr id='topRow'>
+				<td>
+					<div id='r8A' class='empty' onclick='(theHuman).moveTo("r8A")'>
+						<div id='brook1' class='blackPiece rook' onclick='(theHuman).remove("brook1")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r8B' class='empty' onclick='(theHuman).moveTo("r8B")'>
+						<div id='bhorse1' class='blackPiece horse' onclick='(theHuman).remove("bhorse1")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r8C' class='empty' onclick='(theHuman).moveTo("r8C")'>
+						<div id='bbishop1' class='blackPiece bishop' onclick='(theHuman).remove("bbishop1")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r8D' class='empty' onclick='(theHuman).moveTo("r8D")'>
+						<div id='bqueen' class='blackPiece queen' onclick='(theHuman).remove("bqueen")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r8E' class='empty' onclick='(theHuman).moveTo("r8E")'>
+						<div id='bking' class='blackPiece king' onclick='(theHuman).remove("bking")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r8F' class='empty' onclick='(theHuman).moveTo("r8F")'>
+						<div id='bbishop2' class='blackPiece bishop' onclick='(theHuman).remove("bbishop2")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r8G' class='empty' onclick='(theHuman).moveTo("r8G")'>
+						<div id='bhorse2' class='blackPiece horse' onclick='(theHuman).remove("bhorse2")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r8H' class='empty' onclick='(theHuman).moveTo("r8H")'>
+						<div id='brook2' class='blackPiece rook' onclick='(theHuman).remove("brook2")'></div>
+					</div>
+				</td>
+            </tr>
+			<tr id='secondRow'>
+				<td class='black'>
+					<div id='r7A' class='empty' onclick='(theHuman).moveTo("r7A")'>
+						<div id='bpawn1' class='blackPiece pawn' onclick='(theHuman).remove("bpawn1")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r7B' class='empty' onclick='(theHuman).moveTo("r7B")'>
+						<div id='bpawn2' class='blackPiece pawn' onclick='(theHuman).remove("bpawn2")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r7C' class='empty' onclick='(theHuman).moveTo("r7C")'>
+						<div id='bpawn3' class='blackPiece pawn' onclick='(theHuman).remove("bpawn3")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r7D' class='empty' onclick='(theHuman).moveTo("r7D")'>
+						<div id='bpawn4' class='blackPiece pawn' onclick='(theHuman).remove("bpawn4")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r7E' class='empty' onclick='(theHuman).moveTo("r7E")'>
+						<div id='bpawn5' class='blackPiece pawn' onclick='(theHuman).remove("bpawn5")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r7F' class='empty' onclick='(theHuman).moveTo("r7F")'>
+						<div id='bpawn6' class='blackPiece pawn' onclick='(theHuman).remove("bpawn6")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r7G' class='empty' onclick='(theHuman).moveTo("r7G")'>
+						<div id='bpawn7' class='blackPiece pawn' onclick='(theHuman).remove("bpawn7")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r7H' class='empty' onclick='(theHuman).moveTo("r7H")'>
+						<div id='bpawn8' class='blackPiece pawn' onclick='(theHuman).remove("bpawn8")'></div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id='r6A' class='empty' onclick='(theHuman).moveTo("r6A")'></div>
+				</td>
+				<td class='black'>
+					<div id='r6B' class='empty' onclick='(theHuman).moveTo("r6B")'></div>
+				</td>
+				<td>
+					<div id='r6C' class='empty' onclick='(theHuman).moveTo("r6C")'></div>
+				</td>
+				<td class='black'>
+					<div id='r6D' class='empty' onclick='(theHuman).moveTo("r6D")'></div>
+				</td>
+				<td>
+					<div id='r6E' class='empty' onclick='(theHuman).moveTo("r6E")'></div>
+				</td>
+				<td class='black'>
+					<div id='r6F' class='empty' onclick='(theHuman).moveTo("r6F")'></div>
+				</td>
+				<td>
+					<div id='r6G' class='empty' onclick='(theHuman).moveTo("r6G")'></div>
+				</td>
+				<td class='black'>
+					<div id='r6H' class='empty' onclick='(theHuman).moveTo("r6H")'></div>
+				</td>
+			</tr>
+			<tr>
+				<td class='black'>
+					<div id='r5A' class='empty' onclick='(theHuman).moveTo("r5A")'></div>
+				</td>
+				<td>
+					<div id='r5B' class='empty' onclick='(theHuman).moveTo("r5B")'></div>
+				</td>
+				<td class='black'>
+					<div id='r5C' class='empty' onclick='(theHuman).moveTo("r5C")'></div>
+				</td>
+				<td>
+					<div id='r5D' class='empty' onclick='(theHuman).moveTo("r5D")'></div>
+				</td>
+				<td class='black'>
+					<div id='r5E' class='empty' onclick='(theHuman).moveTo("r5E")'></div>
+				</td>
+				<td>
+					<div id='r5F' class='empty' onclick='(theHuman).moveTo("r5F")'></div>
+				</td>
+				<td class='black'>
+					<div id='r5G' class='empty' onclick='(theHuman).moveTo("r5G")'></div>
+				</td>
+				<td>
+					<div id='r5H' class='empty' onclick='(theHuman).moveTo("r5H")'></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id='r4A' class='empty' onclick='(theHuman).moveTo("r4A")'></div>
+				</td>
+				<td class='black'>
+					<div id='r4B' class='empty' onclick='(theHuman).moveTo("r4B")'></div>
+				</td>
+				<td>
+					<div id='r4C' class='empty' onclick='(theHuman).moveTo("r4C")'></div>
+				</td>
+				<td class='black'>
+					<div id='r4D' class='empty' onclick='(theHuman).moveTo("r4D")'></div>
+				</td>
+				<td>
+					<div id='r4E' class='empty' onclick='(theHuman).moveTo("r4E")'></div>
+				</td>
+				<td class='black'>
+					<div id='r4F' class='empty' onclick='(theHuman).moveTo("r4F")'></div>
+				</td>
+				<td>
+					<div id='r4G' class='empty' onclick='(theHuman).moveTo("r4G")'></div>
+				</td>
+				<td class='black'>
+					<div id='r4H' class='empty' onclick='(theHuman).moveTo("r4H")'></div>
+				</td>
+			</tr>
+			<tr>
+				<td class='black'>
+					<div id='r3A' class='empty' onclick='(theHuman).moveTo("r3A")'></div>
+				</td>
+				<td>
+					<div id='r3B' class='empty' onclick='(theHuman).moveTo("r3B")'></div>
+				</td>
+				<td class='black'>
+					<div id='r3C' class='empty' onclick='(theHuman).moveTo("r3C")'></div>
+				</td>
+				<td>
+					<div id='r3D' class='empty' onclick='(theHuman).moveTo("r3D")'></div>
+				</td>
+				<td class='black'>
+					<div id='r3E' class='empty' onclick='(theHuman).moveTo("r3E")'></div>
+				</td>
+				<td>
+					<div id='r3F' class='empty' onclick='(theHuman).moveTo("r3F")'></div>
+				</td>
+				<td class='black'>
+					<div id='r3G' class='empty' onclick='(theHuman).moveTo("r3G")'></div>
+				</td>
+				<td>
+					<div id='r3H' class='empty' onclick='(theHuman).moveTo("r3H")'></div>
+				</td>
+			</tr>
+			<!--Second Last Row-->
+			<tr id='secondLastRow'>
+				<td>
+					<div id='r2A' class='empty' onclick='(theHuman).moveTo("r2A")'>
+						<div id='wpawn1' class='whitePiece pawn' onclick='(theHuman).select("wpawn1")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r2B' class='empty' onclick='(theHuman).moveTo("r2B")'>
+						<div id='wpawn2' class='whitePiece pawn' onclick='(theHuman).select("wpawn2")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r2C' class='empty' onclick='(theHuman).moveTo("r2C")'>
+						<div id='wpawn3' class='whitePiece pawn' onclick='(theHuman).select("wpawn3")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r2D' class='empty' onclick='(theHuman).moveTo("r2D")'>
+						<div id='wpawn4' class='whitePiece pawn' onclick='(theHuman).select("wpawn4")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r2E' class='empty' onclick='(theHuman).moveTo("r2E")'>
+						<!-- <div id='wpawn5' class='whitePiece pawn' onclick='(theHuman).select("wpawn5")'></div> -->
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r2F' class='empty' onclick='(theHuman).moveTo("r2F")'>
+						<!-- <div id='wpawn6' class='whitePiece pawn' onclick='(theHuman).select("wpawn6")'></div> -->
+					</div>
+				</td>
+				<td>
+					<div id='r2G' class='empty' onclick='(theHuman).moveTo("r2G")'>
+						<!-- <div id='wpawn7' class='whitePiece pawn' onclick='(theHuman).select("wpawn7")'></div> -->
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r2H' class='empty' onclick='(theHuman).moveTo("r2H")'>
+						<div id='wpawn8' class='whitePiece pawn' onclick='(theHuman).select("wpawn8")'></div>
+					</div>
+				</td>
+			</tr>
+			<!--Last Row-->
+			<tr id='lastRow'>
+				<td class='black'>
+					<div id='r1A' class='empty' onclick='(theHuman).moveTo("r1A")'>
+						<div id='wrook1' class='whitePiece rook' onclick='(theHuman).select("wrook1")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r1B' class='empty' onclick='(theHuman).moveTo("r1B")'>
+						<div id='whorse1' class='whitePiece horse' onclick='(theHuman).select("whorse1")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r1C' class='empty' onclick='(theHuman).moveTo("r1C")'>
+						<div id='wbishop1' class='whitePiece bishop' onclick='(theHuman).select("wbishop1")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r1D' class='empty' onclick='(theHuman).moveTo("r1D")'>
+						<div id='wqueen' class='whitePiece queen' onclick='(theHuman).select("wqueen")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r1E' class='empty' onclick='(theHuman).moveTo("r1E")'>
+						<div id='wking' class='whitePiece king' onclick='(theHuman).select("wking")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r1F' class='empty' onclick='(theHuman).moveTo("r1F")'>
+					    <div id='wbishop2' class='whitePiece bishop' onclick='(theHuman).select("wbishop2")'></div>
+					</div>
+				</td>
+				<td class='black'>
+					<div id='r1G' class='empty' onclick='(theHuman).moveTo("r1G")'>
+						<div id='whorse2' class='whitePiece horse' onclick='(theHuman).select("whorse2")'></div>
+					</div>
+				</td>
+				<td>
+					<div id='r1H' class='empty' onclick='(theHuman).moveTo("r1H")'>
+						<div id='wrook2' class='whitePiece rook' onclick='(theHuman).select("wrook2")'></div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div id='pieces'></div>
+		<div></div>
+	</div>
+	<div id='option'>
+		<table>
+			<tr>
+				<td>
+					<div class='empty2'>
+						<div id='queenOp' onclick='(theHuman).chooseNew("queenOp")'></div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class='empty2'>
+						<div id='rookOp' onclick='(theHuman).chooseNew("rookOp")'></div>
+					</div>
+				</td>
+				<td>
+					<div class='empty2'>
+						<div id='bishopOp' onclick='(theHuman).chooseNew("bishopOp")'></div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class='empty2'>
+						<div id='horseOp' onclick='(theHuman).chooseNew("horseOp")'></div>
+					</div>
+				</td>
+				<td>
+					<div class='empty2'>
+						<div id='pawnOp' onclick='(theHuman).chooseNew("pawnOp")'></div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id='castleL' onclick='(theHuman).castleMoveL()'>
+		<div class='castle-text'>Castle L</div>
+	</div>
+	<div id='castleR' onclick='(theHuman).castleMoveR()'>
+		<div class='castle-text'>Castle R</div>
+	</div>
+	<div id='checkmate'>
+		<div id='checkmate-text'>Check Mate!</div>
+	</div>
+	{% endblock %}
+	{% load staticfiles %}
+	<script src='{% static "js/jquery-3.2.1.js" %}'></script>
+	<script src='{% static "js/turn_initialiser.js" %}'></script>
+	<script src='{% static "js/humanMovement.js" %}'></script>
+	<script src='{% static "js/mutableVar.js" %}'></script>
+	<script src='{% static "js/robotMovement.js" %}'></script>
+	<script src='{% static "js/puppetMaster.js" %}'></script>
+	<!--<script src='C:\Users\Samuel\Music\JQueryFolder\jquery-3.2.1.js'></script>-->
+	<!--<script src='movement1.js'></script>-->
+</body>
+
+
+
+
+
+
+
+

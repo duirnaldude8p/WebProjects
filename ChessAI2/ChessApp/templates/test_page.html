@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+<head>
+	<link rel='stylesheet' href='{% static "css/bootstrap.min.css" %}'/>
+	<link rel='stylesheet' href='{% static "css/style.css" %}'/>
+</head>
+<body>
+	{% block content %}
+	<form class="form container" method="post" action="" id='box'>
+	{% csrf_token %}
+  		<label id="textA">Value:</label>
+  		<label id="textB">Option:</label>
+  		<label id="textC">Option:</label>
+  		<input type="text" class="form-control" id="input">
+		<button id="button" type='button' class="btn btn-primary">Change</button>
+	</form>
+	{% endblock %}
+<script type='text/javascript' src='{% static "js/jquery-3.2.1.js" %}'></script>
+<script type='text/javascript' src='{% static "js/change_initialiser.js" %}'></script>
+<script type='text/javascript' src='{% static "js/test_script.js" %}'></script>
+<script type='text/javascript' src='{% static "js/changer.js" %}'></script>
+<script type='text/javascript' src='{% static "js/change_on_click.js" %}'></script>
+</body>
