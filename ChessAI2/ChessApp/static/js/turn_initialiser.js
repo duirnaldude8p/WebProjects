@@ -58,3 +58,8 @@ localStorage.setItem("PieceInGuard", "");
 localStorage.setItem("FreeMovementLength", "");
 localStorage.setItem("CanSaveKing", "N");
 
+localStorage.setItem("PawnIDArray", JSON.stringify([]));
+localStorage.setItem("KingHasMoved", "N");
+localStorage.setItem("Rook1HasMoved", "N");
+localStorage.setItem("Rook2HasMoved", "N");
+

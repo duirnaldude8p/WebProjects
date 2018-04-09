@@ -97,6 +97,10 @@
 		"CanSaveKing": "",
 		"Savers": [],
 		"Attackers": [],
+		"PawnIDArray": [],
+		"KingHasMoved": "N",
+		"Rook1HasMoved": "N",
+		"Rook2HasMoved": "N",
 		"Section": "StateData"
 	}
 }

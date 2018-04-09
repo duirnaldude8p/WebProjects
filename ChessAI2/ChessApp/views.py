@@ -75,6 +75,12 @@ def download_page(request):
 				PieceInGuard  = dictdata["StateData"]["PieceInGuard"],
 				SpaceLength = dictdata["StateData"]["SpaceLength"],
 				CanSaveKing = dictdata["StateData"]["CanSaveKing"],
+				Attackers = dictdata["StateData"]["Attackers"],
+				Savers = dictdata["StateData"]["Savers"],
+				PawnIDArray = dictdata["StateData"]["PawnIDArray"],
+				KingHasMoved = dictdata["StateData"]["KingHasMoved"],
+				Rook1HasMoved = dictdata["StateData"]["Rook1HasMoved"],
+				Rook2HasMoved = dictdata["StateData"]["Rook2HasMoved"],
 				Section = "StateData"
 			)
 			restart = True
@@ -144,8 +150,14 @@ def create_page(request):
 				cmpatkrs = literal_eval(cmpatkrs)
 				cmpsavers = request.POST.get("savers")
 				cmpsavers = literal_eval(cmpsavers)
+				cmpkmvd = request.POST.get("kingmvd")
+				cmpr1mvd = request.POST.get("rook1mvd")
+				cmpr2mvd = request.POST.get("rook2mvd")
+				cmppwnarr = request.POST.get("pawnidarr")
+				cmppwnarr = literal_eval(cmppwnarr)
 				brain.setCompInCheck(cmpcheck, cmpnwcheck, cmpnecheck, cmpswcheck, cmpsecheck, cmpupcheck, cmpdowncheck, cmprightcheck, cmpleftcheck )
 				brain.setCheckInfo(cmpmate, cmpfreemove, cmpcurrdir, cmpattarr, cmpingrd, cmppingrd, cmpspclnght, cmpcsk, cmpsavers, cmpatkrs)
+				brain.setCastleAndPawnInfo(cmpkmvd, cmpr1mvd, cmpr2mvd, cmppwnarr)
 				brain.processState(statematrix)
 				#print("compchoice: %s"%brain.getChoice())
 				#print("compmove: %s"%brain.getMove())
@@ -174,6 +186,10 @@ def create_page(request):
 					CanSaveKing = brain.getCanSaveKing(),
 					Savers = brain.getSavers(),
 					Attackers = brain.getAttackers(),
+					PawnIDArray = brain.getPawnArray(),
+					KingHasMoved = brain.getKingHasMoved(),
+					Rook1HasMoved = brain.getRook1HasMoved(),
+					Rook2HasMoved = brain.getRook2HasMoved(),
 					Section = "StateData"
 				)
 

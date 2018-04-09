@@ -183,7 +183,7 @@ this.select = function(controlId){
     var newVal = localStorage.getItem('hasChanged');
     //console.log('in select: '+newVal);
     if(newVal == 'Y'){
-    //console.log('selected');
+    // console.log('robot selected: '+controlId);
     //console.log('select in check '+inCheck);
     selected = document.getElementById(controlId);
     type = selected.classList[1];
@@ -256,7 +256,7 @@ this.select = function(controlId){
       
      //initialises objects each time
     function movable(){
-        //console.log("MOVEABLE");
+        // console.log("MOVEABLE");
         var rstart = false;
         var lstart = false;
         var ustart = false;
@@ -273,6 +273,7 @@ this.select = function(controlId){
         var dArr = [];
 
         for(var i=0; i<8; i++){
+            // console.log("type: "+type+" is freemov: "+freeMov);
            if(type=='rook'&&freeMov||type=='queen'&&freeMov){
             //localStorage.setItem('hasSelected', 'N');
             //console.log('guard: '+isGuard+' check: '+inCheck);
@@ -286,7 +287,7 @@ this.select = function(controlId){
             }if(up>-1){
                 ups = document.getElementById(boardMatrix[up][J]); 
                
-                //console.log('place: '+boardMatrix[up][J]);
+                // console.log('place: '+boardMatrix[up][J]);
             }if(down<8){
                 downs = document.getElementById(boardMatrix[down][J]);
                 
@@ -1136,6 +1137,12 @@ this.select = function(controlId){
         if([I+1]<8&&[J-1]>-1){
             var nwCheck = false;
             var val = document.getElementById(boardMatrix[I+1][J-1]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             var pieceArr = isChecked(boardMatrix[I+1][J-1], piecesFoundnw);
             for(var b=0; b<pieceArr.length; b++){
                 nwCheck = canCheck(pieceArr[b], boardMatrix[I+1][J-1]);
@@ -1150,7 +1157,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I+1][J-1]);
                 val.style.background = 'orange';
                 highlights.push(val);
-            }else if(!nwCheck&&!val.hasChildNodes()){
+            }else if(!nwCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 //console.log('nw check');
                 kingsArray.push(boardMatrix[I+1][J-1]);  
                 allIdArr.push(boardMatrix[I+1][J-1]);
@@ -1162,6 +1169,12 @@ this.select = function(controlId){
             var pieceArr = isChecked(boardMatrix[I+1][J], piecesFoundup);
             //console.log('wats up dude');
             var val = document.getElementById(boardMatrix[I+1][J]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             for(var b=0; b<pieceArr.length; b++){
                 upCheck = canCheck(pieceArr[b], boardMatrix[I+1][J]);
                 //console.log('up check: '+b+' - '+pieceArr[b]+' - '+upCheck);
@@ -1173,7 +1186,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I+1][J]);
                 val.style.background = 'orange';
                 highlights.push(val);
-            }else if(!upCheck&&!val.hasChildNodes()){
+            }else if(!upCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 kingsArray.push(boardMatrix[I+1][J]); 
                 allIdArr.push(boardMatrix[I+1][J]);
                 freeAreas.push(boardMatrix[I+1][J]);  
@@ -1184,6 +1197,12 @@ this.select = function(controlId){
             var neCheck = false;
             var pieceArr = isChecked(boardMatrix[I+1][J+1], piecesFoundne);
             var val = document.getElementById(boardMatrix[I+1][J+1]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             for(var b=0; b<pieceArr.length; b++){
                 neCheck = canCheck(pieceArr[b], boardMatrix[I+1][J+1]);
                 //console.log('ne check: '+b+' - '+pieceArr[b]);
@@ -1196,7 +1215,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I+1][J+1]);
                 val.style.background = 'orange';
                 highlights.push(val);
-            }else if(!neCheck&&!val.hasChildNodes()){
+            }else if(!neCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 kingsArray.push(boardMatrix[I+1][J+1]);
                 allIdArr.push(boardMatrix[I+1][J+1]);
                 freeAreas.push(boardMatrix[I+1][J+1]);
@@ -1207,6 +1226,12 @@ this.select = function(controlId){
             var leftCheck = false;
             var pieceArr = isChecked(boardMatrix[I][J-1], piecesFoundleft);
             var val = document.getElementById(boardMatrix[I][J-1]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             for(var b=0; b<pieceArr.length; b++){
                 leftCheck = canCheck(pieceArr[b], boardMatrix[I][J-1]);
                 //console.log('left check: '+b+' - '+pieceArr[b]);
@@ -1220,7 +1245,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I][J-1]);
                 val.style.background = 'orange';
                 highlights.push(val);
-            }else if(!leftCheck&&!val.hasChildNodes()){
+            }else if(!leftCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 kingsArray.push(boardMatrix[I][J-1]);
                 allIdArr.push(boardMatrix[I][J-1]);
                 freeAreas.push(boardMatrix[I][J-1]);   
@@ -1231,6 +1256,12 @@ this.select = function(controlId){
             var rightCheck = false;
             var pieceArr = isChecked(boardMatrix[I][J+1], piecesFoundright);
             var val = document.getElementById(boardMatrix[I][J+1]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             for(var b=0; b<pieceArr.length; b++){
                 rightCheck = canCheck(pieceArr[b], boardMatrix[I][J+1]);
                 //console.log('right check: '+b+' - '+pieceArr[b]);
@@ -1244,7 +1275,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I][J+1]);
                 val.style.background = 'orange';
                 highlights.push(val);
-            }else if(!rightCheck&&!val.hasChildNodes()){
+            }else if(!rightCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 kingsArray.push(boardMatrix[I][J+1]);
                 allIdArr.push(boardMatrix[I][J+1]);
                 freeAreas.push(boardMatrix[I][J+1]);
@@ -1255,6 +1286,12 @@ this.select = function(controlId){
             var swCheck = false;
             var pieceArr = isChecked(boardMatrix[I-1][J-1], piecesFoundsw);
             var val = document.getElementById(boardMatrix[I-1][J-1]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             for(var b=0; b<pieceArr.length; b++){
                 swCheck = canCheck(pieceArr[b], boardMatrix[I-1][J-1]);
                 //console.log('sw check: '+b+' - '+pieceArr[b]);
@@ -1267,7 +1304,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I-1][J-1]);
                 val.style.background = 'orange'; 
                 highlights.push(val);
-            }else if(!swCheck&&!val.hasChildNodes()){
+            }else if(!swCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 kingsArray.push(boardMatrix[I-1][J-1]);
                 allIdArr.push(boardMatrix[I-1][J-1]);
                 freeAreas.push(boardMatrix[I-1][J-1]);  
@@ -1278,6 +1315,12 @@ this.select = function(controlId){
             var downCheck = false;
             var pieceArr = isChecked(boardMatrix[I-1][J], piecesFounddown);
             var val = document.getElementById(boardMatrix[I-1][J]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             for(var b=0; b<pieceArr.length; b++){
                 downCheck = canCheck(pieceArr[b], boardMatrix[I-1][J]);
                 //console.log('down check: '+b+' - '+pieceArr[b]);
@@ -1290,7 +1333,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I-1][J]);
                 val.style.background = 'orange';
                 highlights.push(val);
-            }else if(!downCheck&&!val.hasChildNodes()){
+            }else if(!downCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 kingsArray.push(boardMatrix[I-1][J]);
                 allIdArr.push(boardMatrix[I-1][J]);
                 freeAreas.push(boardMatrix[I-1][J]);    
@@ -1301,6 +1344,12 @@ this.select = function(controlId){
             var seCheck = false;
             var pieceArr = isChecked(boardMatrix[I-1][J+1], piecesFoundse);
             var val = document.getElementById(boardMatrix[I-1][J+1]);
+            my_piece = null;
+            my_piece_colour = ''; 
+            if(val.hasChildNodes()){
+                my_piece = val.firstElementChild;
+                my_piece_colour = my_piece.classList[0];
+            }
             for(var b=0; b<pieceArr.length; b++){
                 seCheck = canCheck(pieceArr[b], boardMatrix[I-1][J+1]);
                 //console.log('se check: '+b+' - '+pieceArr[b]);
@@ -1313,7 +1362,7 @@ this.select = function(controlId){
                 val = document.getElementById(boardMatrix[I-1][J+1]);
                 val.style.background = 'orange';
                 highlights.push(val);
-            }else if(!seCheck&&!val.hasChildNodes()){
+            }else if(!seCheck&&!val.hasChildNodes()||my_piece&&my_piece_colour!=colour){
                 kingsArray.push(boardMatrix[I-1][J+1]);
                 allIdArr.push(boardMatrix[I-1][J+1]);
                 freeAreas.push(boardMatrix[I-1][J+1]);  
@@ -1689,7 +1738,7 @@ this.kingMovement = function(controlId){
                     localStorage.setItem("CheckMate", "N");
                 }
             }
-            console.log("latest: "+latestVal+" - "+placeId);
+            // console.log("latest: "+latestVal+" - "+placeId);
             //localStorage.setItem("PieceInGuard", latestVal);
             if(latestVal!=''&&latestVal!=boardMatrix[Iking][Jking]&&latestVal==placeId&&!inCheck){
                 isGuard = true;
@@ -5128,7 +5177,10 @@ this.moveTo = function(controlId){
     //     var itemCol = item.classList[0];
     //     console.log('hi item: '+itemCol);
     // }
-
+    localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
+    localStorage.setItem("KingHasMoved", localStorage.getItem("KingHasMoved"));
+    localStorage.setItem("Rook1HasMoved", localStorage.getItem("Rook1HasMoved"));
+    localStorage.setItem("Rook2HasMoved", localStorage.getItem("Rook2HasMoved"));
     if(!nwplc.hasChildNodes()){
     //console.log('in empty move to');
     var newVal = localStorage.getItem('hasChanged');
@@ -5162,9 +5214,11 @@ this.moveTo = function(controlId){
                     }
                     if(selected.id=='brook1'){
                         rook1HasMoved = true;
+                        localStorage.setItem("Rook1HasMoved", "Y");
                     }
                       if(selected.id=='brook2'){
                         rook2HasMoved = true;
+                        localStorage.setItem("Rook2HasMoved", "Y");
                     }
                     //console.log('selectedid: '+selected.id+' - '+rook1HasMoved);
                     localStorage.setItem('hasChanged','N');
@@ -5181,9 +5235,11 @@ this.moveTo = function(controlId){
                     }
                     if(selected.id=='brook1'){
                         rook1HasMoved = true;
+                        localStorage.setItem("Rook1HasMoved", "Y");
                     }
                     if(selected.id=='brook2'){
                         rook2HasMoved = true;
+                        localStorage.setItem("Rook2HasMoved", "Y");
                     }
                     localStorage.setItem('hasChanged','N');
                 }
@@ -5203,9 +5259,11 @@ this.moveTo = function(controlId){
                             }
                             if(selected.id=='brook1'){
                                 rook1HasMoved = true;
+                                localStorage.setItem("Rook1HasMoved", "N");
                             }
                             if(selected.id=='brook2'){
                                 rook2HasMoved = true;
+                                localStorage.setItem("Rook2HasMoved", "Y");
                             }
                             localStorage.setItem('hasChanged','N');
                         }
@@ -5225,9 +5283,11 @@ this.moveTo = function(controlId){
                             }
                             if(selected.id=='wrook1'){
                                 rook1HasMoved = true;
+                                localStorage.setItem("Rook1HasMoved", "Y");
                             }
                             if(selected.id=='wrook2'){
                                 rook2HasMoved = true;
+                                localStorage.setItem("Rook2HasMoved", "Y");
                             }
                             localStorage.setItem('hasChanged','N');
                         }
@@ -5274,6 +5334,7 @@ this.moveTo = function(controlId){
                 }
                 if(selected.id=='bking'){
                     kingHasMoved = true;
+                    localStorage.setItem("KingHasMoved", "Y");
                 }
                 localStorage.setItem('hasChanged','N');    
             }
@@ -5317,6 +5378,7 @@ this.moveTo = function(controlId){
                         movePrev.innerHTML = '';
                     } 
                     pawnIdArr.push(selected.id);
+                    localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                     localStorage.setItem('hasChanged','N');
                 }
             }
@@ -5327,6 +5389,7 @@ this.moveTo = function(controlId){
                         movePrev.innerHTML = '';
                     }
                     pawnIdArr.push(selected.id);
+                    localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                     localStorage.setItem('hasChanged','N'); 
                 }
             } 
@@ -5340,6 +5403,7 @@ this.moveTo = function(controlId){
                         movePrev.innerHTML = '';
                     }
                     pawnIdArr.push(selected.id);
+                    localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                     localStorage.setItem('hasChanged','N');
                     if(pawnEndNum||pawntrEndNum==0){
                         if(controlId==boardMatrix[0][pawnEndNum]){
@@ -5362,6 +5426,7 @@ this.moveTo = function(controlId){
                                 movePrev.innerHTML = '';
                             }
                             pawnIdArr.push(selected.id);
+                            localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                             localStorage.setItem('hasChanged','N');
                         }
                     }
@@ -5376,6 +5441,7 @@ this.moveTo = function(controlId){
                                 movePrev.innerHTML = '';
                             }
                             pawnIdArr.push(selected.id);
+                            localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                             localStorage.setItem('hasChanged','N');
                         }
                     }
@@ -5392,6 +5458,7 @@ this.moveTo = function(controlId){
                                 movePrev.innerHTML = '';
                             }
                             pawnIdArr.push(selected.id);
+                            localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                             localStorage.setItem('hasChanged','N');
                             if(pawnEndNum||pawnEndNum==0){
                                 if(controlId==boardMatrix[0][pawnEndNum]){
@@ -5410,6 +5477,7 @@ this.moveTo = function(controlId){
     }else{
         option.style.display = 'none';
     } 
+    // console.log("in move to - rook1HasMoved: "+localStorage.getItem("Rook1HasMoved")+" rook2HasMoved: "+localStorage.getItem("Rook2HasMoved")+" kingHasMoved: "+localStorage.getItem("KingHasMoved")+" pawnIdArr: "+localStorage.getItem("PawnIDArray"));
 }
 }
 }
@@ -5422,6 +5490,21 @@ this.remove = function(controlId){
     var parent = control.parentNode;
     var parentId = parent.id;
     var canChoose = false;
+    localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
+    localStorage.setItem("KingHasMoved", localStorage.getItem("KingHasMoved"));
+    localStorage.setItem("Rook1HasMoved", localStorage.getItem("Rook1HasMoved"));
+    localStorage.setItem("Rook2HasMoved", localStorage.getItem("Rook2HasMoved"));
+
+    var Prev = document.getElementById(prev);
+    var movePrev = undefined;
+    //console.log('prev: '+prev);
+    for(var f=0; f<allIdArr.length; f++){
+        if(allIdArr[f]===controlId&&!control.hasChildNodes()){
+            movePrev = Prev;
+            allIdArr = [];
+            break;
+        }
+    }
 
     if(type=='rook'&&freeMov||type=='queen'&&freeMov){
         for(var a=right; a<=left; a++){
@@ -5432,9 +5515,11 @@ this.remove = function(controlId){
                     parent.appendChild(selected);
                     if(selected.id=='brook1'){
                         rook1HasMoved = true;
+                        localStorage.setItem("Rook1HasMoved", "Y");
                     }
                       if(selected.id=='brook2'){
                         rook2HasMoved = true;
+                        localStorage.setItem("Rook2HasMoved", "Y");
                     }
                     localStorage.setItem('hasChanged','N');
                 }
@@ -5448,9 +5533,11 @@ this.remove = function(controlId){
                     parent.appendChild(selected);
                     if(selected.id=='brook1'){
                         rook1HasMoved = true;
+                        localStorage.setItem("Rook1HasMoved", "Y");
                     }
                       if(selected.id=='brook2'){
                         rook2HasMoved = true;
+                        localStorage.setItem("Rook2HasMoved", "Y");
                     }
                     localStorage.setItem('hasChanged','N');
                 }
@@ -5488,9 +5575,11 @@ this.remove = function(controlId){
                         allIdArr.push(placeId);
                         if(selected.id=='brook1'){
                             rook1HasMoved = true;
+                            localStorage.setItem("Rook1HasMoved", "Y");
                         }
                         if(selected.id=='brook2'){
                             rook2HasMoved = true;
+                            localStorage.setItem("Rook2HasMoved", "Y");
                         }
                         //console.log('hello remove attacker: '+parent.innerHTML+' - '+parent.id);
                         localStorage.setItem('hasChanged','N');
@@ -5508,9 +5597,11 @@ this.remove = function(controlId){
                         allIdArr.push(placeId);
                         if(selected.id=='brook1'){
                             rook1HasMoved = true;
+                            localStorage.setItem("Rook1HasMoved", "Y");
                         }
                         if(selected.id=='brook2'){
                             rook2HasMoved = true;
+                            localStorage.setItem("Rook2HasMoved", "Y");
                         }
                         localStorage.setItem('hasChanged','N');
                     }
@@ -5553,6 +5644,7 @@ this.remove = function(controlId){
                 parent.appendChild(selected);
                 if(selected.id=='bking'){
                     kingHasMoved = true;
+                    localStorage.setItem("KingHasMoved", "Y");
                 }
                 localStorage.setItem('hasChanged','N');
             }
@@ -5587,7 +5679,8 @@ this.remove = function(controlId){
             pieces.appendChild(control);
             parent.innerHTML = '';
             parent.appendChild(selected);
-            
+            pawnIdArr.push(selected.id);
+            localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
             if(pawntrEndNum||pawntrEndNum==0){
                 if(parentId==boardMatrix[0][pawntrEndNum]){
                     canChoose = true;
@@ -5601,7 +5694,9 @@ this.remove = function(controlId){
             pieces.appendChild(control);
             parent.innerHTML = '';
             parent.appendChild(selected);
-            console.log('pawn end num: '+pawntlEndNum);
+            // console.log('pawn end num: '+pawntlEndNum);
+            pawnIdArr.push(selected.id);
+            localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
             if(pawntlEndNum||pawntlEndNum==0){
                 //console.log('pawn end num id: '+boardMatrix[7][pawntlEndNum]+' p: '+parentId);
                 if(parentId==boardMatrix[0][pawntlEndNum]){
@@ -5619,6 +5714,8 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
+                pawnIdArr.push(selected.id);
+                localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                 allIdArr.push(placeId);
                 
                 if(pawntrEndNum||pawntrEndNum==0){
@@ -5635,7 +5732,8 @@ this.remove = function(controlId){
                 parent.innerHTML = '';
                 parent.appendChild(selected);
                 allIdArr.push(placeId);
-                
+                pawnIdArr.push(selected.id);
+                localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                 if(pawntlEndNum||pawntlEndNum==0){
                     if(parentId==boardMatrix[0][pawntlEndNum]){
                         canChoose = true;
@@ -5652,6 +5750,8 @@ this.remove = function(controlId){
         //console.log('no choose: '+parentId);
         option.style.display = 'none';
     } 
+    // console.log("in remove - rook1HasMoved: "+localStorage.getItem("Rook1HasMoved")+" rook2HasMoved: "+localStorage.getItem("Rook2HasMoved")+" kingHasMoved: "+localStorage.getItem("KingHasMoved")+" pawnIdArr: "+localStorage.getItem("PawnIDArray"));
+    
 }
 }
 }  

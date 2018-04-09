@@ -27,3 +27,9 @@ class StateData(models.Model):
 	CanSaveKing = models.CharField(max_length=100, null=True)
 	Savers =  models.CharField(max_length=1000, null=True)
 	Attackers = models.CharField(max_length=1000, null=True)
+	PawnIDArray = models.CharField(max_length=1000, null=True)
+	KingHasMoved = models.CharField(max_length=100, null=True)
+	Rook1HasMoved = models.CharField(max_length=100, null=True)
+	Rook2HasMoved = models.CharField(max_length=100, null=True)
+	
+

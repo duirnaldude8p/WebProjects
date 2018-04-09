@@ -29,7 +29,7 @@ $(function(){
                             localStorage.setItem("StateMatrix", statematrix2);
                             var compchoice = item.StateData.CompChooses;
                             var compmove = item.StateData.CompMovesTo;
-                            //console.log("compchoice: "+compchoice+" compmove: "+compmove);
+                            console.log("compchoice: "+compchoice+" compmove: "+compmove);
                             
                             $robo.select(compchoice);
                             $robo.moveTo(compmove);
@@ -69,7 +69,7 @@ $(function(){
                     var chkmt = localStorage.getItem("CheckMate");
                     var freemov = localStorage.getItem("FreeMove");
                     var curdir = localStorage.getItem("CurrentDirectionArray");
-                    console.log("curdir: "+curdir);
+                    // console.log("curdir: "+curdir);
                     //curdir = eval(curdir);
                     var attckarr = localStorage.getItem("CurrentAttackerArray");
                     //attckarr = eval(attckarr);
@@ -80,6 +80,11 @@ $(function(){
                     var savers = localStorage.getItem("SaverArray");
                     var attck = localStorage.getItem("AttackerArray");
                     //console.log("puppet master: "+compnecheck);
+                    var pwnidarr = localStorage.getItem("PawnIDArray");
+                    var kmvd = localStorage.getItem("KingHasMoved");
+                    var r1mvd = localStorage.getItem("Rook1HasMoved");
+                    var r2mvd = localStorage.getItem("Rook2HasMoved");
+                    // console.log("in puppetmaster - rook1HasMoved: "+r1mvd+" rook2HasMoved: "+r2mvd+" kingHasMoved: "+kmvd+" pawnIdArr: "+pwnidarr);
                     $.ajax({
                         type: 'POST',
                         url: '/ChessApp/create_page/',
@@ -106,6 +111,10 @@ $(function(){
                             cansaveking: csk,
                             savers: savers,
                             attackers: attck, 
+                            pawnidarr: pwnidarr,
+                            kingmvd: kmvd,
+                            rook1mvd: r1mvd,
+                            rook2mvd: r2mvd,
                             section: 'StateMatrix'
                         },
                         success: function(item){
