@@ -62,4 +62,4 @@ localStorage.setItem("PawnIDArray", JSON.stringify([]));
 localStorage.setItem("KingHasMoved", "N");
 localStorage.setItem("Rook1HasMoved", "N");
 localStorage.setItem("Rook2HasMoved", "N");
-
+localStorage.setItem("RemovedPiecesList", JSON.stringify([]));

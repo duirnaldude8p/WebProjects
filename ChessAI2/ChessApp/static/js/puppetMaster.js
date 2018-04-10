@@ -22,9 +22,9 @@ $(function(){
                     url: '/ChessApp/download_page/',
                     success: function(item){
                         var movemade = item.StateData.CompMadeMove;
+                        var removemade = item.StateData.CompMadeRemove;
                         //console.log("comp moved: "+movemade);
-                        if(movemade=="Y"){
-                            console.log("get success");
+                        if(movemade=="Y"&&removemade=="N"){ 
                             var statematrix2 = item.StateData.StateMatrix;
                             localStorage.setItem("StateMatrix", statematrix2);
                             var compchoice = item.StateData.CompChooses;
@@ -35,6 +35,22 @@ $(function(){
                             $robo.moveTo(compmove);
                             hasGet = true;
                             //console.log("hasGet: "+hasGet);
+                            console.log("get success");
+                        }
+                        else if(removemade=="Y"&&movemade=="Y"){ 
+                            var statematrix2 = item.StateData.StateMatrix;
+                            localStorage.setItem("StateMatrix", statematrix2);
+                            var compchoice = item.StateData.CompChooses;
+                            var compmove = item.StateData.CompMovesTo;
+                            var compremove = item.StateData.CompRemoves;
+                            console.log("compchoice: "+compchoice+" compmove: "+compmove+" compremove: "+compremove);
+                            
+                            $robo.select(compchoice);
+                            $robo.remove(compremove);
+                            $robo.moveTo(compmove);
+                            hasGet = true;
+                            //console.log("hasGet: "+hasGet);
+                            console.log("get success");
                         }
                     },
                     error: function(){
@@ -80,6 +96,7 @@ $(function(){
                     var savers = localStorage.getItem("SaverArray");
                     var attck = localStorage.getItem("AttackerArray");
                     //console.log("puppet master: "+compnecheck);
+                    var rmvdlist = localStorage.getItem("RemovedPiecesList");
                     var pwnidarr = localStorage.getItem("PawnIDArray");
                     var kmvd = localStorage.getItem("KingHasMoved");
                     var r1mvd = localStorage.getItem("Rook1HasMoved");
@@ -115,6 +132,7 @@ $(function(){
                             kingmvd: kmvd,
                             rook1mvd: r1mvd,
                             rook2mvd: r2mvd,
+                            removedlist: rmvdlist,
                             section: 'StateMatrix'
                         },
                         success: function(item){

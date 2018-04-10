@@ -57,7 +57,10 @@ def download_page(request):
 				StateMatrix = brain.getState(),
 				CompChooses = brain.getChoice(),
 				CompMovesTo = brain.getMove(),
+				CompRemoves = brain.getRemove(),
 				CompMadeMove = brain.getHasMoved(),
+				CompMadeRemove = brain.getHasRemoved(),
+				RemovedPieces = dictdata["StateData"]["RemovedPieces"],
 				CompInCheck = dictdata["StateData"]["CompInCheck"],
 				CompNWInCheck = dictdata["StateData"]["CompNWInCheck"], 
 				CompNEInCheck = dictdata["StateData"]["CompNEInCheck"], 
@@ -155,9 +158,12 @@ def create_page(request):
 				cmpr2mvd = request.POST.get("rook2mvd")
 				cmppwnarr = request.POST.get("pawnidarr")
 				cmppwnarr = literal_eval(cmppwnarr)
+				cmprmvdlist = request.POST.get("removedlist")
+				cmprmvdlist = literal_eval(cmprmvdlist)
+				print("remived pieces: %s"%cmprmvdlist)
 				brain.setCompInCheck(cmpcheck, cmpnwcheck, cmpnecheck, cmpswcheck, cmpsecheck, cmpupcheck, cmpdowncheck, cmprightcheck, cmpleftcheck )
 				brain.setCheckInfo(cmpmate, cmpfreemove, cmpcurrdir, cmpattarr, cmpingrd, cmppingrd, cmpspclnght, cmpcsk, cmpsavers, cmpatkrs)
-				brain.setCastleAndPawnInfo(cmpkmvd, cmpr1mvd, cmpr2mvd, cmppwnarr)
+				brain.setExtraInfo(cmpkmvd, cmpr1mvd, cmpr2mvd, cmppwnarr, cmprmvdlist)
 				brain.processState(statematrix)
 				#print("compchoice: %s"%brain.getChoice())
 				#print("compmove: %s"%brain.getMove())
@@ -166,7 +172,10 @@ def create_page(request):
 					StateMatrix = brain.getState(),
 					CompChooses = brain.getChoice(),
 					CompMovesTo = brain.getMove(),
+					CompRemoves = brain.getRemove(),
 					CompMadeMove = brain.getHasMoved(),
+					CompMadeRemove = brain.getHasRemoved(),
+					RemovedPieces = brain.getPiecesRemoved(),
 					CompInCheck = brain.getCompInCheck(),
 					CompNWInCheck = brain.getCompNWInCheck(), 
 					CompNEInCheck = brain.getCompNEInCheck(), 

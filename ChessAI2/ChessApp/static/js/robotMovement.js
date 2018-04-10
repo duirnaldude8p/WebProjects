@@ -175,6 +175,8 @@ var attackers = [];
 var setColour = 'blackPiece';
 var oppColour = 'whitePiece';
 
+var nestedPieceIds = [];
+
 
 
 this.select = function(controlId){
@@ -1849,6 +1851,20 @@ function nonrepeatArr(controlId){
     }
     if(!isIn){
         pcarr.push(controlId);
+        //console.log("add to arr"); 
+    }
+}
+
+function nonrepeatremovedArr(controlId){
+    var isIn = false;
+    for(var i=0; i<nestedPieceIds.length; i++){
+        if(controlId==nestedPieceIds[i]){
+            isIn = true;
+            //console.log("item found");   
+        }
+    }
+    if(!isIn){
+        nestedPieceIds.push(controlId);
         //console.log("add to arr"); 
     }
 }
@@ -5490,7 +5506,17 @@ this.remove = function(controlId){
     var parent = control.parentNode;
     var parentId = parent.id;
     var canChoose = false;
+    console.log("hello remove");
+    var nestedPieces = pieces.children;
+    
+    for(var q=0; q<nestedPieces.length; q++){
+        //console.log("piece id: "+nestedPieces[q].id);
+        nonrepeatremovedArr(nestedPieces[q].id);
+    }
+    console.log("nested guys: "+nestedPieceIds);
+
     localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
+    localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     localStorage.setItem("KingHasMoved", localStorage.getItem("KingHasMoved"));
     localStorage.setItem("Rook1HasMoved", localStorage.getItem("Rook1HasMoved"));
     localStorage.setItem("Rook2HasMoved", localStorage.getItem("Rook2HasMoved"));
@@ -5543,6 +5569,12 @@ this.remove = function(controlId){
                 }
             }
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
 
     if(type=='bishop'&&freeMov||type=='queen'&&freeMov){
@@ -5562,6 +5594,12 @@ this.remove = function(controlId){
                 localStorage.setItem('hasChanged','N');
             }
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
     if(type=='rook'&&!freeMov||type=='queen'&&!freeMov){
         for(var j=right; j<=left; j++){
@@ -5608,7 +5646,12 @@ this.remove = function(controlId){
                 }
             }
         }
-        
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
 
     if(type=='bishop'&&!freeMov||type=='queen'&&!freeMov){
@@ -5634,6 +5677,12 @@ this.remove = function(controlId){
                 }
             }
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
    
     if(type=='king'){
@@ -5649,6 +5698,12 @@ this.remove = function(controlId){
                 localStorage.setItem('hasChanged','N');
             }
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
 
     if(type=='horse'&&freeMov){
@@ -5661,6 +5716,12 @@ this.remove = function(controlId){
                 localStorage.setItem('hasChanged','N');
             }
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
     if(type=='horse'&&!freeMov){
         for(var n=0; n<horseArr.length; n++){
@@ -5673,6 +5734,12 @@ this.remove = function(controlId){
                 }
             }
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
     if(type=='pawn'&&freeMov){
         if(parentId==pawntr){
@@ -5707,6 +5774,12 @@ this.remove = function(controlId){
             localStorage.setItem('hasChanged','N');
             //console.log('pl can choose: '+canChoose+' '+parentId);
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
     if(type=='pawn'&&!freeMov){
         if(parentId==pawntr){
@@ -5742,6 +5815,12 @@ this.remove = function(controlId){
                 localStorage.setItem('hasChanged','N');
             }
         }
+        // nestedPieceIds = [];
+        nestedPieces = pieces.children;
+        for(var q=0; q<nestedPieces.length; q++){
+            nonrepeatremovedArr(nestedPieces[q].id);
+        }
+        localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
     if(canChoose){
         option.style.display = 'initial';
