@@ -108,7 +108,7 @@ class Brain(object):
 		elif my_colour == "b":
 			return "black"
 		else:
-			return "none"
+			return ""
 
 	def getType(self, pieceId):
 		my_type = pieceId[1:-1]
@@ -716,6 +716,36 @@ class Brain(object):
 
 		return None	
 
+	def rookKingChecker(self, i, j, state, col):
+		places = []
+
+		places = self.basicRookMovement(i, j, state, col)
+		my_type = ''
+		my_colour = ''
+
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if my_type == "king" and my_colour is not '' and col is my_colour:
+				return item
+
+		return None	
+
+	def bishopKingChecker(self, i, j, state, col):
+		places = []
+
+		places = self.basicBishopMovement(i, j, state, col)
+		my_type = ''
+		my_colour = ''
+
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if my_type == "king" and my_colour is not '' and col is my_colour:
+				return item
+
+		return None	
+
 	def queenChecker(self, i, j, state, col):
 		places = []
 
@@ -762,12 +792,13 @@ class Brain(object):
 		return {"I": i, "J": j}
 
 	def getRookCheckPath(self, i, j, state, place):
-		end_id = place['pieceId']
+		end_id = place['placeId']
 		places = []
 
 		start_coord = {"I": i, "J": j}
 
 		end_coord = self.getCoordinates(end_id)
+		
 		if start_coord['I'] is end_coord['I']:
 			my_i = start_coord["I"]
 			if start_coord['J'] < end_coord['J']:
@@ -778,6 +809,7 @@ class Brain(object):
 					if(my_j is my_end_j):
 						isfin = True
 					nextval = state[my_i][my_j]
+					places.append(nextval)
 					my_j = my_j + 1
 
 			if start_coord['J'] > end_coord['J']:
@@ -788,6 +820,7 @@ class Brain(object):
 					if(my_j is my_end_j):
 						isfin = True
 					nextval = state[my_i][my_j]
+					places.append(nextval)
 					my_j = my_j + 1
 
 		if start_coord['J'] is end_coord['J']:
@@ -800,6 +833,7 @@ class Brain(object):
 					if(my_i is my_end_i):
 						isfin = True
 					nextval = state[my_i][my_j]
+					places.append(nextval)
 					my_i = my_i + 1
 
 			if start_coord['I'] > end_coord['I']:
@@ -810,17 +844,320 @@ class Brain(object):
 					if(my_i is my_end_i):
 						isfin = True
 					nextval = state[my_i][my_j]
+					places.append(nextval)
 					my_i = my_i + 1
 
+		return places
 
-	# def checker(self, i, j, state, col, firsttime):
-	# 	places = []
 
-	# 	isRookCheck = False
-	# 	isBishopCheck = False
-	# 	isQueenCheck = False
-	# 	isHorseCheck = False
-	# 	isPawnCheck = False
+	def getBishopCheckPath(self, i, j, state, place):
+		end_id = place['placeId']
+		places = []
+
+		start_coord = {"I": i, "J": j}
+
+		end_coord = self.getCoordinates(end_id)
+
+		startI = start_coord['I']
+		startJ = start_coord['J']
+
+		i1 = startI + 1
+		j1 = startJ + 1
+
+		i2 = startI + 1
+		j2 = startJ - 1
+
+		i3 = startI - 1
+		j3 = startJ + 1
+
+		i4 = startI - 1
+		j4 = startJ - 1
+
+		endI = end_coord['I']
+		endJ = end_coord['J']
+
+		my_direction = ''
+
+		for n in range(0, 8):
+			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+				
+				if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
+					if i1 == endI and j1 == endJ:
+						my_direction = 'tr'
+						break
+					i1 = i1 + 1
+					j1 = j1 + 1
+
+				if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
+					if i2 == endI and j2 == endJ:
+						my_direction = 'tl'
+						break
+					i2 = i2 + 1
+					j2 = j2 - 1
+
+				if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
+					if i3 == endI and j3 == endJ:
+						my_direction = 'br'
+						break
+					i3 = i3 - 1
+					j3 = j3 + 1
+
+				if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
+					if i4 == endI and j4 == endJ:
+						my_direction = 'bl'
+						break
+					i4 = i4 - 1
+					j4 = j4 - 1
+
+
+		for m in range(0, 8):
+			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+
+				if my_direction is not '':
+					if my_direction is 'tr':
+						nextval = state[startI][startJ]
+						places.append(nextval)
+						if startI == endI and startJ == endJ:
+							break
+						startI = startI + 1
+						startJ = startJ + 1
+
+					if my_direction is 'tl':
+						nextval = state[startI][startJ]
+						places.append(nextval)
+						if startI == endI and startJ == endJ:
+							break
+						startI = startI + 1
+						startJ = startJ - 1
+
+					if my_direction is 'br':
+						nextval = state[startI][startJ]
+						places.append(nextval)
+						if startI == endI and startJ == endJ:
+							break
+						startI = startI - 1
+						startJ = startJ + 1
+
+					if my_direction is 'bl':
+						nextval = state[startI][startJ]
+						places.append(nextval)
+						if startI == endI and startJ == endJ:
+							break
+						startI = startI - 1
+						startJ = startJ - 1
+
+		return places
+
+
+
+
+
+	def getInGuardDir(self, i, j, state, place):
+
+		end_id = place['placeId']
+		places = []
+
+		start_coord = {"I": i, "J": j}
+
+		end_coord = self.getCoordinates(end_id)
+
+		startI = start_coord['I']
+		startJ = start_coord['J']
+
+		i1 = startI + 1
+		j1 = startJ + 1
+
+		i2 = startI + 1
+		j2 = startJ - 1
+
+		i3 = startI - 1
+		j3 = startJ + 1
+
+		i4 = startI - 1
+		j4 = startJ - 1
+
+		i5 = startI + 1
+		j5 = startJ
+
+		i6 = startI - 1
+		j6 = startJ 
+
+		i7 = startI
+		j7 = startJ + 1
+
+		i8 = startI
+		j8 = startJ - 1
+
+		endI = end_coord['I']
+		endJ = end_coord['J']
+
+		my_direction = ''
+
+		for n in range(0, 8):
+			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+				
+				if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
+					if i1 == endI and j1 == endJ:
+						my_direction = 'tr'
+						break
+					i1 = i1 + 1
+					j1 = j1 + 1
+
+				if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
+					if i2 == endI and j2 == endJ:
+						my_direction = 'tl'
+						break
+					i2 = i2 + 1
+					j2 = j2 - 1
+
+				if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
+					if i3 == endI and j3 == endJ:
+						my_direction = 'br'
+						break
+					i3 = i3 - 1
+					j3 = j3 + 1
+
+				if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
+					if i4 == endI and j4 == endJ:
+						my_direction = 'bl'
+						break
+					i4 = i4 - 1
+					j4 = j4 - 1
+
+				if i5 < 8 and i5 >= 0 and j5 < 8 and j5 >= 0:
+					if i5 == endI and j5 == endJ:
+						my_direction = 'up'
+						break
+					i5 = i5 + 1
+
+				if i6 < 8 and i6 >= 0 and j6 < 8 and j6 >= 0:
+					if i6 == endI and j6 == endJ:
+						my_direction = 'down'
+						break
+					i6 = i6 - 1
+
+				if i7 < 8 and i7 >= 0 and j7 < 8 and j7 >= 0:
+					if i7 == endI and j7 == endJ:
+						my_direction = 'right'
+						break
+					j7 = j7 + 1
+
+				if i8 < 8 and i8 >= 0 and j8 < 8 and j8 >= 0:
+					if i8 == endI and j8 == endJ:
+						my_direction = 'left'
+						break
+					j8 = j8 - 1
+
+		return my_direction
+
+
+
+
+
+	def isInGuard(self, i, j, state, col, dirtn):
+
+	
+		places = []
+
+		start_coord = {"I": i, "J": j}
+
+		startI = start_coord['I']
+		startJ = start_coord['J']
+
+		my_direction = dirtn
+
+		for m in range(0, 8):
+			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0:
+
+				if my_direction is not '':
+					if my_direction is 'bl':
+						nextval = state[startI][startJ]
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startI = startI + 1
+						startJ = startJ + 1
+
+					if my_direction is 'br':
+						nextval = state[startI][startJ]
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startI = startI + 1
+						startJ = startJ - 1
+
+					if my_direction is 'tl':
+						nextval = state[startI][startJ]
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startI = startI - 1
+						startJ = startJ + 1
+
+					if my_direction is 'tr':
+						nextval = state[startI][startJ]
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startI = startI - 1
+						startJ = startJ - 1
+
+					if my_direction is 'up':
+						nextval = state[startI][startJ]
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startI = startI - 1
+
+					if my_direction is 'down':
+						nextval = state[startI][startJ]
+						# print("val: %s"%nextval['pieceId'])
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startI = startI + 1
+			
+					if my_direction is 'right':
+						nextval = state[startI][startJ]
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startJ = startJ - 1
+
+					if my_direction is 'left':
+						nextval = state[startI][startJ]
+						my_type = self.getType(nextval['pieceId'])
+						my_colour = self.getColour(nextval['pieceId'])
+						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+							return True
+						elif my_colour is not '' and col is not my_colour:
+							return False
+						startJ = startJ + 1
+
+		return False
+
+	
 
 
 
