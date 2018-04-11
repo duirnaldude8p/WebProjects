@@ -4,7 +4,7 @@ localStorage.setItem('FinishedMove', 'N');
 
 var stateMatrix = [[{ pieceId: "wrook1", placeId: "r1A"},{ pieceId: "whorse1", placeId: "r1B"},{ pieceId: "wbishop1", placeId: "r1C"},
 					{ pieceId: "wking", placeId: "r1D"},{ pieceId: "wqueen", placeId: "r1E"},{ pieceId: "wbishop2", placeId: "r1F"},
-					{ pieceId: "whorse2", placeId: "r1G"},{ pieceId: "brook2", placeId: "r1H"}],
+					{ pieceId: "whorse2", placeId: "r1G"},{ pieceId: "wrook2", placeId: "r1H"}],
 				   [{ pieceId: "wpawn1", placeId: "r2A"},{ pieceId: "wpawn2", placeId: "r2B"},{ pieceId: "wpawn3", placeId: "r2C"},
 					{ pieceId: "wpawn4", placeId: "r2D"},{ pieceId: "wpawn5", placeId: "r2E"},{ pieceId: "wpawn6", placeId: "r2F"},
 					{ pieceId: "wpawn7", placeId: "r2G"},{ pieceId: "wpawn8", placeId: "r2H"}],

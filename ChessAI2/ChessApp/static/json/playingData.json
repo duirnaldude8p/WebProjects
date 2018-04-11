@@ -3,7 +3,7 @@
 		"StateMatrix": "empty",
 		"ComputerMovesTo": "empty",
 		"ComputerChooses": "empty",
-		"COmpMadeMove": "N",
+		"CompMadeMove": "N",
 		"Section": "StateData"
 	}
 }

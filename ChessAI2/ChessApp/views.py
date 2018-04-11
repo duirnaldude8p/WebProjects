@@ -40,7 +40,7 @@ def download_page(request):
 		global newdata
 		global brain
 		global restart
-
+#
 		#restart = False;
 		if not restart:
 			brain = Roboto.Brain()
