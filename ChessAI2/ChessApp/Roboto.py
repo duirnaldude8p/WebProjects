@@ -176,7 +176,7 @@ class Brain(object):
 				nextval = state[up][j]
 				if nextval is not None:
 					nextpiece = nextval['pieceId']
-					print("npl: %s"%nextpiece)
+					# print("npl: %s"%nextpiece)
 					if nextpiece == '' or startu == False:
 						startu = True
 						rookPlaces.append(nextval)
@@ -430,6 +430,7 @@ class Brain(object):
 		return places	
 
 	def basicPawnMovement(self, i, j, state, firsttime, colour):
+		print("col: %s"%colour)
 		if colour is "white":
 			return self.whitePawn(i, j, state, firsttime)
 		elif colour is "black":
@@ -649,12 +650,7 @@ class Brain(object):
 		# length = len(input_arr)
 		# print("length: %s"%length)
 
-		for item in input_arr:
-			if item == input_val:
-				input_arr.remove(item)
-
-
-		return input_arr
+		return [val for val in input_arr if val != input_val]
 
 	def horseChecker(self, i, j, state, col):
 		places = []
@@ -799,14 +795,14 @@ class Brain(object):
 
 		end_coord = self.getCoordinates(end_id)
 		
-		if start_coord['I'] is end_coord['I']:
+		if start_coord['I'] == end_coord['I']:
 			my_i = start_coord["I"]
 			if start_coord['J'] < end_coord['J']:
 				my_j = start_coord['J']
 				my_end_j = end_coord['J']
 				isfin = False
 				while not isfin:
-					if(my_j is my_end_j):
+					if(my_j == my_end_j):
 						isfin = True
 					nextval = state[my_i][my_j]
 					places.append(nextval)
@@ -817,20 +813,20 @@ class Brain(object):
 				my_end_j = start_coord['J']
 				isfin = False
 				while not isfin:
-					if(my_j is my_end_j):
+					if(my_j == my_end_j):
 						isfin = True
 					nextval = state[my_i][my_j]
 					places.append(nextval)
 					my_j = my_j + 1
 
-		if start_coord['J'] is end_coord['J']:
+		if start_coord['J'] == end_coord['J']:
 			my_j = start_coord["J"]
 			if start_coord['I'] < end_coord['I']:
 				my_i = start_coord['I']
 				my_end_i = end_coord['I']
 				isfin = False
 				while not isfin:
-					if(my_i is my_end_i):
+					if(my_i == my_end_i):
 						isfin = True
 					nextval = state[my_i][my_j]
 					places.append(nextval)
@@ -841,7 +837,7 @@ class Brain(object):
 				my_end_i = start_coord['I']
 				isfin = False
 				while not isfin:
-					if(my_i is my_end_i):
+					if(my_i == my_end_i):
 						isfin = True
 					nextval = state[my_i][my_j]
 					places.append(nextval)
@@ -1074,9 +1070,9 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour !=  '' and col !=  my_colour:
 							return False
 						startI = startI + 1
 						startJ = startJ + 1
@@ -1085,9 +1081,9 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour != '' and col !=  my_colour:
 							return False
 						startI = startI + 1
 						startJ = startJ - 1
@@ -1096,9 +1092,9 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour !=  '' and col !=  my_colour:
 							return False
 						startI = startI - 1
 						startJ = startJ + 1
@@ -1107,9 +1103,9 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "bishop" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour !=  '' and col !=  my_colour:
 							return False
 						startI = startI - 1
 						startJ = startJ - 1
@@ -1118,9 +1114,9 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour !=  '' and col !=  my_colour:
 							return False
 						startI = startI - 1
 
@@ -1129,9 +1125,9 @@ class Brain(object):
 						# print("val: %s"%nextval['pieceId'])
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour !=  '' and col !=  my_colour:
 							return False
 						startI = startI + 1
 			
@@ -1139,9 +1135,9 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour !=  '' and col !=  my_colour:
 							return False
 						startJ = startJ - 1
 
@@ -1149,18 +1145,130 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
-						if my_type == "queen" and my_colour is not '' and col is not my_colour or my_type == "rook" and my_colour is not '' and col is not my_colour:
+						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							return True
-						elif my_colour is not '' and col is not my_colour:
+						elif my_colour !=  '' and col !=  my_colour:
 							return False
 						startJ = startJ + 1
 
 		return False
 
+	def inCheck(self, i, j, state, firsttime, col):
+		checker = None
+
+		checker1 = self.rookChecker(i, j, state, col)
+		checker2 = self.bishopChecker(i, j, state, col)
+		checker3 = self.horseChecker(i, j, state, col)
+		checker4 = self.queenChecker(i, j, state, col)
+		checker5 = self.pawnChecker(i, j, state, col, firsttime)
+		if checker1 is not None:
+			return True	
+		elif checker2 is not None:
+			return True
+		
+		elif checker3 is not None:
+			return True
+		
+		elif checker4 is not None:
+			return True
+		
+		elif checker5 is not None:
+			return True
+
+		return False
 	
+	def getPieces(self, state, col):
+		places = []
+
+		for i in range(0, 8):
+			for j in range (0, 8):
+				nextval = state[i][j]
+				if nextval is not None:
+					nextpiece = nextval['pieceId']
+					if nextpiece is not '':
+						my_colour = self.getColour(nextpiece)
+						if my_colour is col:
+							places.append(nextval)
+
+		return places
+
+	def findKing(self, state, col):
+		king = None
+		breaker = False
+		for i in range(0, 8):
+			for j in range (0, 8):
+				nextval = state[i][j]
+				if nextval is not None:
+					nextpiece = nextval['pieceId']
+					if nextpiece is not '':
+						my_type = self.getType(nextpiece)
+						my_colour = self.getColour(nextpiece)
+						if my_colour is col and my_type is "king":
+							king = nextval
+							breaker = True
+							break
+			if breaker:
+				break				
 
 
+		return king
 
+
+	def getMoves(self, state, firsttime, col, vals):
+		in_check = False
+		king = self.findKing(state, col)
+		king_co = self.getCoordinates(king['placeId'])
+		in_check = self.inCheck(king_co['I'], king_co['J'], state, firsttime, col)
+
+		movements = []
+
+		if not in_check:
+			for item in vals:
+				item_id = item['pieceId']
+				item_co = self.getCoordinates(item['placeId'])
+				item_type = self.getType(item_id)
+
+				# print("id: %s"%item_id)
+				# print("coord: %s"%item_co)
+				# print("type: %s"%item_type)
+
+				if item_type == "rook":
+					# print("hello rook")
+					movement = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
+					movement = self.smoothenArray(movement, item)
+					# print("rook mov %s - %s"%(movement, item))
+					movements = movements + movement
+
+				if item_type == "bishop":
+					movement = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
+					movement = self.smoothenArray(movement, item)
+					movements = movements + movement
+
+				if item_type == "horse":
+					movement = self.basicHorseMovement(item_co['I'], item_co['J'], state, col)
+					# print("horse mov %s"%movement)
+					movements = movements + movement
+
+				if item_type == "pawn":
+					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, firsttime, col)
+					print("pawn mov %s"%movement)
+					movements = movements + movement
+
+				if item_type == "queen":
+					movement1 = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
+					movement1 = self.smoothenArray(movement1, item)
+					movement2 = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
+					movement2 = self.smoothenArray(movement2, item)
+					movements = movements + movement1 + movement2
+
+				if item_type == "king":
+					movement = self.basicKingMovement(item_co['I'], item_co['J'], state, col)
+					movements = movements + movement
+			
+
+		return movements
+
+	
 
 
 
