@@ -645,6 +645,185 @@ class Brain(object):
 
 		return places
 
+	def smoothenArray(self, input_arr, input_val):
+		# length = len(input_arr)
+		# print("length: %s"%length)
+
+		for item in input_arr:
+			if item == input_val:
+				input_arr.remove(item)
+
+
+		return input_arr
+
+	def horseChecker(self, i, j, state, col):
+		places = []
+
+		places = self.basicHorseMovement(i, j, state, col)
+		my_type = ''
+		my_colour = ''
+		
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if my_type == "horse" and my_colour is not '' and col is not my_colour:
+				return item
+		
+		return None
+
+	def pawnChecker(self, i, j, state, col, firsttime):
+		places = []
+
+		places = self.basicPawnMovement(i, j, state, firsttime, col)
+		my_type = ''
+		my_colour = ''
+		
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if my_type == "pawn"  and my_colour is not '' and col is not my_colour:
+				return item
+		
+		return None
+
+	def rookChecker(self, i, j, state, col):
+		places = []
+
+		places = self.basicRookMovement(i, j, state, col)
+		my_type = ''
+		my_colour = ''
+
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if my_type == "rook" and my_colour is not '' and col is not my_colour:
+				return item
+
+		return None	
+
+	def bishopChecker(self, i, j, state, col):
+		places = []
+
+		places = self.basicBishopMovement(i, j, state, col)
+		my_type = ''
+		my_colour = ''
+
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if my_type == "bishop" and my_colour is not '' and col is not my_colour:
+				return item
+
+		return None	
+
+	def queenChecker(self, i, j, state, col):
+		places = []
+
+		places = self.basicRookMovement(i, j, state, col)
+		places2 = self.basicBishopMovement(i, j, state, col)
+		places = places + places2
+		my_type = ''
+		my_colour = ''
+
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if my_type == "queen" and my_colour is not '' and col is not my_colour:
+				return item
+
+		return None	
+
+	def getCoordinates(self, posId):
+		
+		number = posId[1:-1]
+		i = int(number) - 1
+		
+		
+		letter = posId[2:]
+		j = 0
+
+		if letter is "A":
+			j = 0
+		elif letter is "B":
+			j = 1
+		elif letter is "C":
+			j = 2
+		elif letter is "D":
+			j = 3
+		elif letter is "E":
+			j = 4
+		elif letter is "F":
+			j = 5
+		elif letter is "G":
+			j = 6
+		elif letter is "H":
+			j = 7
+
+		return {"I": i, "J": j}
+
+	def getRookCheckPath(self, i, j, state, place):
+		end_id = place['pieceId']
+		places = []
+
+		start_coord = {"I": i, "J": j}
+
+		end_coord = self.getCoordinates(end_id)
+		if start_coord['I'] is end_coord['I']:
+			my_i = start_coord["I"]
+			if start_coord['J'] < end_coord['J']:
+				my_j = start_coord['J']
+				my_end_j = end_coord['J']
+				isfin = False
+				while not isfin:
+					if(my_j is my_end_j):
+						isfin = True
+					nextval = state[my_i][my_j]
+					my_j = my_j + 1
+
+			if start_coord['J'] > end_coord['J']:
+				my_j = end_coord['J']
+				my_end_j = start_coord['J']
+				isfin = False
+				while not isfin:
+					if(my_j is my_end_j):
+						isfin = True
+					nextval = state[my_i][my_j]
+					my_j = my_j + 1
+
+		if start_coord['J'] is end_coord['J']:
+			my_j = start_coord["J"]
+			if start_coord['I'] < end_coord['I']:
+				my_i = start_coord['I']
+				my_end_i = end_coord['I']
+				isfin = False
+				while not isfin:
+					if(my_i is my_end_i):
+						isfin = True
+					nextval = state[my_i][my_j]
+					my_i = my_i + 1
+
+			if start_coord['I'] > end_coord['I']:
+				my_i = end_coord['I']
+				my_end_i = start_coord['I']
+				isfin = False
+				while not isfin:
+					if(my_i is my_end_i):
+						isfin = True
+					nextval = state[my_i][my_j]
+					my_i = my_i + 1
+
+
+	# def checker(self, i, j, state, col, firsttime):
+	# 	places = []
+
+	# 	isRookCheck = False
+	# 	isBishopCheck = False
+	# 	isQueenCheck = False
+	# 	isHorseCheck = False
+	# 	isPawnCheck = False
+
+
+
 
 
 
