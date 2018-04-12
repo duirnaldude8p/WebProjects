@@ -4,57 +4,139 @@ import Roboto
 
 brain = Roboto.Brain()
 
-# colour = brain.getColour("bpawn8")
-
-# my_type = brain.getType("bpawn8")
-
-# print("colour: %s type: %s"%(colour, my_type))
-
 trainstate = brain.getTrainState()
 
-# # print("train state: %s"%trainstate)
-# #4f 4d
-# trainstate[1][3].update(pieceId='') 
-# trainstate[2][3].update(pieceId='wpawn4')
+#horse checker
+# trainstate[5][4].update(pieceId = "whorse1")
 
-# # trainstate[1][4].update(pieceId='') 
-# # trainstate[2][4].update(pieceId='bpawn5')
-# trainstate[1][6].update(pieceId='') 
-# trainstate[3][6].update(pieceId='bpawn5')
-# trainstate[0][2].update(pieceId='') 
-# trainstate[3][5].update(pieceId='bbishop1')
+# recieved_horse = brain.horseChecker(7, 3, trainstate, "black")
 
-# # trainstate[0][1].update(pieceId='') 
-# # trainstate[5][1].update(pieceId='whorse')
-# # trainstate[0][3].update(pieceId='') 
-# trainstate[1][0].update(pieceId='wking')
-# trainstate[5][0].update(pieceId='brook1')
-# trainstate[3][0].update(pieceId='wpawn3')
-# # print("changed train state: %s"%trainstate)
-# my_place = trainstate[1][0]
-# my_piece = trainstate[3][0]['pieceId']
-my_piece_colour = "white"
-print("val: %s"%my_piece_colour)
-# # my_places = brain.basicRookMovement(3, 5, trainstate, my_piece_colour)
-# my_places = brain.basicBishopMovement(3, 5, trainstate, my_piece_colour)
-# # my_places = brain.basicPawnMovement(2, 4, trainstate, False ,my_piece_colour)
-# # my_places = brain.basicHorseMovement(0, 1, trainstate, my_piece_colour)
-# # my_places = brain.basicKingMovement(5, 3, trainstate, my_piece_colour)
-# my_places = brain.getRookCheckPath(3, 0, trainstate, my_place)
-# my_places = brain.getBishopCheckPath(3, 5, trainstate, my_place)#
-my_pieces = brain.getPieces(trainstate, my_piece_colour)
-my_places = brain.getMoves(trainstate, True, my_piece_colour, my_pieces)
-# direction = brain.getInGuardDir(3, 0, trainstate, my_place)
-# isInGuard = brain.isInGuard(3, 0, trainstate, my_piece_colour, direction)
-# # brain.setTrainState(trainstate)
-# my_places = brain.smoothenArray(my_places, trainstate[3][5])
-# # trainstate2 = brain.getTrainState()
-# # print("set train state: %s"%trainstate2)
-print("places: %s"%my_places)
-# print("is in guard: %s"%isInGuard)
+# print("recieved horse: %s"%recieved_horse)
 
-# my_coord = brain.getCoordinates("r1D")
+#rook checker
+# trainstate[4][4].update(pieceId = "bking")
+# trainstate[1][4].update(pieceId = "")
+# trainstate[4][7].update(pieceId = "wrook1")
 
-# print("co-ord: %s - %s"%(my_coord["I"], my_coord["J"]))
+# recieved_horse = brain.rookChecker(4, 4, trainstate, "black")
+
+# print("recieved horse: %s"%recieved_horse)
+
+#bishop checker
+# trainstate[4][4].update(pieceId = "bking")
+# trainstate[5][5].update(pieceId = "wbishop1")
+# # trainstate[4][7].update(pieceId = "wrook1")
+
+# recieved_horse = brain.bishopChecker(4, 4, trainstate, "black")
+
+# print("recieved horse: %s"%recieved_horse)
+
+#queen checker
+# trainstate[4][4].update(pieceId = "wking")
+# trainstate[1][1].update(pieceId = "")
+# trainstate[0][0].update(pieceId = "bqueen")
+# # trainstate[4][7].update(pieceId = "wrook1")
+
+# recieved = brain.queenChecker(4, 4, trainstate, "white")
+
+# print("recieved: %s"%recieved)
+
+#pawn checker
+# trainstate[4][5].update(pieceId = "bpawn1")
+# # trainstate[1][1].update(pieceId = "")
+# trainstate[3][5].update(pieceId = "wking")
+
+# trainstate[4][4].update(pieceId = "bking")
+# # trainstate[1][1].update(pieceId = "")
+# trainstate[3][5].update(pieceId = "wrook1")
+# # trainstate[4][7].update(pieceId = "wrook1")
+
+# recieved = brain.pawnChecker(4, 4, trainstate, "black", True) 
+
+# print("recieved: %s"%recieved)
+
+#rook king checker
+# trainstate[4][4].update(pieceId = "wrook")
+# # trainstate[1][1].update(pieceId = "")
+# trainstate[1][4].update(pieceId = "wking")
+# # # trainstate[4][7].update(pieceId = "wrook1")
+
+# recieved = brain.rookKingChecker(4, 4, trainstate, "white")
+
+# print("recieved: %s"%recieved)
+
+#rook check path
+# trainstate[4][4].update(pieceId = "bking")
+# trainstate[1][4].update(pieceId = "")
+# trainstate[4][7].update(pieceId = "wrook1")
+# my_state = trainstate[4][7]
+
+# recieved = brain.getRookCheckPath(3, 4, trainstate, my_state)
+
+# print("recieved horse: %s"%recieved)
+
+#bishop check path
+# trainstate[4][4].update(pieceId = "bking")
+# # trainstate[1][4].update(pieceId = "")
+# trainstate[6][5].update(pieceId = "wbishop1")
+# my_state = trainstate[6][5]
+
+# recieved = brain.getBishopCheckPath(4, 7, trainstate, my_state)
+
+# print("recieved: %s"%recieved)
+
+#in guard dir and in guard
+# trainstate[6][4].update(pieceId = "wbishop")
+# # # trainstate[1][4].update(pieceId = "")
+# trainstate[4][4].update(pieceId = "bpawn1")
+# my_state = trainstate[1][4]
+
+# direction = brain.getInGuardDir(4, 4, trainstate, my_state)
+
+# recieved = brain.isInGuard(1, 4, trainstate, "black", direction)
+
+# print("recieved: %s - %s"%(recieved, direction))
+
+#in check
+# trainstate[6][2].update(pieceId = "wqueen")
+# # # trainstate[1][4].update(pieceId = "")
+# trainstate[4][4].update(pieceId = "bpawn1")
+# # my_state = trainstate[1][4]
+
+# recieved = brain.inCheck(4, 4, trainstate, False, "black")
+# print("recieved: %s"%recieved)
+
+# #get pieces
+# recieved = brain.getPieces(trainstate, "white")
+
+# print("recieved: %s"%recieved)
+
+#find king
+# trainstate[0][3].update(pieceId = "")
+# trainstate[5][7].update(pieceId = "wking")
+# recieved = brain.findKing(trainstate, "white")
+# print("recieved: %s"%recieved)
+
+#get item place
+# my_dict = brain.getFirsts()
+# my_dict2 = brain.getMovesDict()
+# recieved = brain.getItemPlace(my_dict2, "brook2")
+# print("recieved: %s"%recieved)
+
+#get restricted places
+# my_moves = brain.basicRookMovement(1, 0, trainstate, "white")
+# my_moves2 = brain.basicRookMovement(4, 4, trainstate, "white")
+
+# recieved = brain.getRestrictedPlaces(my_moves2, my_moves)
+# print("recieved: %s"%recieved)#
+
+#is first time
+# my_dict = brain.getFirsts()
+
+# recieved = brain.isFirst(my_dict, "wbishop1")
+# print("recieved: %s"%recieved)
+
+
+
 
 
