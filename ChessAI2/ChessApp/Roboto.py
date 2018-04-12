@@ -63,6 +63,24 @@ class Brain(object):
 					{"id": "wking", "is_first": False}, {"id": "bking", "is_first": False},
 					{"id": "wqueen", "is_first": False}, {"id": "bqueen", "is_first": False}
 				]
+	
+	movesdict = [
+					{"id": "wpawn1", "moves": []}, {"id": "wpawn2", "moves": []}, {"id": "wpawn3", "moves": []},
+					{"id": "wpawn4", "moves": []}, {"id": "wpawn5", "moves": []}, {"id": "wpawn6", "moves": []},
+					{"id": "wpawn7", "moves": []}, {"id": "wpawn8", "moves": []}, {"id": "bpawn1", "moves": []}, 
+					{"id": "bpawn2", "moves": []}, {"id": "bpawn3", "moves": []}, {"id": "bpawn4", "moves": []}, 
+					{"id": "bpawn5", "moves": []}, {"id": "bpawn6", "moves": []}, {"id": "bpawn7", "moves": []}, 
+					{"id": "bpawn8", "moves": []}, {"id": "wrook1", "moves": []}, {"id": "wrook2", "moves": []},
+					{"id": "brook1", "moves": []}, {"id": "brook2", "moves": []}, 
+					{"id": "wbishop1", "moves": []}, {"id": "wbishop2", "moves": []},
+					{"id": "bbishop1", "moves": []}, {"id": "bbishop2", "moves": []},
+					{"id": "whorse1", "moves": []}, {"id": "whorse2", "moves": []},
+					{"id": "bhorse1", "moves": []}, {"id": "bhorse2", "moves": []},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
+					{"id": "wqueen", "moves": []}, {"id": "bqueen", "moves": []}
+				]
+
 
 	def _init_(self):
 		data = open('static\json\playing_data.json')
@@ -114,6 +132,22 @@ class Brain(object):
 					{"id": "bhorse1", "is_first": False}, {"id": "bhorse2", "is_first": False},
 					{"id": "wking", "is_first": False}, {"id": "bking", "is_first": False},
 					{"id": "wqueen", "is_first": False}, {"id": "bqueen", "is_first": False}
+				]
+		self.movesdict = [
+					{"id": "wpawn1", "moves": []}, {"id": "wpawn2", "moves": []}, {"id": "wpawn3", "moves": []},
+					{"id": "wpawn4", "moves": []}, {"id": "wpawn5", "moves": []}, {"id": "wpawn6", "moves": []},
+					{"id": "wpawn7", "moves": []}, {"id": "wpawn8", "moves": []}, {"id": "bpawn1", "moves": []}, 
+					{"id": "bpawn2", "moves": []}, {"id": "bpawn3", "moves": []}, {"id": "bpawn4", "moves": []}, 
+					{"id": "bpawn5", "moves": []}, {"id": "bpawn6", "moves": []}, {"id": "bpawn7", "moves": []}, 
+					{"id": "bpawn8", "moves": []}, {"id": "wrook1", "moves": []}, {"id": "wrook2", "moves": []},
+					{"id": "brook1", "moves": []}, {"id": "brook2", "moves": []}, 
+					{"id": "wbishop1", "moves": []}, {"id": "wbishop2", "moves": []},
+					{"id": "bbishop1", "moves": []}, {"id": "bbishop2", "moves": []},
+					{"id": "whorse1", "moves": []}, {"id": "whorse2", "moves": []},
+					{"id": "bhorse1", "moves": []}, {"id": "bhorse2", "moves": []},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
+					{"id": "wqueen", "moves": []}, {"id": "bqueen", "moves": []}
 				]
 		self.first = False
 		self.sec = True
@@ -1185,7 +1219,7 @@ class Brain(object):
 
 		return in_guard = {"is_guard" : False, "values" : places}
 
-	def inCheck(self, i, j, state, firsttime, col):
+	def inCheck(self, i, j, state, firsts, col):
 		checker = None
 
 		checker1 = self.rookChecker(i, j, state, col)
@@ -1246,6 +1280,36 @@ class Brain(object):
 
 		return king
 
+	def findPiece(self, state, p):
+		piece = None
+		breaker = False
+		for i in range(0, 8):
+			for j in range (0, 8):
+				nextval = state[i][j]
+				if nextval is not None:
+					nextpiece = nextval['pieceId']
+					if nextpiece is not '':
+						piece = nextval
+						breaker = True
+						break
+			if breaker:
+				break				
+
+
+		return piece
+
+	def getItemPlace(self, dict_input, val_id):
+		place = None
+		counter = 0
+		for item in dict_input:
+			if item is not None:
+				counter = counter + 1
+				next_id = item['id']
+				if next_id == val_id:
+					return counter
+					
+		return counter
+
 	def getRestrictedPlaces(self, open_in, restricted_in):
 
 		return [val for val in open_in if val in restricted_in]
@@ -1259,8 +1323,125 @@ class Brain(object):
 
 		return False
 
+	def getRightCastle(self, i, j, state, col):
 
-	def getMoves(self, state, firsttime, col, vals):
+		start_coord = {"I": i, "J": j}
+
+		startI = start_coord['I']
+		startJ = start_coord['J']
+		
+		w_right = startJ + 1
+		b_right = startJ + 1
+
+		castle = {"is_castle" : False, "king_pos" : None, "rook_pos": None, "rook": None}
+
+		w_pos = []
+		b_pos = []
+
+		for m in range(0, 8):
+			if right < 8 and right >= 0:
+
+				if col == 'white':
+					rightval = state[i][w_right]
+					rightpiece = rightval['pieceId']
+					rightplace = rightval['placeId']
+					w_type = self.getType(rightpiece)
+					w_colour = self.getColour(rightpiece)
+					if rightpiece == '':
+						w_right = w_right + 1
+					elif w_type == "rook" and w_colour == col:
+						given_co = self.getCoordinates(rightplace)
+						if given_co['I'] == 0 and given_co['J'] == 7:
+							castle = {"is_castle" : True, "king_pos" : state[0][4], "rook_pos": state[0][5], "rook": rightval}
+							break
+						else:
+							break
+					else:
+						break
+
+				elif col == "black":
+					rightval = state[i][b_right]
+					rightpiece = rightval['pieceId']
+					rightplace = rightval['placeId']
+					b_type = self.getType(rightpiece)
+					b_colour = self.getColour(rightpiece)
+					if rightpiece == '':
+						b_right = b_right + 1
+					elif b_type == "rook" and b_colour == col:
+						given_co = self.getCoordinates(rightplace)
+						if given_co['I'] == 7 and given_co['J'] == 7:
+							castle = {"is_castle" : True, "king_pos" : state[7][4], "rook_pos": state[7][5], "rook": rightval}
+							break
+						else:
+							break
+					else:
+						break
+					
+
+				
+		return castle
+
+	def getLeftCastle(self, i, j, state, col):
+
+		start_coord = {"I": i, "J": j}
+
+		startI = start_coord['I']
+		startJ = start_coord['J']
+		
+		w_left = startJ - 1
+		b_left = startJ - 1
+
+		castle = {"is_castle" : False, "king_pos" : None, "rook_pos": None,, "rook": None}
+
+		w_pos = []
+		b_pos = []
+
+		for m in range(0, 8):
+			if right < 8 and right >= 0:
+
+				if col == 'white':
+					leftval = state[i][w_left]
+					leftpiece = leftval['pieceId']
+					leftplace = leftval['placeId']
+					w_type = self.getType(leftpiece)
+					w_colour = self.getColour(leftpiece)
+					if leftpiece == '':
+						w_left = w_left - 1
+					elif w_type == "rook" and w_colour == col:
+						given_co = self.getCoordinates(leftplace)
+						if given_co['I'] == 0 and given_co['J'] == 0:
+							castle = {"is_castle" : True, "king_pos" : state[0][1], "rook_pos": state[0][2], "rook": leftval}
+							break
+						else:
+							break
+					else:
+						break
+
+				elif col == "black":
+					leftval = state[i][b_left]
+					leftpiece = leftval['pieceId']
+					leftplace = leftval['placeId']
+					b_type = self.getType(leftpiece)
+					b_colour = self.getColour(leftpiece)
+					if leftpiece == '':
+						b_left = b_left - 1
+					elif b_type == "rook" and b_colour == col:
+						given_co = self.getCoordinates(leftplace)
+						if given_co['I'] == 7 and given_co['J'] == 0:
+							castle = {"is_castle" : True, "king_pos" : state[7][1], "rook_pos": state[7][2], "rook": leftval}
+							break
+						else:
+							break
+					else:
+						break
+					
+
+				
+		return castle
+
+
+
+	def getMoves(self, state, firsts, col, vals, m_dict):
 		in_check = False
 		king = self.findKing(state, col)
 		king_co = self.getCoordinates(king['placeId'])
@@ -1281,6 +1462,7 @@ class Brain(object):
 				in_guard = self.isInGuard(item_co['I'], item_co['J'], state, col, in_guard_dir)
 				is_guard = in_guard['is_guard']
 				in_g_v = in_guard['values']
+				dict_place = self.getItemPlace(m_dict, item_co)
 
 				if item_type == "rook":
 					movement = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
@@ -1288,28 +1470,34 @@ class Brain(object):
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, in_g_v)
 					# print("rook mov %s - %s"%(movement, item))
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
+
 
 				if item_type == "bishop":
 					movement = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.smoothenArray(movement, item)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, in_g_v)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "horse":
 					movement = self.basicHorseMovement(item_co['I'], item_co['J'], state, col)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, in_g_v)
 					# print("horse mov %s"%movement)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "pawn":
-					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, firsttime, col)
+					is_first = self.isFirst(firsts, item)
+					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first , col)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, in_g_v)
 					print("pawn mov %s"%movement)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "queen":
 					movement1 = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
@@ -1319,11 +1507,39 @@ class Brain(object):
 					movement = movement1 + movement2
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, in_g_v)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "king":
 					movement = self.basicKingMovement(item_co['I'], item_co['J'], state, col)
-					movements = movements + movement
+					moves = []
+					r_moves = self.getRightCastle(item_co['I'], item_co['J'], state, col)
+					l_moves = self.getLeftCastle(item_co['I'], item_co['J'], state, col)
+					can_c = False
+					can_r_castle = r_moves['is_castle']
+					can_l_castle = l_moves['is_castle']
+					r_castling_rook = None
+					l_castling_rook = None
+					if can_r_castle:
+						moves.append(r_moves['king_pos'])
+						moves.append(r_moves['rook_pos'])
+						can_c = can_r_castle
+						r_castling_rook = r_moves['rook']
+
+
+					if can_l_castle:
+						moves.append(l_moves['king_pos'])
+						moves.append(l_moves['rook_pos'])
+						can_c = can_l_castle
+						l_castling_rook = l_moves['rook']
+
+					movement = movement + moves
+					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(can_castle = can_c)
+					m_dict[dict_place].update(r_castle_rook = r_castling_rook)
+					m_dict[dict_place].update(l_castle_rook = l_castling_rook)
+
+					# movements = movements + movement
 		else:	
 			for item in vals:
 				item_id = item['pieceId']
@@ -1339,25 +1555,30 @@ class Brain(object):
 					movement = self.smoothenArray(movement, item)
 					movement = self.getRestrictedPlaces(movement, restr)
 					# print("rook mov %s - %s"%(movement, item))
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "bishop":
 					movement = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.smoothenArray(movement, item)
 					movement = self.getRestrictedPlaces(movement, restr)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "horse":
 					movement = self.basicHorseMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.getRestrictedPlaces(movement, restr)
 					# print("horse mov %s"%movement)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "pawn":
-					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, firsttime, col)
+					is_first = self.isFirst(firsts, item)
+					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first, col)
 					movement = self.getRestrictedPlaces(movement, restr)
 					print("pawn mov %s"%movement)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "queen":
 					movement1 = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
@@ -1366,7 +1587,8 @@ class Brain(object):
 					movement2 = self.smoothenArray(movement2, item)
 					movement = movement1 + movement2
 					movement = self.getRestrictedPlaces(movement, restr)
-					movements = movements + movement
+					# movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "king":
 					movement = self.basicKingMovement(item_co['I'], item_co['J'], state, col)
@@ -1383,7 +1605,8 @@ class Brain(object):
 							movement2.append(val)
 
 					movement = self.getRestrictedPlaces(movement, movement2)
-					movements = movements + movement
+					m_dict[dict_place].update(moves = movement)
+					# movements = movements + movement
 
 
 		return movements
@@ -1601,3 +1824,9 @@ class Brain(object):
 
 	def getRook2HasMoved(self):
 		return self.rook2HasMoved
+
+	def getFirsts(self):
+		return self.firsttimes
+
+	def getMovesDict(self):
+		return self.movesdict
