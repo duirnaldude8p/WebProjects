@@ -87,15 +87,20 @@ trainstate = brain.getTrainState()
 
 #in guard dir and in guard
 # trainstate[6][4].update(pieceId = "wbishop")
-# # # trainstate[1][4].update(pieceId = "")
+# # trainstate[1][4].update(pieceId = "")
 # trainstate[4][4].update(pieceId = "bpawn1")
-# my_state = trainstate[1][4]
+# trainstate[0][3].update(pieceId = "")
+# trainstate[1][1].update(pieceId = "")
+# trainstate[0][0].update(pieceId = "wking")
+# trainstate[3][3].update(pieceId = "wbishop1")
+# trainstate[5][5].update(pieceId = "wbishop2")
+# my_state = trainstate[0][0]
 
-# direction = brain.getInGuardDir(4, 4, trainstate, my_state)
+# direction = brain.getInGuardDir(3, 3, trainstate, my_state, "bishop")
 
-# recieved = brain.isInGuard(1, 4, trainstate, "black", direction)
+# recieved = brain.isInGuard(3, 3, trainstate, "white", direction)
 
-# print("recieved: %s - %s"%(recieved, direction))
+# print("recieveds: %s - %s"%(recieved, direction))
 
 #in check
 # trainstate[6][2].update(pieceId = "wqueen")
@@ -135,6 +140,72 @@ trainstate = brain.getTrainState()
 
 # recieved = brain.isFirst(my_dict, "wbishop1")
 # print("recieved: %s"%recieved)
+
+#right castle
+# trainstate[0][1].update(pieceId = "")
+# trainstate[0][2].update(pieceId = "")
+# trainstate[0][3].update(pieceId = "")
+# trainstate[7][5].update(pieceId = "")
+# trainstate[7][6].update(pieceId = "")
+# trainstate[1][6].update(pieceId = "")
+# trainstate[2][6].update(pieceId = "brook1")
+
+# recieved = brain.getRightCastle(7, 4, trainstate, "black")
+# print("recieved: %s"%recieved)
+
+#left castle
+# trainstate[7][1].update(pieceId = "")
+# trainstate[7][2].update(pieceId = "")
+# trainstate[7][3].update(pieceId = "")
+# trainstate[1][3].update(pieceId = "")
+# # trainstate[3][3].update(pieceId = "brook1")
+
+# recieved = brain.getLeftCastle(7, 4, trainstate, "black")
+# print("recieved: %s"%recieved)
+
+#MOVE GEN!
+# trainstate[0][3].update(pieceId = "")
+# trainstate[1][4].update(pieceId = "")
+# trainstate[0][2].update(pieceId = "")
+# trainstate[0][5].update(pieceId = "")
+# trainstate[0][4].update(pieceId = "wking")
+# trainstate[3][4].update(pieceId = "wbishop2")
+# trainstate[5][4].update(pieceId = "brook1")
+# my_state = trainstate[0][4]
+
+# direction = brain.getInGuardDir(3, 4, trainstate, my_state, "bishop")
+
+# recieved = brain.isInGuard(3, 4, trainstate, "white", direction)
+
+# # trainstate[0][1].update(pieceId = "")
+# # trainstate[0][2].update(pieceId = "")
+# trainstate[6][5].update(pieceId = "")
+# # trainstate[7][1].update(pieceId = "")
+# # trainstate[7][2].update(pieceId = "")
+# # trainstate[0][5].update(pieceId = "")
+# # trainstate[0][6].update(pieceId = "")
+# trainstate[7][4].update(pieceId = "")
+# trainstate[7][5].update(pieceId = "")
+# trainstate[7][6].update(pieceId = "")
+# # trainstate[0][3].update(pieceId = "wking")
+# trainstate[3][5].update(pieceId = "wrook2")
+# # trainstate[5][4].update(pieceId = "brook1")
+
+# trainstate[1][3].update(pieceId = "")
+# trainstate[4][3].update(pieceId = "brook1")
+# trainstate[2][1].update(pieceId = "wrook1")
+
+
+
+
+# pieces = brain.getPieces(trainstate, "white")
+# moves = brain.getMovesDict()
+# firsts = brain.getFirsts()
+
+# recieved = brain.getMoves(trainstate, firsts, "white", pieces, moves)
+# # recieved = brain.basicPawnMovement(1, 2, trainstate, True, "white")
+# print("recieved: %s"%recieved)
+# print("recieveds: %s - %s"%(recieved, direction))
 
 
 

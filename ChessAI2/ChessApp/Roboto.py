@@ -379,6 +379,7 @@ class Brain(object):
 					nextpiece = nextval['pieceId']
 					if nextpiece == '':
 						places.append(nextval)
+					elif nextpiece != '':
 						is_infront = True
 			
 			if up+2 < 8 and up+2 >= 0:
@@ -438,6 +439,7 @@ class Brain(object):
 		tlleft = j + 1
 		tlup = i - 1 
 		up = i
+		is_infront = False
 		
 		if firsttime:
 			if up-1 < 8 and up-1 >= 0:
@@ -446,12 +448,14 @@ class Brain(object):
 					nextpiece = nextval['pieceId']
 					if nextpiece == '':
 						places.append(nextval)
+					elif nextpiece != '':
+						is_infront = True
 			
 			if up-2 < 8 and up-2 >= 0:
 				nextval = state[up-2][j]
 				if nextval is not None:
 					nextpiece = nextval['pieceId']
-					if nextpiece == '':
+					if nextpiece == '' and not is_infront:
 						places.append(nextval)
 			
 			if trright < 8 and trright >= 0 and trup < 8 and trup >= 0:
@@ -497,7 +501,7 @@ class Brain(object):
 		return places	
 
 	def basicPawnMovement(self, i, j, state, firsttime, colour):
-		print("col: %s"%colour)
+		# print("col: %s"%colour)
 		if colour is "white":
 			return self.whitePawn(i, j, state, firsttime)
 		elif colour is "black":
@@ -987,7 +991,7 @@ class Brain(object):
 
 
 
-	def getInGuardDir(self, i, j, state, king_place):
+	def getInGuardDir(self, i, j, state, king_place, p_type):
 
 		end_id = king_place['placeId']
 		places = []
@@ -1025,63 +1029,71 @@ class Brain(object):
 
 		endI = end_coord['I']
 		endJ = end_coord['J']
-
+		# print("end %s - %s"%(endI, endJ))
 		my_direction = ''
 
 		for n in range(0, 8):
 			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
 				
 				if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
-					if i1 == endI and j1 == endJ:
-						my_direction = 'tr'
-						break
-					i1 = i1 + 1
-					j1 = j1 + 1
+					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+						if i1 == endI and j1 == endJ:
+							my_direction = 'tr'
+							break
+						i1 = i1 + 1
+						j1 = j1 + 1
 
 				if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
-					if i2 == endI and j2 == endJ:
-						my_direction = 'tl'
-						break
-					i2 = i2 + 1
-					j2 = j2 - 1
+					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+						if i2 == endI and j2 == endJ:
+							my_direction = 'tl'
+							break
+						i2 = i2 + 1
+						j2 = j2 - 1
 
 				if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
-					if i3 == endI and j3 == endJ:
-						my_direction = 'br'
-						break
-					i3 = i3 - 1
-					j3 = j3 + 1
+					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+						if i3 == endI and j3 == endJ:
+							my_direction = 'br'
+							break
+						i3 = i3 - 1
+						j3 = j3 + 1
 
 				if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
-					if i4 == endI and j4 == endJ:
-						my_direction = 'bl'
-						break
-					i4 = i4 - 1
-					j4 = j4 - 1
+					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+						if i4 == endI and j4 == endJ:
+							my_direction = 'bl'
+							break
+						i4 = i4 - 1
+						j4 = j4 - 1
 
 				if i5 < 8 and i5 >= 0 and j5 < 8 and j5 >= 0:
-					if i5 == endI and j5 == endJ:
-						my_direction = 'up'
-						break
-					i5 = i5 + 1
+					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+						if i5 == endI and j5 == endJ:
+							my_direction = 'up'
+							break
+						i5 = i5 + 1
 
 				if i6 < 8 and i6 >= 0 and j6 < 8 and j6 >= 0:
-					if i6 == endI and j6 == endJ:
-						my_direction = 'down'
-						break
-					i6 = i6 - 1
+					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+						if i6 == endI and j6 == endJ:
+							my_direction = 'down'
+							break
+						i6 = i6 - 1
 
 				if i7 < 8 and i7 >= 0 and j7 < 8 and j7 >= 0:
-					if i7 == endI and j7 == endJ:
-						my_direction = 'right'
-						break
-					j7 = j7 + 1
+					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+						if i7 == endI and j7 == endJ:
+							my_direction = 'right'
+							break
+						j7 = j7 + 1
 
 				if i8 < 8 and i8 >= 0 and j8 < 8 and j8 >= 0:
-					if i8 == endI and j8 == endJ:
-						my_direction = 'left'
-						break
-					j8 = j8 - 1
+					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+						if i8 == endI and j8 == endJ:
+							my_direction = 'left'
+							break
+						j8 = j8 - 1
 
 		return my_direction
 
@@ -1101,6 +1113,16 @@ class Brain(object):
 		my_direction = dirtn
 
 		in_guard = {"is_guard" : False, "value" : None}
+        
+		upstart = False
+		downstart = False
+		rightstart = False
+		leftstart = False
+
+		trstart = False
+		tlstart = False
+		brstart = False
+		blstart = False
 
 		for m in range(0, 8):
 			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0:
@@ -1110,10 +1132,16 @@ class Brain(object):
 						nextval = state[startI][startJ]
 						my_type = self.getType(nextval['pieceId'])
 						my_colour = self.getColour(nextval['pieceId'])
+						# print("val: %s - %s - %s"%(nextval, my_type, my_colour))
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour !=  '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and blstart:
+							blstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "bishop":
+							blstart = True
+							break
 						startI = startI + 1
 						startJ = startJ + 1
 
@@ -1123,8 +1151,13 @@ class Brain(object):
 						my_colour = self.getColour(nextval['pieceId'])
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour != '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and brstart:
+							brstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "bishop":
+							brstart = True
+							break
 						startI = startI + 1
 						startJ = startJ - 1
 
@@ -1134,8 +1167,13 @@ class Brain(object):
 						my_colour = self.getColour(nextval['pieceId'])
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour !=  '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and tlstart:
+							tlstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "bishop":
+							tlstart = True
+							break
 						startI = startI - 1
 						startJ = startJ + 1
 
@@ -1145,8 +1183,13 @@ class Brain(object):
 						my_colour = self.getColour(nextval['pieceId'])
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "bishop" and my_colour !=  '' and col !=  my_colour:
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour !=  '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and trstart:
+							trstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "bishop":
+							trstart = True
+							break
 						startI = startI - 1
 						startJ = startJ - 1
 
@@ -1156,8 +1199,13 @@ class Brain(object):
 						my_colour = self.getColour(nextval['pieceId'])
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour !=  '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and upstart:
+							upstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "rook":
+							upstart = True
+							break
 						startI = startI - 1
 
 					if my_direction is 'down':
@@ -1168,8 +1216,13 @@ class Brain(object):
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							# print("kinda working: %s - %s"%(nextval, places))
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour !=  '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and downstart:
+							downstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "rook":
+							downstart = True
+							break
 						startI = startI + 1
 			
 					if my_direction is 'right':
@@ -1178,8 +1231,13 @@ class Brain(object):
 						my_colour = self.getColour(nextval['pieceId'])
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour !=  '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and rightstart:
+							rightstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "rook":
+							rightstart = True
+							break
 						startJ = startJ - 1
 
 					if my_direction is 'left':
@@ -1188,8 +1246,13 @@ class Brain(object):
 						my_colour = self.getColour(nextval['pieceId'])
 						if my_type == "queen" and my_colour !=  '' and col !=  my_colour or my_type == "rook" and my_colour !=  '' and col !=  my_colour:
 							in_guard = {"is_guard" : True, "value" : nextval}
-						elif my_colour !=  '' and col !=  my_colour:
-							in_guard = {"is_guard" : False, "value" : None}
+							break
+						elif my_colour != '' and col == my_colour and leftstart:
+							leftstart = True
+							break
+						elif my_type != "queen" and my_colour !=  '' and col !=  my_colour and my_type != "rook":
+							leftstart = True
+							break
 						startJ = startJ + 1
 
 		return in_guard
@@ -1261,12 +1324,12 @@ class Brain(object):
 		counter = 0
 		for item in dict_input:
 			if item is not None:
-				counter = counter + 1
 				next_id = item['id']
 				if next_id == val_id:
 					return counter
+				counter = counter + 1
 					
-		return counter
+		return 0
 
 	def getRestrictedPlaces(self, open_in, restricted_in):
 
@@ -1300,7 +1363,7 @@ class Brain(object):
 		b_pos = []
 
 		for m in range(0, 8):
-			if right < 8 and right >= 0:
+			if w_right < 8 and w_right >= 0 and b_right < 8 and b_right >= 0:
 
 				if col == 'white':
 					rightval = state[i][w_right]
@@ -1308,12 +1371,19 @@ class Brain(object):
 					rightplace = rightval['placeId']
 					w_type = self.getType(rightpiece)
 					w_colour = self.getColour(rightpiece)
+					# print("r val %s"%rightval)
 					if rightpiece == '':
 						w_right = w_right + 1
+						# print("r emp val %s"%rightval)
 					elif w_type == "rook" and w_colour == col:
 						given_co = self.getCoordinates(rightplace)
+						# print("r place %s - %s"%(given_co['I'], given_co['J']))
 						if given_co['I'] == 0 and given_co['J'] == 7:
-							castle = {"is_castle" : True, "king_pos" : state[0][4], "rook_pos": state[0][5], "rook": rightval}
+							king_check = self.inCheck(0, 5, state, True, col)
+							rook_check = self.inCheck(0, 4, state, True, col)
+							# print("check %s - %s"%(king_check, rook_check))
+							if not king_check and not rook_check:
+								castle = {"is_castle" : True, "king_pos" : state[0][5], "rook_pos": state[0][4], "rook": rightval}
 							break
 						else:
 							break
@@ -1331,7 +1401,10 @@ class Brain(object):
 					elif b_type == "rook" and b_colour == col:
 						given_co = self.getCoordinates(rightplace)
 						if given_co['I'] == 7 and given_co['J'] == 7:
-							castle = {"is_castle" : True, "king_pos" : state[7][4], "rook_pos": state[7][5], "rook": rightval}
+							king_check = self.inCheck(7, 5, state, True, col)
+							rook_check = self.inCheck(7, 4, state, True, col)
+							if not king_check and not rook_check:
+								castle = {"is_castle" : True, "king_pos" : state[7][5], "rook_pos": state[7][4], "rook": rightval}
 							break
 						else:
 							break
@@ -1351,6 +1424,7 @@ class Brain(object):
 		
 		w_left = startJ - 1
 		b_left = startJ - 1
+	
 
 		castle = {"is_castle" : False, "king_pos" : None, "rook_pos": None, "rook": None}
 
@@ -1358,7 +1432,7 @@ class Brain(object):
 		b_pos = []
 
 		for m in range(0, 8):
-			if right < 8 and right >= 0:
+			if w_left < 8 and w_left >= 0 and  b_left < 8 and b_left >= 0:
 
 				if col == 'white':
 					leftval = state[i][w_left]
@@ -1371,7 +1445,10 @@ class Brain(object):
 					elif w_type == "rook" and w_colour == col:
 						given_co = self.getCoordinates(leftplace)
 						if given_co['I'] == 0 and given_co['J'] == 0:
-							castle = {"is_castle" : True, "king_pos" : state[0][1], "rook_pos": state[0][2], "rook": leftval}
+							king_check = self.inCheck(0, 1, state, True, col)
+							rook_check = self.inCheck(0, 2, state, True, col)
+							if not king_check and not rook_check:
+								castle = {"is_castle" : True, "king_pos" : state[0][1], "rook_pos": state[0][2], "rook": leftval}
 							break
 						else:
 							break
@@ -1389,7 +1466,10 @@ class Brain(object):
 					elif b_type == "rook" and b_colour == col:
 						given_co = self.getCoordinates(leftplace)
 						if given_co['I'] == 7 and given_co['J'] == 0:
-							castle = {"is_castle" : True, "king_pos" : state[7][1], "rook_pos": state[7][2], "rook": leftval}
+							king_check = self.inCheck(7, 1, state, True, col)
+							rook_check = self.inCheck(7, 2, state, True, col)
+							if not king_check and not rook_check:
+								castle = {"is_castle" : True, "king_pos" : state[7][1], "rook_pos": state[7][2], "rook": leftval}
 							break
 						else:
 							break
@@ -1408,43 +1488,52 @@ class Brain(object):
 		king_co = self.getCoordinates(king['placeId'])
 		
 		in_check = False
-		check = self.inCheck(king_co['I'], king_co['J'], state, firsttime, col)
+		check = self.inCheck(king_co['I'], king_co['J'], state, True, col)
 		if check is not None:
 			in_check = True
 		
 		movements = []
-
+		print("king: %s"%king)
 		if not in_check:
 			for item in vals:
 				item_id = item['pieceId']
 				item_co = self.getCoordinates(item['placeId'])
 				item_type = self.getType(item_id)
 				
-				in_guard_dir = self.getInGuardDir(item_co['I'], item_co['J'], state, king)
+				in_guard_dir = self.getInGuardDir(item_co['I'], item_co['J'], state, king, item_type)
 				in_guard = self.isInGuard(item_co['I'], item_co['J'], state, col, in_guard_dir)
 				is_guard = in_guard['is_guard']
 				in_g_v = in_guard['value']
-				g_id = in_g_v['pieceId']
-				# g_co = self.getCoordinates(g_id)
-				g_r_path = self.getRookCheckPath(king_co['I'], king_co['J'], state, in_g_v)
-				g_r_path = self.smoothenArray(g_r_path, king)
-				g_b_path = self.getBishopCheckPath(king_co['I'], king_co['J'], state, in_g_v)
-				g_b_path = self.smoothenArray(g_b_path, king)
-				g_path = []
+				# print("g: %s"%in_g_v)
+
 				
-				if len(g_r_path) != 0 and len(g_b_path) == 0:
-					g_path = g_r_path
-				elif len(g_r_path) == 0 and len(g_b_path) != 0:
-					g_path = g_b_path
-				else:
-					print("MULTIPLE PATH ERROR: %s - %s"%(len(g_r_path), len(g_b_path)))
+
+				g_path = []
+				if in_g_v:
+					g_id = in_g_v['pieceId']
 
 
-				dict_place = self.getItemPlace(m_dict, item_co)
+					g_r_path = self.getRookCheckPath(king_co['I'], king_co['J'], state, in_g_v)
+					g_r_path = self.smoothenArray(g_r_path, king)
+					g_b_path = self.getBishopCheckPath(king_co['I'], king_co['J'], state, in_g_v)
+					g_b_path = self.smoothenArray(g_b_path, king)
+					g_path = []
+				
+					if len(g_r_path) != 0 and len(g_b_path) == 0:
+						g_path = g_r_path
+					elif len(g_r_path) == 0 and len(g_b_path) != 0:
+						g_path = g_b_path
+					else:
+						print("MULTIPLE PATH ERROR: %s - %s"%(len(g_r_path), len(g_b_path)))
+
+
+				dict_place = self.getItemPlace(m_dict, item_id)
+				# print("pos: %s"%dict_place)
 
 				if item_type == "rook":
 					movement = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.smoothenArray(movement, item)
+					# print("is guard %s"%is_guard)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# print("rook mov %s - %s"%(movement, item))
@@ -1453,11 +1542,11 @@ class Brain(object):
 
 
 				if item_type == "bishop":
+					# print("bish: %s"%item)
 					movement = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.smoothenArray(movement, item)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
-					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "horse":
@@ -1470,11 +1559,15 @@ class Brain(object):
 
 				if item_type == "pawn":
 					is_first = self.isFirst(firsts, item)
+					if is_first:
+						is_first = False
+					else:
+						is_first = True
+
 					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first , col)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
-					print("pawn mov %s"%movement)
-					# movements = movements + movement
+					# print("pawn %s"% item)
 					m_dict[dict_place].update(moves = movement)
 
 				if item_type == "queen":
@@ -1483,6 +1576,8 @@ class Brain(object):
 					movement2 = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
 					movement2 = self.smoothenArray(movement2, item)
 					movement = movement1 + movement2
+					# print("is guard %s"%is_guard)
+					# print("queen: %s"%item)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# movements = movements + movement
@@ -1490,6 +1585,7 @@ class Brain(object):
 
 				if item_type == "king":
 					movement = self.basicKingMovement(item_co['I'], item_co['J'], state, col)
+					# print("k mov: %s"%movement)
 					moves = []
 					r_moves = self.getRightCastle(item_co['I'], item_co['J'], state, col)
 					l_moves = self.getLeftCastle(item_co['I'], item_co['J'], state, col)
@@ -1508,10 +1604,12 @@ class Brain(object):
 					if can_l_castle:
 						moves.append(l_moves['king_pos'])
 						moves.append(l_moves['rook_pos'])
+						print("k m: %s - %s"%(l_moves['king_pos'], l_moves['rook_pos']))
 						can_c = can_l_castle
 						l_castling_rook = l_moves['rook']
 
-					movement = movement + moves
+					# print("k moves: %s"%moves)
+					movement = moves
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(can_castle = can_c)
 					m_dict[dict_place].update(r_castle_rook = r_castling_rook)
@@ -1526,6 +1624,7 @@ class Brain(object):
 				restr1 = self.getRookCheckPath(king_co['I'], king_co['J'], state, check)
 				restr2 = self.getBishopCheckPath(king_co['I'], king_co['J'], state, check) 
 				restr = restr1 + restr2
+				dict_place = self.getItemPlace(m_dict, item_id)
 				
 
 				if item_type == "rook":
@@ -1554,7 +1653,7 @@ class Brain(object):
 					is_first = self.isFirst(firsts, item)
 					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first, col)
 					movement = self.getRestrictedPlaces(movement, restr)
-					print("pawn mov %s"%movement)
+					# print("pawn mov %s"%movement)
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
 
@@ -1575,7 +1674,7 @@ class Brain(object):
 						val_co = self.getCoordinates(val['placeId'])
 						
 						val_in_check = False
-						val_check = self.inCheck(val_co['I'], val_co['J'], state, firsttime, col)
+						val_check = self.inCheck(val_co['I'], val_co['J'], state, True, col)
 						if val_check is not None:
 							val_in_check = True
 						
@@ -1587,7 +1686,7 @@ class Brain(object):
 					# movements = movements + movement
 
 
-		return movements
+		return m_dict
 
 	
 
