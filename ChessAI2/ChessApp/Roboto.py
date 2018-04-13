@@ -65,20 +65,20 @@ class Brain(object):
 				]
 	
 	movesdict = [
-					{"id": "wpawn1", "moves": []}, {"id": "wpawn2", "moves": []}, {"id": "wpawn3", "moves": []},
-					{"id": "wpawn4", "moves": []}, {"id": "wpawn5", "moves": []}, {"id": "wpawn6", "moves": []},
-					{"id": "wpawn7", "moves": []}, {"id": "wpawn8", "moves": []}, {"id": "bpawn1", "moves": []}, 
-					{"id": "bpawn2", "moves": []}, {"id": "bpawn3", "moves": []}, {"id": "bpawn4", "moves": []}, 
-					{"id": "bpawn5", "moves": []}, {"id": "bpawn6", "moves": []}, {"id": "bpawn7", "moves": []}, 
-					{"id": "bpawn8", "moves": []}, {"id": "wrook1", "moves": []}, {"id": "wrook2", "moves": []},
-					{"id": "brook1", "moves": []}, {"id": "brook2", "moves": []}, 
-					{"id": "wbishop1", "moves": []}, {"id": "wbishop2", "moves": []},
-					{"id": "bbishop1", "moves": []}, {"id": "bbishop2", "moves": []},
-					{"id": "whorse1", "moves": []}, {"id": "whorse2", "moves": []},
-					{"id": "bhorse1", "moves": []}, {"id": "bhorse2", "moves": []},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
-					{"id": "wqueen", "moves": []}, {"id": "bqueen", "moves": []}
+					{"id": "wpawn1", "moves": [], "pos": None}, {"id": "wpawn2", "moves": [], "pos": None}, {"id": "wpawn3", "moves": [], "pos": None},
+					{"id": "wpawn4", "moves": [], "pos": None}, {"id": "wpawn5", "moves": [], "pos": None}, {"id": "wpawn6", "moves": [], "pos": None},
+					{"id": "wpawn7", "moves": [], "pos": None}, {"id": "wpawn8", "moves": [], "pos": None}, {"id": "bpawn1", "moves": [], "pos": None}, 
+					{"id": "bpawn2", "moves": [], "pos": None}, {"id": "bpawn3", "moves": [], "pos": None}, {"id": "bpawn4", "moves": [], "pos": None}, 
+					{"id": "bpawn5", "moves": [], "pos": None}, {"id": "bpawn6", "moves": [], "pos": None}, {"id": "bpawn7", "moves": [], "pos": None}, 
+					{"id": "bpawn8", "moves": [], "pos": None}, {"id": "wrook1", "moves": [], "pos": None}, {"id": "wrook2", "moves": [], "pos": None},
+					{"id": "brook1", "moves": [], "pos": None}, {"id": "brook2", "moves": [], "pos": None}, 
+					{"id": "wbishop1", "moves": [], "pos": None}, {"id": "wbishop2", "moves": [], "pos": None},
+					{"id": "bbishop1", "moves": [], "pos": None}, {"id": "bbishop2", "moves": [], "pos": None},
+					{"id": "whorse1", "moves": [], "pos": None}, {"id": "whorse2", "moves": [], "pos": None},
+					{"id": "bhorse1", "moves": [], "pos": None}, {"id": "bhorse2", "moves": [], "pos": None},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None},
+					{"id": "wqueen", "moves": [], "pos": None}, {"id": "bqueen", "moves": [], "pos": None}
 				]
 
 
@@ -134,20 +134,20 @@ class Brain(object):
 					{"id": "wqueen", "is_first": False}, {"id": "bqueen", "is_first": False}
 				]
 		self.movesdict = [
-					{"id": "wpawn1", "moves": []}, {"id": "wpawn2", "moves": []}, {"id": "wpawn3", "moves": []},
-					{"id": "wpawn4", "moves": []}, {"id": "wpawn5", "moves": []}, {"id": "wpawn6", "moves": []},
-					{"id": "wpawn7", "moves": []}, {"id": "wpawn8", "moves": []}, {"id": "bpawn1", "moves": []}, 
-					{"id": "bpawn2", "moves": []}, {"id": "bpawn3", "moves": []}, {"id": "bpawn4", "moves": []}, 
-					{"id": "bpawn5", "moves": []}, {"id": "bpawn6", "moves": []}, {"id": "bpawn7", "moves": []}, 
-					{"id": "bpawn8", "moves": []}, {"id": "wrook1", "moves": []}, {"id": "wrook2", "moves": []},
-					{"id": "brook1", "moves": []}, {"id": "brook2", "moves": []}, 
-					{"id": "wbishop1", "moves": []}, {"id": "wbishop2", "moves": []},
-					{"id": "bbishop1", "moves": []}, {"id": "bbishop2", "moves": []},
-					{"id": "whorse1", "moves": []}, {"id": "whorse2", "moves": []},
-					{"id": "bhorse1", "moves": []}, {"id": "bhorse2", "moves": []},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None},
-					{"id": "wqueen", "moves": []}, {"id": "bqueen", "moves": []}
+					{"id": "wpawn1", "moves": [], "pos": None}, {"id": "wpawn2", "moves": [], "pos": None}, {"id": "wpawn3", "moves": [], "pos": None},
+					{"id": "wpawn4", "moves": [], "pos": None}, {"id": "wpawn5", "moves": [], "pos": None}, {"id": "wpawn6", "moves": [], "pos": None},
+					{"id": "wpawn7", "moves": [], "pos": None}, {"id": "wpawn8", "moves": [], "pos": None}, {"id": "bpawn1", "moves": [], "pos": None}, 
+					{"id": "bpawn2", "moves": [], "pos": None}, {"id": "bpawn3", "moves": [], "pos": None}, {"id": "bpawn4", "moves": [], "pos": None}, 
+					{"id": "bpawn5", "moves": [], "pos": None}, {"id": "bpawn6", "moves": [], "pos": None}, {"id": "bpawn7", "moves": [], "pos": None}, 
+					{"id": "bpawn8", "moves": [], "pos": None}, {"id": "wrook1", "moves": [], "pos": None}, {"id": "wrook2", "moves": [], "pos": None},
+					{"id": "brook1", "moves": [], "pos": None}, {"id": "brook2", "moves": [], "pos": None}, 
+					{"id": "wbishop1", "moves": [], "pos": None}, {"id": "wbishop2", "moves": [], "pos": None},
+					{"id": "bbishop1", "moves": [], "pos": None}, {"id": "bbishop2", "moves": [], "pos": None},
+					{"id": "whorse1", "moves": [], "pos": None}, {"id": "whorse2", "moves": [], "pos": None},
+					{"id": "bhorse1", "moves": [], "pos": None}, {"id": "bhorse2", "moves": [], "pos": None},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None},
+					{"id": "wqueen", "moves": [], "pos": None}, {"id": "bqueen", "moves": [], "pos": None}
 				]
 		self.first = False
 		self.sec = True
@@ -176,9 +176,9 @@ class Brain(object):
 
 	def getType(self, pieceId):
 		my_type = pieceId[1:-1]
-		if my_type in "king":
+		if my_type in "king" and my_type != "":
 			my_type = "king"
-		elif my_type in "queen":
+		elif my_type in "queen" and my_type != "":
 			my_type = "queen"
 	
 		return my_type
@@ -1493,7 +1493,7 @@ class Brain(object):
 			in_check = True
 		
 		movements = []
-		print("king: %s"%king)
+		# print("king: %s"%king)
 		if not in_check:
 			for item in vals:
 				item_id = item['pieceId']
@@ -1512,7 +1512,6 @@ class Brain(object):
 				if in_g_v:
 					g_id = in_g_v['pieceId']
 
-
 					g_r_path = self.getRookCheckPath(king_co['I'], king_co['J'], state, in_g_v)
 					g_r_path = self.smoothenArray(g_r_path, king)
 					g_b_path = self.getBishopCheckPath(king_co['I'], king_co['J'], state, in_g_v)
@@ -1526,7 +1525,6 @@ class Brain(object):
 					else:
 						print("MULTIPLE PATH ERROR: %s - %s"%(len(g_r_path), len(g_b_path)))
 
-
 				dict_place = self.getItemPlace(m_dict, item_id)
 				# print("pos: %s"%dict_place)
 
@@ -1539,6 +1537,7 @@ class Brain(object):
 					# print("rook mov %s - %s"%(movement, item))
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 
 				if item_type == "bishop":
@@ -1548,6 +1547,7 @@ class Brain(object):
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "horse":
 					movement = self.basicHorseMovement(item_co['I'], item_co['J'], state, col)
@@ -1556,6 +1556,7 @@ class Brain(object):
 					# print("horse mov %s"%movement)
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "pawn":
 					is_first = self.isFirst(firsts, item)
@@ -1569,6 +1570,7 @@ class Brain(object):
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# print("pawn %s"% item)
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "queen":
 					movement1 = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
@@ -1582,6 +1584,7 @@ class Brain(object):
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "king":
 					movement = self.basicKingMovement(item_co['I'], item_co['J'], state, col)
@@ -1604,13 +1607,14 @@ class Brain(object):
 					if can_l_castle:
 						moves.append(l_moves['king_pos'])
 						moves.append(l_moves['rook_pos'])
-						print("k m: %s - %s"%(l_moves['king_pos'], l_moves['rook_pos']))
+						# print("k m: %s - %s"%(l_moves['king_pos'], l_moves['rook_pos']))
 						can_c = can_l_castle
 						l_castling_rook = l_moves['rook']
 
 					# print("k moves: %s"%moves)
 					movement = moves
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 					m_dict[dict_place].update(can_castle = can_c)
 					m_dict[dict_place].update(r_castle_rook = r_castling_rook)
 					m_dict[dict_place].update(l_castle_rook = l_castling_rook)
@@ -1634,6 +1638,7 @@ class Brain(object):
 					# print("rook mov %s - %s"%(movement, item))
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "bishop":
 					movement = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
@@ -1641,6 +1646,7 @@ class Brain(object):
 					movement = self.getRestrictedPlaces(movement, restr)
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "horse":
 					movement = self.basicHorseMovement(item_co['I'], item_co['J'], state, col)
@@ -1648,6 +1654,7 @@ class Brain(object):
 					# print("horse mov %s"%movement)
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "pawn":
 					is_first = self.isFirst(firsts, item)
@@ -1656,6 +1663,7 @@ class Brain(object):
 					# print("pawn mov %s"%movement)
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "queen":
 					movement1 = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
@@ -1666,6 +1674,7 @@ class Brain(object):
 					movement = self.getRestrictedPlaces(movement, restr)
 					# movements = movements + movement
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 
 				if item_type == "king":
 					movement = self.basicKingMovement(item_co['I'], item_co['J'], state, col)
@@ -1683,10 +1692,77 @@ class Brain(object):
 
 					movement = self.getRestrictedPlaces(movement, movement2)
 					m_dict[dict_place].update(moves = movement)
+					m_dict[dict_place].update(pos = item)
 					# movements = movements + movement
 
 
 		return m_dict
+
+
+	def evaluate(self, state, m_dict, col):
+		bestmove = None
+		bestval = 0
+
+		for value in m_dict:
+			my_moves = value['moves']
+			pos = value['pos']
+			if pos:
+				current_c_e = self.getAssignedVal(pos, col)
+			for item in my_moves:
+				init_e = 0
+				check_e = 0
+				init_e = self.getAssignedVal(item, col)
+				item_co = self.getCoordinates(item['placeId'])
+				check = self.inCheck(item_co['I'], item_co['J'], state ,True ,col)
+				if check:
+					check_e = current_c_e
+					check_piece = check['pieceId']
+					check_type = self.getType(check_piece)
+					if check_type == "king":
+						check_e = 900
+					
+				print("item: %s init_e: %s check_e %s"%(item, init_e, check_e))
+				nextval = init_e + check_e
+				if nextval > bestval:
+					bestval = nextval
+					bestmove = item 
+
+		return bestmove
+
+	def getAssignedVal(self, my_dict, col):
+		# print("dict: %s"%my_dict)
+		my_piece = my_dict['pieceId']
+
+		my_colour = self.getColour(my_piece)
+		my_type = self.getType(my_piece)
+
+		if my_type == "pawn" and my_colour != col:
+			return 10
+		elif my_type == "pawn" and my_colour == col:
+			return -10
+		elif my_type == "horse" and my_colour != col:
+			return 30
+		elif my_type == "horse" and my_colour == col:
+			return -30
+		elif my_type == "bishop" and my_colour != col:
+			return 30
+		elif my_type == "bishop" and my_colour == col:
+			return -30
+		elif my_type == "rook" and my_colour != col:
+			return 50
+		elif my_type == "rook" and my_colour == col:
+			return -50
+		elif my_type == "queen" and my_colour != col:
+			return 90
+		elif my_type == "queen" and my_colour == col:
+			return -90
+		elif my_type == "king" and my_colour == col:
+			return -900
+	
+		return 0			
+
+	
+
 
 	
 

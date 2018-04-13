@@ -207,6 +207,21 @@ trainstate = brain.getTrainState()
 # print("recieved: %s"%recieved)
 # print("recieveds: %s - %s"%(recieved, direction))
 
+#evaluate
+trainstate[6][3].update(pieceId = "")
+trainstate[3][4].update(pieceId = "wrook1")
+trainstate[5][5].update(pieceId = "bbishop2")
+
+pieces = brain.getPieces(trainstate, "white")
+movesdic = brain.getMovesDict()
+firsts = brain.getFirsts()
+
+moves = brain.getMoves(trainstate, firsts, "white", pieces, movesdic)
+
+recieved = brain.evaluate(trainstate, moves, "white")
+# recieved = brain.getType("")
+print("recieved: %s"%recieved)
+
 
 
 
