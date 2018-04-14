@@ -917,43 +917,47 @@ class Brain(object):
 
 		my_direction = ''
 
+		
+			
 		for n in range(0, 8):
-			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
-				
-				if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
-					if i1 == endI and j1 == endJ:
-						my_direction = 'tr'
-						break
-					i1 = i1 + 1
-					j1 = j1 + 1
+			if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
+				if i1 == endI and j1 == endJ:
+					my_direction = 'tr'
+					break
+				i1 = i1 + 1
+				j1 = j1 + 1
 
-				if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
-					if i2 == endI and j2 == endJ:
-						my_direction = 'tl'
-						break
-					i2 = i2 + 1
-					j2 = j2 - 1
+		for n in range(0, 8):
+			if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
+				if i2 == endI and j2 == endJ:
+					my_direction = 'tl'
+					break
+				i2 = i2 + 1
+				j2 = j2 - 1
 
-				if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
-					if i3 == endI and j3 == endJ:
-						my_direction = 'br'
-						break
-					i3 = i3 - 1
-					j3 = j3 + 1
+		for n in range(0, 8):
+			if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
+				if i3 == endI and j3 == endJ:
+					my_direction = 'br'
+					break
+				i3 = i3 - 1
+				j3 = j3 + 1
 
-				if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
-					if i4 == endI and j4 == endJ:
-						my_direction = 'bl'
-						break
-					i4 = i4 - 1
-					j4 = j4 - 1
+		for n in range(0, 8):
+			if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
+				if i4 == endI and j4 == endJ:
+					my_direction = 'bl'
+					break
+				i4 = i4 - 1
+				j4 = j4 - 1
 
 
-		for m in range(0, 8):
-			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+		
 
-				if my_direction is not '':
-					if my_direction is 'tr':
+		if my_direction is not '':
+			for m in range(0, 8):
+				if my_direction is 'tr':
+					if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0:
 						nextval = state[startI][startJ]
 						places.append(nextval)
 						if startI == endI and startJ == endJ:
@@ -961,7 +965,9 @@ class Brain(object):
 						startI = startI + 1
 						startJ = startJ + 1
 
-					if my_direction is 'tl':
+			for m in range(0, 8):
+				if my_direction is 'tl':
+					if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0:
 						nextval = state[startI][startJ]
 						places.append(nextval)
 						if startI == endI and startJ == endJ:
@@ -969,7 +975,9 @@ class Brain(object):
 						startI = startI + 1
 						startJ = startJ - 1
 
-					if my_direction is 'br':
+			for m in range(0, 8):
+				if my_direction is 'br':
+					if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0:
 						nextval = state[startI][startJ]
 						places.append(nextval)
 						if startI == endI and startJ == endJ:
@@ -977,7 +985,9 @@ class Brain(object):
 						startI = startI - 1
 						startJ = startJ + 1
 
-					if my_direction is 'bl':
+			for m in range(0, 8):
+				if my_direction is 'bl':
+					if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0:
 						nextval = state[startI][startJ]
 						places.append(nextval)
 						if startI == endI and startJ == endJ:
@@ -1032,68 +1042,75 @@ class Brain(object):
 		# print("end %s - %s"%(endI, endJ))
 		my_direction = ''
 
+		
+			# if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+		for n in range(0, 8):	
+			if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
+				if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+					if i1 == endI and j1 == endJ:
+						my_direction = 'tr'
+						break
+					i1 = i1 + 1
+					j1 = j1 + 1
+
 		for n in range(0, 8):
-			if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
-				
-				if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
-					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
-						if i1 == endI and j1 == endJ:
-							my_direction = 'tr'
-							break
-						i1 = i1 + 1
-						j1 = j1 + 1
+			if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
+				if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+					if i2 == endI and j2 == endJ:
+						my_direction = 'tl'
+						break
+					i2 = i2 + 1
+					j2 = j2 - 1
 
-				if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
-					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
-						if i2 == endI and j2 == endJ:
-							my_direction = 'tl'
-							break
-						i2 = i2 + 1
-						j2 = j2 - 1
+		for n in range(0, 8):
+			if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
+				if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+					if i3 == endI and j3 == endJ:
+						my_direction = 'br'
+						break
+					i3 = i3 - 1
+					j3 = j3 + 1
 
-				if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
-					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
-						if i3 == endI and j3 == endJ:
-							my_direction = 'br'
-							break
-						i3 = i3 - 1
-						j3 = j3 + 1
+		for n in range(0, 8):
+			if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
+				if p_type == "bishop" or p_type == "queen" or p_type == "rook":
+					if i4 == endI and j4 == endJ:
+						my_direction = 'bl'
+						break
+					i4 = i4 - 1
+					j4 = j4 - 1
 
-				if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
-					if p_type == "bishop" or p_type == "queen" or p_type == "rook":
-						if i4 == endI and j4 == endJ:
-							my_direction = 'bl'
-							break
-						i4 = i4 - 1
-						j4 = j4 - 1
+		for n in range(0, 8):
+			if i5 < 8 and i5 >= 0 and j5 < 8 and j5 >= 0:
+				if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+					if i5 == endI and j5 == endJ:
+						my_direction = 'up'
+						break
+					i5 = i5 + 1
 
-				if i5 < 8 and i5 >= 0 and j5 < 8 and j5 >= 0:
-					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
-						if i5 == endI and j5 == endJ:
-							my_direction = 'up'
-							break
-						i5 = i5 + 1
+		for n in range(0, 8):
+			if i6 < 8 and i6 >= 0 and j6 < 8 and j6 >= 0:
+				if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+					if i6 == endI and j6 == endJ:
+						my_direction = 'down'
+						break
+					i6 = i6 - 1
 
-				if i6 < 8 and i6 >= 0 and j6 < 8 and j6 >= 0:
-					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
-						if i6 == endI and j6 == endJ:
-							my_direction = 'down'
-							break
-						i6 = i6 - 1
+		for n in range(0, 8):
+			if i7 < 8 and i7 >= 0 and j7 < 8 and j7 >= 0:
+				if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+					if i7 == endI and j7 == endJ:
+						my_direction = 'right'
+						break
+					j7 = j7 + 1
 
-				if i7 < 8 and i7 >= 0 and j7 < 8 and j7 >= 0:
-					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
-						if i7 == endI and j7 == endJ:
-							my_direction = 'right'
-							break
-						j7 = j7 + 1
 
-				if i8 < 8 and i8 >= 0 and j8 < 8 and j8 >= 0:
-					if p_type == "rook" or p_type == "queen" or p_type == "bishop":
-						if i8 == endI and j8 == endJ:
-							my_direction = 'left'
-							break
-						j8 = j8 - 1
+			if i8 < 8 and i8 >= 0 and j8 < 8 and j8 >= 0:
+				if p_type == "rook" or p_type == "queen" or p_type == "bishop":
+					if i8 == endI and j8 == endJ:
+						my_direction = 'left'
+						break
+					j8 = j8 - 1
 
 		return my_direction
 
@@ -1748,7 +1765,7 @@ class Brain(object):
 			start_coord = {"I": i, "J": j}
 
 			end_coord = king_co
-			print("start: %s end: %s"%(start_coord, end_coord))
+			# print("start: %s end: %s"%(start_coord, end_coord))
 			if start_coord['I'] == end_coord['I']:
 				my_i = start_coord["I"]
 				if start_coord['J'] < end_coord['J']:
@@ -1817,12 +1834,13 @@ class Brain(object):
 				my_colour = "white"
 
 		my_val = state[i][j]
+		# print("val: %s"%my_val)
 		my_bit = my_val['pieceId']
 		if my_bit != '' or not check_own:
 			king = self.findKing(state, my_colour)
 			king_co = self.getCoordinates(king['placeId'])
 			king_piece = king['pieceId']
-
+			# print("king: %s"%king_piece)
 			start_coord = {"I": i, "J": j}
 
 			end_coord = king_co
@@ -1847,44 +1865,52 @@ class Brain(object):
 
 			my_direction = ''
 
-			for n in range(0, 8):
-				if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+			
 				
-					if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
-						nextval = state[i1][j1]
-						if i1 == endI and j1 == endJ:
-							return True
-						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
-							return False
-						i1 = i1 + 1
-						j1 = j1 + 1
+				# if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+			for n in range(0, 8):	
+				# print("loop: ")
+				if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
+					nextval = state[i1][j1]
+					# print("values: %s - %s"%(my_val, nextval))
+					# print("next: %s - %s"%(king_piece, nextval['pieceId']))
+					if i1 == endI and j1 == endJ:
+						return True
+					elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+						return False
+					i1 = i1 + 1
+					j1 = j1 + 1
 
-					if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
-						nextval = state[i2][j2]
-						if i2 == endI and j2 == endJ:
-							return True
-						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
-							return False
-						i2 = i2 + 1
-						j2 = j2 - 1
+			for n in range(0, 8):
+				if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
+					nextval = state[i2][j2]
+					if i2 == endI and j2 == endJ:
+						return True
+					elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+						return False
+					i2 = i2 + 1
+					j2 = j2 - 1
+				
 
-					if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
-						nextval = state[i3][j3]
-						if i3 == endI and j3 == endJ:
-							return True
-						elif nextval['pieceId'] == '' and nextval['pieceId'] != king_piece:
-							return False
-						i3 = i3 - 1
-						j3 = j3 + 1
+			for n in range(0, 8):
+				if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
+					nextval = state[i3][j3]
+					if i3 == endI and j3 == endJ:
+						return True
+					elif nextval['pieceId'] == '' and nextval['pieceId'] != king_piece:
+						return False
+					i3 = i3 - 1
+					j3 = j3 + 1
 
-					if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
-						nextval = state[i4][j4]
-						if i4 == endI and j4 == endJ:
-							return True
-						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
-							return False
-						i4 = i4 - 1
-						j4 = j4 - 1
+			for n in range(0, 8):
+				if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
+					nextval = state[i4][j4]
+					if i4 == endI and j4 == endJ:
+						return True
+					elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+						return False
+					i4 = i4 - 1
+					j4 = j4 - 1
 
 		return False
 
@@ -1939,25 +1965,25 @@ class Brain(object):
 			if pos:
 				pos_type = self.getType(pos['pieceId'])
 				current_c_e = self.getAssignedVal(pos, col)
+				# print("pos type: %s - %s"%(pos_type, my_moves))
 			for item in my_moves:
 				init_e = 0
 				check_e = 0
 				init_e = self.getAssignedVal(item, col)
 				item_co = self.getCoordinates(item['placeId'])
-				
+				# print("pos type: %s"%pos_type)
 				is_first = self.isFirst(firsts, item)
 				reach_king = False
 				if pos_type == "rook" or pos_type == "queen":
 					reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, False)
 					if not reach_king:
-						# print("hllo not reach")
-						
 						reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, True)
-					# print("rook item: %s - %s"%(item, reach_king))
 				elif pos_type == "bishop" or pos_type == "queen":
+					# print("hello bish")
 					reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, False)
 					if not reach_king:
 						reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, True)
+					# print("bishop reach king: %s - %s"%(reach_king, item))
 				elif pos_type == "horse":
 					reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, False)
 					if not reach_king:
@@ -1974,7 +2000,7 @@ class Brain(object):
 				if check:
 					check_e = current_c_e
 					
-				# print("item: %s init_e: %s check_e %s"%(item, init_e, check_e))
+				print("items: %s init_e: %s check_e %s"%(item, init_e, check_e))
 				nextval = init_e + check_e
 				if nextval > bestval:
 					bestval = nextval
