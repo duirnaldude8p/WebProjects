@@ -1698,37 +1698,6 @@ class Brain(object):
 
 		return m_dict
 
-
-	def evaluate(self, state, m_dict, col):
-		bestmove = None
-		bestval = 0
-
-		for value in m_dict:
-			my_moves = value['moves']
-			pos = value['pos']
-			if pos:
-				current_c_e = self.getAssignedVal(pos, col)
-			for item in my_moves:
-				init_e = 0
-				check_e = 0
-				init_e = self.getAssignedVal(item, col)
-				item_co = self.getCoordinates(item['placeId'])
-				check = self.inCheck(item_co['I'], item_co['J'], state ,True ,col)
-				if check:
-					check_e = current_c_e
-					check_piece = check['pieceId']
-					check_type = self.getType(check_piece)
-					if check_type == "king":
-						check_e = 900
-					
-				print("item: %s init_e: %s check_e %s"%(item, init_e, check_e))
-				nextval = init_e + check_e
-				if nextval > bestval:
-					bestval = nextval
-					bestmove = item 
-
-		return bestmove
-
 	def getAssignedVal(self, my_dict, col):
 		# print("dict: %s"%my_dict)
 		my_piece = my_dict['pieceId']
@@ -1759,7 +1728,261 @@ class Brain(object):
 		elif my_type == "king" and my_colour == col:
 			return -900
 	
-		return 0			
+		return 0	
+
+	def isCornerRookCheck(self, i, j, state, col, check_own):
+		my_colour = col
+		if not check_own:
+			if col == "white":
+				my_colour = "black"
+			elif col == "black":
+				my_colour = "white"
+
+		my_val = state[i][j]
+		my_bit = my_val['pieceId']
+		if my_bit != '' or not check_own:
+			king = self.findKing(state, my_colour)
+			king_co = self.getCoordinates(king['placeId'])
+			king_piece = king['pieceId']
+
+			start_coord = {"I": i, "J": j}
+
+			end_coord = king_co
+			print("start: %s end: %s"%(start_coord, end_coord))
+			if start_coord['I'] == end_coord['I']:
+				my_i = start_coord["I"]
+				if start_coord['J'] < end_coord['J']:
+					my_j = start_coord['J']
+					my_end_j = end_coord['J']
+					isfin = False
+					while not isfin:
+						nextval = state[my_i][my_j]
+						if my_j == my_end_j:
+							isfin = True
+							return True
+						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+							return False
+						my_j = my_j + 1
+
+				if start_coord['J'] > end_coord['J']:
+					my_j = end_coord['J']
+					my_end_j = start_coord['J']
+					isfin = False
+					while not isfin:
+						nextval = state[my_i][my_j]
+						if my_j == my_end_j:
+							isfin = True
+							return True
+						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+							return False
+						my_j = my_j + 1
+
+			if start_coord['J'] == end_coord['J']:
+				my_j = start_coord["J"]
+				if start_coord['I'] < end_coord['I']:
+					my_i = start_coord['I']
+					my_end_i = end_coord['I']
+					isfin = False
+					while not isfin:
+						nextval = state[my_i][my_j]
+						if my_i == my_end_i:
+							isfin = True
+							return True
+						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+							return False
+						my_i = my_i + 1
+
+				if start_coord['I'] > end_coord['I']:
+					my_i = end_coord['I']
+					my_end_i = start_coord['I']
+					isfin = False
+					while not isfin:
+						nextval = state[my_i][my_j]
+						if my_i == my_end_i:
+							isfin = True
+							return True
+						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+							return False
+						my_i = my_i + 1
+
+		return False
+
+
+	def isCornerBishopCheck(self, i, j, state, col, check_own):
+		my_colour = col
+		if not check_own:
+			if col == "white":
+				my_colour = "black"
+			elif col == "black":
+				my_colour = "white"
+
+		my_val = state[i][j]
+		my_bit = my_val['pieceId']
+		if my_bit != '' or not check_own:
+			king = self.findKing(state, my_colour)
+			king_co = self.getCoordinates(king['placeId'])
+			king_piece = king['pieceId']
+
+			start_coord = {"I": i, "J": j}
+
+			end_coord = king_co
+
+			startI = start_coord['I']
+			startJ = start_coord['J']
+
+			i1 = startI + 1
+			j1 = startJ + 1
+
+			i2 = startI + 1
+			j2 = startJ - 1
+
+			i3 = startI - 1
+			j3 = startJ + 1
+
+			i4 = startI - 1
+			j4 = startJ - 1
+
+			endI = end_coord['I']
+			endJ = end_coord['J']
+
+			my_direction = ''
+
+			for n in range(0, 8):
+				if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+				
+					if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
+						nextval = state[i1][j1]
+						if i1 == endI and j1 == endJ:
+							return True
+						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+							return False
+						i1 = i1 + 1
+						j1 = j1 + 1
+
+					if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
+						nextval = state[i2][j2]
+						if i2 == endI and j2 == endJ:
+							return True
+						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+							return False
+						i2 = i2 + 1
+						j2 = j2 - 1
+
+					if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
+						nextval = state[i3][j3]
+						if i3 == endI and j3 == endJ:
+							return True
+						elif nextval['pieceId'] == '' and nextval['pieceId'] != king_piece:
+							return False
+						i3 = i3 - 1
+						j3 = j3 + 1
+
+					if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
+						nextval = state[i4][j4]
+						if i4 == endI and j4 == endJ:
+							return True
+						elif nextval['pieceId'] != '' and nextval['pieceId'] != king_piece:
+							return False
+						i4 = i4 - 1
+						j4 = j4 - 1
+
+		return False
+
+	def isCornerHorseChecker(self, i, j, state, col, check_own):
+	
+		places = self.basicHorseMovement(i, j, state, col)
+		my_type = ''
+		my_colour = ''
+		
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if not check_own:
+				if my_type == "king" and my_colour != '' and col != my_colour:
+					return True
+			else:
+				if my_type == "king" and my_colour != '' and col == my_colour:
+					return True
+		
+		return False
+
+	def isCornerPawnChecker(self, i, j, state, col, firsttime, check_own):
+
+		places = self.basicPawnMovement(i, j, state, firsttime, col)
+		# print("places: %s"%places)
+		my_type = ''
+		my_colour = ''
+		
+		for item in places:
+			my_type = self.getType(item['pieceId'])
+			my_colour = self.getColour(item['pieceId'])
+			if not check_own:
+				if my_type == "king" and my_colour != '' and col != my_colour:
+					return True
+			else:
+				if my_type == "king" and my_colour != '' and col == my_colour:
+					return True
+		
+		return False
+
+	def evaluate(self, state, m_dict, col, firsts):
+		bestmove = None
+		bestval = 0
+
+		king = self.findKing(state, col)
+		king_co = self.getCoordinates(king['placeId'])
+
+		for value in m_dict:
+			my_moves = value['moves']
+			pos = value['pos']
+			
+			if pos:
+				pos_type = self.getType(pos['pieceId'])
+				current_c_e = self.getAssignedVal(pos, col)
+			for item in my_moves:
+				init_e = 0
+				check_e = 0
+				init_e = self.getAssignedVal(item, col)
+				item_co = self.getCoordinates(item['placeId'])
+				
+				is_first = self.isFirst(firsts, item)
+				reach_king = False
+				if pos_type == "rook" or pos_type == "queen":
+					reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, False)
+					if not reach_king:
+						# print("hllo not reach")
+						
+						reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, True)
+					# print("rook item: %s - %s"%(item, reach_king))
+				elif pos_type == "bishop" or pos_type == "queen":
+					reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, False)
+					if not reach_king:
+						reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, True)
+				elif pos_type == "horse":
+					reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, False)
+					if not reach_king:
+						reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, True)
+				elif pos_type == "pawn":
+					reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, False)
+					if not reach_king:
+						reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, True)
+
+				if reach_king:
+					init_e = init_e + 900
+
+				check = self.inCheck(item_co['I'], item_co['J'], state ,True ,col)
+				if check:
+					check_e = current_c_e
+					
+				# print("item: %s init_e: %s check_e %s"%(item, init_e, check_e))
+				nextval = init_e + check_e
+				if nextval > bestval:
+					bestval = nextval
+					bestmove = item 
+
+		return bestmove
+
+			
 
 	
 
