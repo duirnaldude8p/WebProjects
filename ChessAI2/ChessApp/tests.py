@@ -6,6 +6,23 @@ brain = Roboto.Brain()
 
 trainstate = brain.getTrainState()
 
+#game play
+# trainstate[6][0].update(pieceId = "")
+# trainstate[5][0].update(pieceId = "")
+# trainstate[4][0].update(pieceId = "bpawn1")
+trainstate[1][4].update(pieceId = "")
+trainstate[2][4].update(pieceId = "wpawn5")
+trainstate[1][3].update(pieceId = "")
+trainstate[2][3].update(pieceId = "wpawn4")
+trainstate[0][3].update(pieceId = "")
+trainstate[4][7].update(pieceId = "wqueen")
+# trainstate[3][7].update(pieceId = "wrook1")
+# trainstate[0][3].update(pieceId = "")
+# trainstate[2][5].update(pieceId = "bqueen")
+recieved = brain.processState(trainstate)
+
+print("test recieved: %s"%recieved)
+
 #horse checker
 # trainstate[5][4].update(pieceId = "whorse1")
 
@@ -208,24 +225,28 @@ trainstate = brain.getTrainState()
 # print("recieveds: %s - %s"%(recieved, direction))
 
 #evaluate
-# trainstate[1][3].update(pieceId = "")
-trainstate[6][4].update(pieceId = "")
-trainstate[5][4].update(pieceId = "wpawn1")
-# trainstate[3][3].update(pieceId = "bbishop1")
-# trainstate[1][4].update(pieceId = "")
-# trainstate[3][7].update(pieceId = "wrook1")
-# trainstate[3][4].update(pieceId = "brook1")
-# trainstate[5][5].update(pieceId = "bbishop2")
+# trainstate[6][0].update(pieceId = "")
+# trainstate[5][0].update(pieceId = "")
+# trainstate[4][0].update(pieceId = "bpawn1")
+# trainstate[6][1].update(pieceId = "")
+# trainstate[6][2].update(pieceId = "")
+# trainstate[5][1].update(pieceId = "bpawn2")
+# trainstate[4][2].update(pieceId = "bpawn3")
+# trainstate[1][2].update(pieceId = "")
+# trainstate[2][2].update(pieceId = "wpawn3")
+# trainstate[1][1].update(pieceId = "")
+# trainstate[2][1].update(pieceId = "wpawn2")
+# trainstate[2][0].update(pieceId = "bbishop1")
 
-pieces = brain.getPieces(trainstate, "white")
-movesdic = brain.getMovesDict()
-firsts = brain.getFirsts()
+# pieces = brain.getPieces(trainstate, "black")
+# movesdic = brain.getMovesDict()
+# firsts = brain.getFirsts()
 
-moves = brain.getMoves(trainstate, firsts, "white", pieces, movesdic)
-
-recieved = brain.evaluate(trainstate, moves, "white", firsts)
-# recieved = brain.getType("")
-print("recieved: %s"%recieved)
+# moves = brain.getMoves(trainstate, firsts, "black", pieces, movesdic)
+# mov_dict = brain.dictToList(moves, "black")
+# recieved = brain.evaluate(trainstate, mov_dict, "black", firsts)
+# # recieved = brain.getType("")
+# print("recieved: %s"%recieved)
 
 
 

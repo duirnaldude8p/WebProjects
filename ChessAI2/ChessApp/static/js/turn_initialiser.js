@@ -3,7 +3,7 @@ localStorage.setItem('hasSelected', 'N');
 localStorage.setItem('FinishedMove', 'N');
 
 var stateMatrix = [[{ pieceId: "wrook1", placeId: "r1A"},{ pieceId: "whorse1", placeId: "r1B"},{ pieceId: "wbishop1", placeId: "r1C"},
-					{ pieceId: "wking", placeId: "r1D"},{ pieceId: "wqueen", placeId: "r1E"},{ pieceId: "wbishop2", placeId: "r1F"},
+					{ pieceId: "wqueen", placeId: "r1D"},{ pieceId: "wking", placeId: "r1E"},{ pieceId: "wbishop2", placeId: "r1F"},
 					{ pieceId: "whorse2", placeId: "r1G"},{ pieceId: "wrook2", placeId: "r1H"}],
 				   [{ pieceId: "wpawn1", placeId: "r2A"},{ pieceId: "wpawn2", placeId: "r2B"},{ pieceId: "wpawn3", placeId: "r2C"},
 					{ pieceId: "wpawn4", placeId: "r2D"},{ pieceId: "wpawn5", placeId: "r2E"},{ pieceId: "wpawn6", placeId: "r2F"},
@@ -24,7 +24,7 @@ var stateMatrix = [[{ pieceId: "wrook1", placeId: "r1A"},{ pieceId: "whorse1", p
 					{ pieceId: "bpawn4", placeId: "r7D"},{ pieceId: "bpawn5", placeId: "r7E"},{ pieceId: "bpawn6", placeId: "r7F"},
 					{ pieceId: "bpawn7", placeId: "r7G"},{ pieceId: "bpawn8", placeId: "r7H"}],
 				   [{ pieceId: "brook1", placeId: "r8A"},{ pieceId: "bhorse1", placeId: "r8B"},{ pieceId: "bbishop1", placeId: "r8C"},
-					{ pieceId: "bking", placeId: "r8D"},{ pieceId: "bqueen", placeId: "r8E"},{ pieceId: "bbishop2", placeId: "r8F"},
+					{ pieceId: "bqueen", placeId: "r8D"},{ pieceId: "bking", placeId: "r8E"},{ pieceId: "bbishop2", placeId: "r8F"},
 					{ pieceId: "bhorse2", placeId: "r8G"},{ pieceId: "brook2", placeId: "r8H"}]			   
 				   ];
 

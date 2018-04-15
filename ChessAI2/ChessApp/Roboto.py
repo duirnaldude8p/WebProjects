@@ -1,9 +1,12 @@
 import json
 
 class Brain(object):
-	data = open('static\json\playing_data.json')
+	data = open('ChessApp\static\json\playing_data.json')
 	dictdata = json.load(data)
 	statematrix = dictdata['StateData']['StateMatrix']
+	data2 = open('ChessApp\static\json\playing_data2.json')
+	dictdata2 = json.load(data2)
+	trainstatemat = dictdata2['StateData']['StateMatrix']
 	compchoice = ''
 	compmove = ''
 	hasmoved = "N"
@@ -47,21 +50,20 @@ class Brain(object):
 	pawnIdArray = []
 	brainpiececolour = ''
 	brainpiecetype = ''
-	trainstatemat = statematrix
 	firsttimes = [
-					{"id": "wpawn1", "is_first": False}, {"id": "wpawn2", "is_first": False}, {"id": "wpawn3", "is_first": False},
-					{"id": "wpawn4", "is_first": False}, {"id": "wpawn5", "is_first": False}, {"id": "wpawn6", "is_first": False},
-					{"id": "wpawn7", "is_first": False}, {"id": "wpawn8", "is_first": False}, {"id": "bpawn1", "is_first": False}, 
-					{"id": "bpawn2", "is_first": False}, {"id": "bpawn3", "is_first": False}, {"id": "bpawn4", "is_first": False}, 
-					{"id": "bpawn5", "is_first": False}, {"id": "bpawn6", "is_first": False}, {"id": "bpawn7", "is_first": False}, 
-					{"id": "bpawn8", "is_first": False}, {"id": "wrook1", "is_first": False}, {"id": "wrook2", "is_first": False},
-					{"id": "brook1", "is_first": False}, {"id": "brook2", "is_first": False}, 
-					{"id": "wbishop1", "is_first": False}, {"id": "wbishop2", "is_first": False},
-					{"id": "bbishop1", "is_first": False}, {"id": "bbishop2", "is_first": False},
-					{"id": "whorse1", "is_first": False}, {"id": "whorse2", "is_first": False},
-					{"id": "bhorse1", "is_first": False}, {"id": "bhorse2", "is_first": False},
-					{"id": "wking", "is_first": False}, {"id": "bking", "is_first": False},
-					{"id": "wqueen", "is_first": False}, {"id": "bqueen", "is_first": False}
+					{"id": "wpawn1", "is_first": True}, {"id": "wpawn2", "is_first": True}, {"id": "wpawn3", "is_first": True},
+					{"id": "wpawn4", "is_first": True}, {"id": "wpawn5", "is_first": True}, {"id": "wpawn6", "is_first": True},
+					{"id": "wpawn7", "is_first": True}, {"id": "wpawn8", "is_first": True}, {"id": "bpawn1", "is_first": False}, 
+					{"id": "bpawn2", "is_first": True}, {"id": "bpawn3", "is_first": True}, {"id": "bpawn4", "is_first": True}, 
+					{"id": "bpawn5", "is_first": True}, {"id": "bpawn6", "is_first": True}, {"id": "bpawn7", "is_first": True}, 
+					{"id": "bpawn8", "is_first": True}, {"id": "wrook1", "is_first": True}, {"id": "wrook2", "is_first": True},
+					{"id": "brook1", "is_first": True}, {"id": "brook2", "is_first": True}, 
+					{"id": "wbishop1", "is_first": True}, {"id": "wbishop2", "is_first": True},
+					{"id": "bbishop1", "is_first": True}, {"id": "bbishop2", "is_first": True},
+					{"id": "whorse1", "is_first": True}, {"id": "whorse2", "is_first": True},
+					{"id": "bhorse1", "is_first": True}, {"id": "bhorse2", "is_first": True},
+					{"id": "wking", "is_first": True}, {"id": "bking", "is_first": True},
+					{"id": "wqueen", "is_first": True}, {"id": "bqueen", "is_first": True}
 				]
 	
 	movesdict = [
@@ -83,10 +85,12 @@ class Brain(object):
 
 
 	def _init_(self):
-		data = open('static\json\playing_data.json')
+		data = open('ChessApp\static\json\playing_data.json')
 		dictdata = json.load(data)
 		self.statematrix = dictdata['StateData']['StateMatrix']
-		self.trainstatemat = self.statematrix
+		data2 = open('ChessApp\static\json\playing_data2.json')
+		dictdata2 = json.load(data2)
+		self.trainstatemat = dictdata2['StateData']['StateMatrix']
 		self.compchoice = ''
 		self.compmove = ''
 		self.hasmoved = "N"
@@ -108,7 +112,7 @@ class Brain(object):
 		self.attackerArray = []
 		self.inGuard = 'N'
 		self.pieceInGuard = ''
-		self.spaceLength = 0;
+		self.spaceLength = 0
 		self.canSaveKing = ''
 		self.kingHasMoved = 'N'
 		self.rook1HasMoved = 'N'
@@ -119,19 +123,19 @@ class Brain(object):
 		self.brainpiececolour = ''
 		self.brainpiecetype = ''
 		self.firsttimes = [
-					{"id": "wpawn1", "is_first": False}, {"id": "wpawn2", "is_first": False}, {"id": "wpawn3", "is_first": False},
-					{"id": "wpawn4", "is_first": False}, {"id": "wpawn5", "is_first": False}, {"id": "wpawn6", "is_first": False},
-					{"id": "wpawn7", "is_first": False}, {"id": "wpawn8", "is_first": False}, {"id": "bpawn1", "is_first": False}, 
-					{"id": "bpawn2", "is_first": False}, {"id": "bpawn3", "is_first": False}, {"id": "bpawn4", "is_first": False}, 
-					{"id": "bpawn5", "is_first": False}, {"id": "bpawn6", "is_first": False}, {"id": "bpawn7", "is_first": False}, 
-					{"id": "bpawn8", "is_first": False}, {"id": "wrook1", "is_first": False}, {"id": "wrook2", "is_first": False},
-					{"id": "brook1", "is_first": False}, {"id": "brook2", "is_first": False}, 
-					{"id": "wbishop1", "is_first": False}, {"id": "wbishop2", "is_first": False},
-					{"id": "bbishop1", "is_first": False}, {"id": "bbishop2", "is_first": False},
-					{"id": "whorse1", "is_first": False}, {"id": "whorse2", "is_first": False},
-					{"id": "bhorse1", "is_first": False}, {"id": "bhorse2", "is_first": False},
-					{"id": "wking", "is_first": False}, {"id": "bking", "is_first": False},
-					{"id": "wqueen", "is_first": False}, {"id": "bqueen", "is_first": False}
+					{"id": "wpawn1", "is_first": True}, {"id": "wpawn2", "is_first": True}, {"id": "wpawn3", "is_first": True},
+					{"id": "wpawn4", "is_first": True}, {"id": "wpawn5", "is_first": True}, {"id": "wpawn6", "is_first": True},
+					{"id": "wpawn7", "is_first": True}, {"id": "wpawn8", "is_first": True}, {"id": "bpawn1", "is_first": False}, 
+					{"id": "bpawn2", "is_first": True}, {"id": "bpawn3", "is_first": True}, {"id": "bpawn4", "is_first": True}, 
+					{"id": "bpawn5", "is_first": True}, {"id": "bpawn6", "is_first": True}, {"id": "bpawn7", "is_first": True}, 
+					{"id": "bpawn8", "is_first": True}, {"id": "wrook1", "is_first": True}, {"id": "wrook2", "is_first": True},
+					{"id": "brook1", "is_first": True}, {"id": "brook2", "is_first": True}, 
+					{"id": "wbishop1", "is_first": True}, {"id": "wbishop2", "is_first": True},
+					{"id": "bbishop1", "is_first": True}, {"id": "bbishop2", "is_first": True},
+					{"id": "whorse1", "is_first": True}, {"id": "whorse2", "is_first": True},
+					{"id": "bhorse1", "is_first": True}, {"id": "bhorse2", "is_first": True},
+					{"id": "wking", "is_first": True}, {"id": "bking", "is_first": True},
+					{"id": "wqueen", "is_first": True}, {"id": "bqueen", "is_first": True}
 				]
 		self.movesdict = [
 					{"id": "wpawn1", "moves": [], "pos": None}, {"id": "wpawn2", "moves": [], "pos": None}, {"id": "wpawn3", "moves": [], "pos": None},
@@ -1357,12 +1361,15 @@ class Brain(object):
 		for item in firsts:
 			my_id = item['id']
 			is_first = item['is_first']
+			# print("is first loop %s - %s - %s"%(input_id, my_id, is_first))
 			if my_id == input_id and is_first is True:
+				# print("is first true found  %s"%my_id)
 				return True
-			elif my_id == input_id and is_first is True:
+			elif my_id == input_id and is_first is False:
+				# print("is first false found  %s"%my_id)
 				return False
 
-		return False
+		return True
 
 	def getRightCastle(self, i, j, state, col):
 
@@ -1497,13 +1504,14 @@ class Brain(object):
 				
 		return castle
 
+	# def getMoves(self, state):
 
 
 	def getMoves(self, state, firsts, col, vals, m_dict):
 		in_check = False
 		king = self.findKing(state, col)
 		king_co = self.getCoordinates(king['placeId'])
-		
+		# print("col: %s"%col)
 		in_check = False
 		check = self.inCheck(king_co['I'], king_co['J'], state, True, col)
 		if check is not None:
@@ -1576,16 +1584,15 @@ class Brain(object):
 					m_dict[dict_place].update(pos = item)
 
 				if item_type == "pawn":
-					is_first = self.isFirst(firsts, item)
-					if is_first:
-						is_first = False
-					else:
-						is_first = True
-
+					# my_firsts = self.getFirsts()
+					# print("first %s - %s"%(my_firsts[dict_place]['id'], my_firsts[dict_place]['is_first']))
+					is_first = self.isFirst(firsts, item_id)
+					# print("is first: %s -%s"%(is_first, item_id))
+				
 					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first , col)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
-					# print("pawn %s"% item)
+					# print("pawn mov %s  %s"% (item_id, movement))
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
 
@@ -1674,7 +1681,8 @@ class Brain(object):
 					m_dict[dict_place].update(pos = item)
 
 				if item_type == "pawn":
-					is_first = self.isFirst(firsts, item)
+					is_first = self.isFirst(firsts, item_id)
+		
 					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first, col)
 					movement = self.getRestrictedPlaces(movement, restr)
 					# print("pawn mov %s"%movement)
@@ -1951,141 +1959,207 @@ class Brain(object):
 		
 		return False
 
-	def evaluate(self, state, m_dict, col, firsts):
+	def dictToList(self, m_dict, col):
+		m_list = []
+		
+		for value in m_dict:
+			# print("values: %s"%value)
+			my_moves = value['moves']
+			pos = value['pos']
+			if pos:
+				pos_type = self.getType(pos['pieceId'])
+				current_c_e = self.getAssignedVal(pos, col)
+				for item in my_moves:
+					m_list.append({"pos": pos, "item": item})
+
+		return m_list
+
+	def evaluate(self, state, m_list, col, firsts):
 		bestmove = None
-		bestval = 0
+		bestval = -9999
 
 		king = self.findKing(state, col)
 		king_co = self.getCoordinates(king['placeId'])
 
-		for value in m_dict:
-			my_moves = value['moves']
+		counter = 0
+
+		
+		for value in m_list:
+			# print("value: %s"%value)
+			item = value['item']
+			item_id = item['pieceId']
 			pos = value['pos']
-			
-			if pos:
-				pos_type = self.getType(pos['pieceId'])
-				current_c_e = self.getAssignedVal(pos, col)
-				# print("pos type: %s - %s"%(pos_type, my_moves))
-			for item in my_moves:
-				init_e = 0
-				check_e = 0
-				init_e = self.getAssignedVal(item, col)
-				item_co = self.getCoordinates(item['placeId'])
-				# print("pos type: %s"%pos_type)
-				is_first = self.isFirst(firsts, item)
-				reach_king = False
-				if pos_type == "rook" or pos_type == "queen":
-					reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, False)
-					if not reach_king:
-						reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, True)
-				elif pos_type == "bishop" or pos_type == "queen":
-					# print("hello bish")
-					reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, False)
-					if not reach_king:
-						reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, True)
-					# print("bishop reach king: %s - %s"%(reach_king, item))
-				elif pos_type == "horse":
-					reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, False)
-					if not reach_king:
-						reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, True)
-				elif pos_type == "pawn":
-					reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, False)
-					if not reach_king:
-						reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, True)
-
-				if reach_king:
-					init_e = init_e + 900
-
-				check = self.inCheck(item_co['I'], item_co['J'], state ,True ,col)
-				if check:
-					check_e = current_c_e
+			pos_id = pos['pieceId']
+			pos_type = self.getType(pos_id)
+			current_c_e = self.getAssignedVal(pos, col)
+			if counter == 0:
+				bestmove = {"pos": pos, "item": item}
+			init_e = 0
+			check_e = 0
+			init_e = self.getAssignedVal(item, col)
+			item_co = self.getCoordinates(item['placeId'])
+			is_first = self.isFirst(firsts, item_id)
+			reach_king = False
+			if pos_type == "rook" or pos_type == "queen":
+				reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, False)
+				if not reach_king:
+					reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, True)
+			elif pos_type == "bishop" or pos_type == "queen":
+				reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, False)
+				if not reach_king:
+					reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, True)
+				# print("bishop reach king: %s - %s"%(reach_king, item))
+			elif pos_type == "horse":
+				reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, False)
+				if not reach_king:
+					reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, True)
+			elif pos_type == "pawn":
+				reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, False)
+				if not reach_king:
+					reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, True)
+			if reach_king:
+				init_e = init_e + 900
+			check = self.inCheck(item_co['I'], item_co['J'], state , is_first ,col)
+			# print("pos %s isfirst: %s incheck: %s"%(pos_id, is_first, check))
+			if check:
+				check_e = current_c_e
 					
-				print("items: %s init_e: %s check_e %s"%(item, init_e, check_e))
-				nextval = init_e + check_e
-				if nextval > bestval:
-					bestval = nextval
-					bestmove = item 
-
+			# print("items: %s init_e: %s check_e %s"%(item, init_e, check_e))
+			nextval = init_e + check_e
+			if nextval > bestval:
+				bestval = nextval
+				bestmove = {"pos": pos, "item": item}
+			
+			counter = counter + 1			
+		
 		return bestmove
 
 			
 
-	
+	def isRemove(self, dict_input):
+		piece = dict_input['pieceId']
+		
+		if piece != '':
+			return True
+
+		return False
 
 
 	
+	def inputFirst(self, firsts, input_id):
+
+		for item in firsts:
+			my_id = item['id']
+			if my_id == input_id:
+				item.update(is_first = False)
+			
+		return firsts
+	
 
 
+	def processState(self, currentState):
+		
+		
+		self.hasmoved = "N"
+		self.hasremoved = "N"
+		# print("hello p_s %s"%(currentState != self.statematrix))
+		if currentState != self.statematrix:
+			# print("hello p_s if")
+			self.statematrix = currentState
+			
+			pieces = self.getPieces(self.statematrix, "black")
+			movesdic = self.getMovesDict()
+			firsts = self.getFirsts()
+
+			moves = self.getMoves(self.statematrix, firsts, "black", pieces, movesdic)
+			mov_dict = self.dictToList(moves, "black")
+			recieved = self.evaluate(self.statematrix, mov_dict, "black", firsts)
+			# print("------ recieved: %s"%recieved)
+			to_pos = recieved['item']
+			curr_pos = recieved['pos'] 
+			is_rem = self.isRemove(to_pos)
+
+			p_id = to_pos['pieceId']
+			pl_id = to_pos['placeId']
+			p_co = self.getCoordinates(pl_id)
+			c_p_id = curr_pos['pieceId']
+			c_pl_id = curr_pos['placeId']
+			c_p_co = self.getCoordinates(c_pl_id)
+			self.inputFirst(firsts, c_p_id)
+			if is_rem:
+				self.compchoice = c_p_id
+				self.compremove = p_id
+				self.compmove = pl_id
+				self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
+				self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
+				self.hasremoved = "Y"
+				self.hasmoved = "Y"	
+			else:
+				self.compchoice = c_p_id
+				self.compmove = pl_id
+				self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
+				self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
+				self.hasmoved = "Y"
+
+			return to_pos
 
 	# def processState(self, currentState):
 		
-		
 	# 	self.hasmoved = "N"
 	# 	self.hasremoved = "N"
+
+	# 	# self.first = False
+	# 	# self.sec = True
+	# 	# self.third = True
+	# 	# self.fourth = True
+	# 	# self.fifth = True
+	# 	# self.move7 = True
+	# 	# self.move8 = True
+	# 	# self.move9 = True
+	# 	# self.move10 = True
+	# 	# self.move11 = True
+	# 	# self.move12 = True
 		
-	# 	if(currentState!=self.statematrix):
-	# 		#'''
+	# 	if currentState != self.statematrix:
 	# 		self.statematrix = currentState
+			
 	# 		if not self.first:
-	# 			self.compchoice = 'bpawn5'
-	# 			self.compmove = 'r5E'
-	# 			self.statematrix[6][4].update(pieceId='') 
-	# 			self.statematrix[4][4].update(pieceId='bpawn5')
-	# 			self.hasmoved = "Y"
+	# 			self.compchoice = c_p_id
+	# 			self.compremove = p_id
+	# 			self.compmove = pl_id
+	# 			self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
+	# 			self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
+	# 			self.hasremoved = "Y"
+	# 			self.hasmoved = "Y"	
 	# 			self.first = True
 	# 			self.sec = False
 	# 		elif not self.sec:
-	# 			self.compchoice = 'bqueen'
-	# 			self.compmove = 'r4H'
-	# 			self.statematrix[7][3].update(pieceId='') 
-	# 			self.statematrix[3][7].update(pieceId='bqueen')
+	# 			self.compchoice = c_p_id
+	# 			self.compmove = pl_id
+	# 			self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
+	# 			self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
 	# 			self.hasmoved = "Y"
 	# 			self.sec = True
-	# 			self.third = False
+	# 			self.third = False	
 	# 		elif not self.third:
-	# 			self.compchoice = 'bqueen'
-	# 			self.compremove = 'wpawn8'
-	# 			self.compmove = 'r1H'
-	# 			self.statematrix[3][7].update(pieceId='') 
-	# 			self.statematrix[1][7].update(pieceId='bqueen')	
-	# 			self.hasremoved = "Y"
-	# 			self.hasmoved = "Y"	
 	# 			self.third = True
 	# 			self.fourth = False
 	# 		elif not self.fourth:
-	# 			self.compchoice = 'bqueen'
-	# 			self.compmove = 'r4F'
-	# 			self.compremove = 'wpawn6'
-	# 			self.statematrix[1][7].update(pieceId='') 
-	# 			self.statematrix[3][5].update(pieceId='bqueen')	
-	# 			self.hasmoved = "Y"	
-	# 			self.hasremoved = "Y"			
 	# 			self.fourth = True
 	# 			self.fifth = False
 	# 		elif not self.fifth:
-	# 			self.compchoice = 'bqueen'
-	# 			self.compremove = 'wbishop2'
-	# 			self.compmove = 'r1F'
-	# 			self.statematrix[3][5].update(pieceId='') 
-	# 			self.statematrix[0][5].update(pieceId='bqueen')	
-	# 			self.hasremoved = "Y"
-	# 			self.hasmoved = "Y"
 	# 			self.fifth = True
-	# 			self.move6 = False
-	# 		elif not self.move6:
-	# 			self.compchoice = 'brook1'
-	# 			self.compmove = 'r6A'
-	# 			self.statematrix[7][0].update(pieceId='') 
-	# 			self.statematrix[5][0].update(pieceId='brook1')
-	# 			self.hasmoved = "Y"
-	# 			self.move6 = True
 	# 			self.move7 = False
-			
+	# 		elif not self.move7:
+	# 			self.move7 = True
+	# 			self.move8 = False
+	# 		elif not self.move8:
+	# 			self.move8 = True
+	# 			self.move9 = False
 
-	# 		print("horay new state")
-	# 	else:
-	# 		self.hasmoved = "Y"
-	# 		print("same state")
+
+
+
 		
 		
 	def setCompInCheck(self, comp, nw, ne, sw, se, up, down, right, left):

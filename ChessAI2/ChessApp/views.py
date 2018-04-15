@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.urls import reverse
+
 from django.http import JsonResponse
 
 from django.template import loader
@@ -40,8 +42,8 @@ def download_page(request):
 		global newdata
 		global brain
 		global restart
-#
-		#restart = False;
+
+		# restart = False;
 		if not restart:
 			brain = Roboto.Brain()
 
@@ -141,7 +143,7 @@ def create_page(request):
 				cmpfreemove = request.POST.get("freemove")
 				cmpcurrdir = request.POST.get("currentdirarr")
 				cmpcurrdir = literal_eval(cmpcurrdir)
-				print("view: %s"%cmpcurrdir)
+				# print("view: %s"%cmpcurrdir)
 				cmpattarr = request.POST.get("attackerarray")
 				#cmpattarr = literal_eval(cmpattarr)
 				cmpingrd = request.POST.get("inguard")
@@ -160,13 +162,13 @@ def create_page(request):
 				cmppwnarr = literal_eval(cmppwnarr)
 				cmprmvdlist = request.POST.get("removedlist")
 				cmprmvdlist = literal_eval(cmprmvdlist)
-				print("remived pieces: %s"%cmprmvdlist)
+				# print("removed pieces: %s"%cmprmvdlist)
 				brain.setCompInCheck(cmpcheck, cmpnwcheck, cmpnecheck, cmpswcheck, cmpsecheck, cmpupcheck, cmpdowncheck, cmprightcheck, cmpleftcheck )
 				brain.setCheckInfo(cmpmate, cmpfreemove, cmpcurrdir, cmpattarr, cmpingrd, cmppingrd, cmpspclnght, cmpcsk, cmpsavers, cmpatkrs)
 				brain.setExtraInfo(cmpkmvd, cmpr1mvd, cmpr2mvd, cmppwnarr, cmprmvdlist)
 				brain.processState(statematrix)
 				#print("compchoice: %s"%brain.getChoice())
-				#print("compmove: %s"%brain.getMove())
+				print("post move")
 				StateData.objects.all().delete()
 				StateData.objects.create(
 					StateMatrix = brain.getState(),
@@ -218,7 +220,7 @@ def create_page(request):
 			
 		#print('post: %s'%request.POST[''])
 
-		return HttpResponseRedirect('/ChessApp/download_page/')
+		return HttpResponseRedirect('../download_page/')
 	else:
 		return HttpResponse('no create', request)
 

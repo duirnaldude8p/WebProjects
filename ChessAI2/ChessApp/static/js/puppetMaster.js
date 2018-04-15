@@ -14,16 +14,17 @@ $(function(){
 
     function updateGet(){
         if(!hasGet){
-            //console.log("upgt: "+hasGet);
+            console.log("upgt: "+changeable);
             if(changeable=="Y"){
                 $.ajax({
                     type: 'GET',
                     dataType: 'json',
+                    cache: false,
                     url: '/ChessApp/download_page/',
                     success: function(item){
                         var movemade = item.StateData.CompMadeMove;
                         var removemade = item.StateData.CompMadeRemove;
-                        //console.log("comp moved: "+movemade);
+                        console.log("comp moved: "+movemade+' - '+removemade);
                         if(movemade=="Y"&&removemade=="N"){ 
                             var statematrix2 = item.StateData.StateMatrix;
                             localStorage.setItem("StateMatrix", statematrix2);
@@ -106,6 +107,7 @@ $(function(){
                         type: 'POST',
                         url: '/ChessApp/create_page/',
                         dataType: 'json',
+                        cache: false,
                         data: {
                             statemat: statematrix1,
                             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
@@ -136,7 +138,7 @@ $(function(){
                             section: 'StateMatrix'
                         },
                         success: function(item){
-                            console.log("post success");
+                            console.log("post success hi");
                             localStorage.setItem('FinishedMove', 'N');
                             hasGet = false;
                             hasStart = true;
