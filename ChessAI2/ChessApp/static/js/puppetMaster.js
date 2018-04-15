@@ -65,9 +65,10 @@ $(function(){
 
     function updatePost(){
         if(!hasStart||hasGet){
-            //console.log("uppt: "+hasGet);
+            var finmove = localStorage.getItem("FinishedMove");
+            
             if(changeable=="Y"){
-                var finmove = localStorage.getItem("FinishedMove");
+                console.log("changeable: "+changeable+' finmove: '+finmove);
                 if(finmove=="Y"){
                     var statematrix1 = localStorage.getItem("StateMatrix");
                     var stmt = eval(statematrix1);

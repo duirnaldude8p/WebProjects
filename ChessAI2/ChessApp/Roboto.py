@@ -2062,9 +2062,9 @@ class Brain(object):
 		
 		self.hasmoved = "N"
 		self.hasremoved = "N"
-		# print("hello p_s %s"%(currentState != self.statematrix))
+		print("--------out %s"%(currentState != self.statematrix))
 		if currentState != self.statematrix:
-			# print("hello p_s if")
+			print("--------in")
 			self.statematrix = currentState
 			
 			pieces = self.getPieces(self.statematrix, "black")

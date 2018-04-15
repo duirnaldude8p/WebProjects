@@ -123,6 +123,7 @@ def create_page(request):
 		global newdata
 		global brain
 		#'''
+		print("post my move")
 		
 		#'''
 		if restart:
@@ -168,7 +169,7 @@ def create_page(request):
 				brain.setExtraInfo(cmpkmvd, cmpr1mvd, cmpr2mvd, cmppwnarr, cmprmvdlist)
 				brain.processState(statematrix)
 				#print("compchoice: %s"%brain.getChoice())
-				print("post move")
+				
 				StateData.objects.all().delete()
 				StateData.objects.create(
 					StateMatrix = brain.getState(),

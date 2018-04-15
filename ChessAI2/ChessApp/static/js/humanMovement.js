@@ -5519,11 +5519,17 @@ this.moveTo = function(controlId){
         for(var p=0; p<fullArr.length; p++){
             if(controlId==fullArr[p].id){
                 control.appendChild(selected);
-                for(var t=0; t<7; t++){
-                    for(var w=0; w<7; w++){
+                var bish_breaker = false;
+                for(var t=0; t<8; t++){
+                    if(bish_breaker){
+                        break;
+                    }
+                    for(var w=0; w<8; w++){
+                        // console.log("bish vals: "+boardMatrix[t][w]+' - '+fullArr[p].id)
                         if(boardMatrix[t][w]==fullArr[p].id){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                            bish_breaker = true;
                             break;   
                         }
                     }
@@ -5541,11 +5547,16 @@ this.moveTo = function(controlId){
                 for(var d=0; d<currDir.length; d++){
                     if(controlId==currDir[d]){
                         control.appendChild(selected);
-                        for(var t=0; t<7; t++){
-                            for(var w=0; w<7; w++){
+                        var bish_breaker = false;
+                        for(var t=0; t<8; t++){
+                            if(bish_breaker){
+                                break;
+                            }
+                            for(var w=0; w<8; w++){
                                 if(boardMatrix[t][w]==fullArr[e].id){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                                    bish_breaker = true;
                                     break;   
                                 }
                             }
@@ -5564,8 +5575,8 @@ this.moveTo = function(controlId){
         for(var m=0; m<kingsArray.length; m++){
             if(controlId==kingsArray[m]){
                 control.appendChild(selected);
-                for(var t=0; t<7; t++){
-                    for(var w=0; w<7; w++){
+                for(var t=0; t<8; t++){
+                    for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==kingsArray[m]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5588,8 +5599,8 @@ this.moveTo = function(controlId){
         for(var n=0; n<horseArr.length; n++){
             if(controlId==horseArr[n]){
                 control.appendChild(selected);
-                for(var t=0; t<7; t++){
-                    for(var w=0; w<7; w++){
+                for(var t=0; t<8; t++){
+                    for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==horseArr[n]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5610,8 +5621,8 @@ this.moveTo = function(controlId){
                 for(var g=0; g<currDir.length; g++){
                     if(controlId==currDir[g]){
                         control.appendChild(selected);
-                        for(var t=0; t<7; t++){
-                            for(var w=0; w<7; w++){
+                        for(var t=0; t<8; t++){
+                            for(var w=0; w<8; w++){
                                 if(boardMatrix[t][w]==horseArr[f]){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5752,7 +5763,7 @@ this.moveTo = function(controlId){
     var finishedState = localStorage.getItem("StateMatrix");
     finishedState = eval(finishedState);
 
-    //console.log("finishedMove state: "+finishedState[I][J].pieceId);
+    console.log("finishedMove state: "+finishedState[I][J].pieceId);
     if(finishedState[I][J].pieceId==""){
         localStorage.setItem("FinishedMove", "Y");
     }
@@ -5820,8 +5831,8 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
-                for(var t=0; t<7; t++){
-                    for(var w=0; w<7; w++){
+                for(var t=0; t<8; t++){
+                    for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==swtone[c]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5837,8 +5848,8 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
-                for(var t=0; t<7; t++){
-                    for(var w=0; w<7; w++){
+                for(var t=0; t<8; t++){
+                    for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==nwtose[d]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5910,8 +5921,8 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
-                        for(var t=0; t<7; t++){
-                            for(var w=0; w<7; w++){
+                        for(var t=0; t<8; t++){
+                            for(var w=0; w<8; w++){
                                 if(boardMatrix[t][w]==swtone[p]){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5932,8 +5943,8 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
-                        for(var t=0; t<7; t++){
-                            for(var w=0; w<7; w++){
+                        for(var t=0; t<8; t++){
+                            for(var w=0; w<8; w++){
                                 if(boardMatrix[t][w]==nwtose[q]){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5955,8 +5966,8 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
-                for(var t=0; t<7; t++){
-                    for(var w=0; w<7; w++){
+                for(var t=0; t<8; t++){
+                    for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==kingsArray[m]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -5977,8 +5988,8 @@ this.remove = function(controlId){
             if(parentId==horseArr[n]){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
-                for(var t=0; t<7; t++){
-                    for(var w=0; w<7; w++){
+                for(var t=0; t<8; t++){
+                    for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==horseArr[n]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
@@ -6000,8 +6011,8 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
-                        for(var t=0; t<7; t++){
-                            for(var w=0; w<7; w++){
+                        for(var t=0; t<8; t++){
+                            for(var w=0; w<8; w++){
                                 if(boardMatrix[t][w]==horseArr[n]){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
