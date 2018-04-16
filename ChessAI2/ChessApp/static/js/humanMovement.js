@@ -5892,7 +5892,7 @@ this.remove = function(controlId){
         for(var j=left; j<=right; j++){
             if(j<8&&j>-1){
                 if(parentId==boardMatrix[I][j]){
-                    console.log('parentId: '+parentId+' attacker: '+attackerArr);
+                    // console.log('parentId: '+parentId+' attacker: '+attackerArr);
                     for(var m=0; m<attackerArr.length; m++){
                         if(attackerArr[m]==parentId){
                             pieces.appendChild(control);
@@ -6113,7 +6113,7 @@ this.remove = function(controlId){
                 }
             }
             localStorage.setItem('hasChanged','Y');
-            console.log('pl can choose: '+canChoose+' '+parentId);
+            // console.log('pl can choose: '+canChoose+' '+parentId);
         }
     }
     if(type=='pawn'&&!freeMov){

@@ -1510,7 +1510,7 @@ class Brain(object):
 				
 		return castle
 
-	# def getMoves(self, state):
+	
 
 
 	def getMoves(self, state, firsts, col, vals, m_dict):
@@ -2037,6 +2037,115 @@ class Brain(object):
 
 		return m_list
 
+	def isGoodMove(self, state, checker_place, check_place):
+
+		end_id = check_place['placeId']
+
+		end_coord = self.getCoordinates(end_id)
+
+		endI = end_coord['I']
+		endJ = end_coord['J']
+
+		start_id = checker_place['placeId']
+
+		start_pid = checker_place['pieceId']
+
+		start_coord = self.getCoordinates(start_id)
+
+		startI = start_coord['I']
+		startJ = start_coord['J']
+
+		p_type = self.getType(start_pid)
+		# col = self.getColour(end_id)
+
+		i1 = startI + 1
+		j1 = startJ + 1
+
+		i2 = startI + 1
+		j2 = startJ - 1
+
+		i3 = startI - 1
+		j3 = startJ + 1
+
+		i4 = startI - 1
+		j4 = startJ - 1
+
+		i5 = startI + 1
+		j5 = startJ
+
+		i6 = startI - 1
+		j6 = startJ 
+
+		i7 = startI
+		j7 = startJ + 1
+
+		i8 = startI
+		j8 = startJ - 1
+
+	
+			# if startI < 8 and startI >= 0 and startJ < 8 and startJ >= 0 and endI < 8 and endI >= 0 and endJ < 8 and endJ >= 0:
+		for n in range(0, 8):	
+			if i1 < 8 and i1 >= 0 and j1 < 8 and j1 >= 0:
+				if p_type == "bishop" or p_type == "queen":
+					if i1 == endI and j1 == endJ:
+						return False
+					i1 = i1 + 1
+					j1 = j1 + 1
+
+		for n in range(0, 8):
+			if i2 < 8 and i2 >= 0 and j2 < 8 and j2 >= 0:
+				if p_type == "bishop" or p_type == "queen":
+					if i2 == endI and j2 == endJ:
+						return False
+					i2 = i2 + 1
+					j2 = j2 - 1
+
+		for n in range(0, 8):
+			if i3 < 8 and i3 >= 0 and j3 < 8 and j3 >= 0:
+				if p_type == "bishop" or p_type == "queen":
+					if i3 == endI and j3 == endJ:
+						return False
+					i3 = i3 - 1
+					j3 = j3 + 1
+
+		for n in range(0, 8):
+			if i4 < 8 and i4 >= 0 and j4 < 8 and j4 >= 0:
+				if p_type == "bishop" or p_type == "queen":
+					if i4 == endI and j4 == endJ:
+						return False
+					i4 = i4 - 1
+					j4 = j4 - 1
+
+		for n in range(0, 8):
+			if i5 < 8 and i5 >= 0 and j5 < 8 and j5 >= 0:
+				if p_type == "rook" or p_type == "queen":
+					if i5 == endI and j5 == endJ:
+						return False
+					i5 = i5 + 1
+
+		for n in range(0, 8):
+			if i6 < 8 and i6 >= 0 and j6 < 8 and j6 >= 0:
+				if p_type == "rook" or p_type == "queen":
+					if i6 == endI and j6 == endJ:
+						return False
+					i6 = i6 - 1
+
+		for n in range(0, 8):
+			if i7 < 8 and i7 >= 0 and j7 < 8 and j7 >= 0:
+				if p_type == "rook" or p_type == "queen":
+					if i7 == endI and j7 == endJ:
+						return False
+					j7 = j7 + 1
+
+		for n in range(0, 8):
+			if i8 < 8 and i8 >= 0 and j8 < 8 and j8 >= 0:
+				if p_type == "rook" or p_type == "queen":
+					if i8 == endI and j8 == endJ:
+						return False
+					j8 = j8 - 1
+
+		return True
+
 	def evaluate(self, state, m_list, col, firsts):
 		bestmove = None
 		bestval = -9999
@@ -2048,7 +2157,7 @@ class Brain(object):
 
 		
 		for value in m_list:
-			print("value: %s"%value)
+			# print("value: %s"%value)
 			item = value['item']
 			item_id = item['pieceId']
 			pos = value['pos']
@@ -2059,12 +2168,17 @@ class Brain(object):
 				bestmove = {"pos": pos, "item": item}
 			init_e = 0
 			check_e = 0
+			is_good_move = True
 			pos_in_check = value['in_check']
-			if pos_in_check and pos_type != "king":
-				init_e = -self.getAssignedVal(pos, col)
+			if pos_in_check:
+				is_good_move = self.isGoodMove(state, pos_in_check, item)
+				if is_good_move:
+					init_e = init_e - self.getAssignedVal(pos, col)
 			init_e = init_e + self.getAssignedVal(item, col)
 			item_co = self.getCoordinates(item['placeId'])
 			is_first = self.isFirst(firsts, item_id)
+			
+
 			reach_king = False
 			if pos_type == "rook" or pos_type == "queen":
 				reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, False)
@@ -2086,12 +2200,13 @@ class Brain(object):
 			if reach_king:
 				init_e = init_e + 900
 			check = self.inCheck(item_co['I'], item_co['J'], state , is_first ,col)
-			# print("pos %s isfirst: %s incheck: %s"%(pos_id, is_first, check))
+			print("before goodmov %s init_e: %s item: %s"%(is_good_move, init_e, item))
+			
 			if check:
-				check_e = current_c_e
-					
-			# print("items: %s pos %s init_e: %s check_e %s"%(item, pos, init_e, check_e))
+				check_e = check_e + current_c_e
+			print("after goodmov %s init_e: %s item: %s"%(is_good_move, init_e, item))
 			nextval = init_e + check_e
+			# print("pos %s items %s nextval %s goodmov %s"%(pos, item, nextval, is_good_move))
 			if nextval > bestval:
 				bestval = nextval
 				bestmove = {"pos": pos, "item": item}
