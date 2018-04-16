@@ -43,7 +43,7 @@ def download_page(request):
 		global brain
 		global restart
 
-		# restart = False;
+		# restart = False
 		if not restart:
 			brain = Roboto.Brain()
 
@@ -123,7 +123,7 @@ def create_page(request):
 		global newdata
 		global brain
 		#'''
-		print("post my move")
+		# print("post my move")
 		
 		#'''
 		if restart:

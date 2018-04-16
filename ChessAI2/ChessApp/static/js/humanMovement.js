@@ -5575,11 +5575,16 @@ this.moveTo = function(controlId){
         for(var m=0; m<kingsArray.length; m++){
             if(controlId==kingsArray[m]){
                 control.appendChild(selected);
+                var king_breaker = false;
                 for(var t=0; t<8; t++){
+                    if(king_breaker){
+                        break;
+                    }
                     for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==kingsArray[m]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                            king_breaker = true;
                             break;   
                         }
                     }
@@ -5599,11 +5604,16 @@ this.moveTo = function(controlId){
         for(var n=0; n<horseArr.length; n++){
             if(controlId==horseArr[n]){
                 control.appendChild(selected);
+                var horse_breaker = false;
                 for(var t=0; t<8; t++){
+                    if(horse_breaker){
+                        break;
+                    }
                     for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==horseArr[n]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                            horse_breaker = true;
                             break;   
                         }
                     }
@@ -5621,11 +5631,16 @@ this.moveTo = function(controlId){
                 for(var g=0; g<currDir.length; g++){
                     if(controlId==currDir[g]){
                         control.appendChild(selected);
+                        var horse_breaker = false;
                         for(var t=0; t<8; t++){
+                            if(horse_breaker){
+                                break;
+                            }
                             for(var w=0; w<8; w++){
                                 if(boardMatrix[t][w]==horseArr[f]){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                                    horse_breaker = true;
                                     break;   
                                 }
                             }
@@ -5831,11 +5846,16 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
+                var bish_breaker = false;
                 for(var t=0; t<8; t++){
+                    if(bish_breaker){
+                        break;
+                    }
                     for(var w=0; w<8; w++){
-                        if(boardMatrix[t][w]==swtone[c]){
+                        if(boardMatrix[t][w]==swtone[c].id){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                            bish_breaker = true;
                             break;   
                         }
                     }
@@ -5848,11 +5868,18 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
+                var bish_breaker = false;
                 for(var t=0; t<8; t++){
+                    if(bish_breaker){
+                        break;
+                    }
                     for(var w=0; w<8; w++){
-                        if(boardMatrix[t][w]==nwtose[d]){
+                        // console.log("rem bish vals: "+boardMatrix[t][w]+' - '+nwtose[d].id)
+                        if(boardMatrix[t][w]==nwtose[d].id){
+                            // console.log("hello bish");
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                            bish_breaker = true;
                             break;   
                         }
                     }
@@ -5921,11 +5948,16 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
+                        var bish_breaker = false;
                         for(var t=0; t<8; t++){
+                            if(bish_breaker){
+                                break;
+                            }
                             for(var w=0; w<8; w++){
-                                if(boardMatrix[t][w]==swtone[p]){
+                                if(boardMatrix[t][w]==swtone[p].id){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                                    bish_breaker = true;
                                     break;   
                                 }
                             }
@@ -5943,11 +5975,16 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
+                        var bish_breaker = false;
                         for(var t=0; t<8; t++){
+                            if(bish_breaker){
+                                break;
+                            }
                             for(var w=0; w<8; w++){
-                                if(boardMatrix[t][w]==nwtose[q]){
+                                if(boardMatrix[t][w]==nwtose[q].id){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                                    bish_breaker = true;
                                     break;   
                                 }
                             }
@@ -5966,11 +6003,16 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
+                var king_breaker = false;
                 for(var t=0; t<8; t++){
+                    if(king_breaker){
+                        break;
+                    }
                     for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==kingsArray[m]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                            king_breaker = true;
                             break;   
                         }
                     }
@@ -5988,11 +6030,16 @@ this.remove = function(controlId){
             if(parentId==horseArr[n]){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
+                var horse_breaker = false;
                 for(var t=0; t<8; t++){
+                    if(horse_breaker){
+                        break;
+                    }
                     for(var w=0; w<8; w++){
                         if(boardMatrix[t][w]==horseArr[n]){
                             statematrix[t][w].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                            horse_breaker = true;
                             break;   
                         }
                     }
@@ -6011,11 +6058,16 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
+                        var horse_breaker = false;
                         for(var t=0; t<8; t++){
+                            if(horse_breaker){
+                                break;
+                            }
                             for(var w=0; w<8; w++){
                                 if(boardMatrix[t][w]==horseArr[n]){
                                     statematrix[t][w].pieceId = selected.id;
                                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
+                                    horse_breaker = true;
                                     break;   
                                 }
                             }

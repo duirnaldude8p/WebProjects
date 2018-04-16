@@ -185,7 +185,7 @@ this.select = function(controlId){
     var newVal = localStorage.getItem('hasChanged');
     //console.log('in select: '+newVal);
     if(newVal == 'Y'){
-    // console.log('robot selected: '+controlId);
+    console.log('robot selected: '+controlId);
     //console.log('select in check '+inCheck);
     selected = document.getElementById(controlId);
     type = selected.classList[1];
