@@ -65,6 +65,15 @@ class Brain(object):
 					{"id": "wking", "is_first": True}, {"id": "bking", "is_first": True},
 					{"id": "wqueen", "is_first": True}, {"id": "bqueen", "is_first": True}
 				]
+
+	pawnEnds = [
+					{"id": "wpawn1", "is_end": False}, {"id": "wpawn2", "is_end": False}, {"id": "wpawn3", "is_end": False},
+					{"id": "wpawn4", "is_end": False},  {"id": "wpawn5", "is_end": False}, {"id": "wpawn6", "is_end": False},
+					{"id": "wpawn7", "is_end": False}, {"id": "wpawn8", "is_end": False}, {"id": "bpawn1", "is_end": False}, 
+					{"id": "bpawn2", "is_end": False}, {"id": "bpawn3", "is_end": False}, {"id": "bpawn4", "is_end": False}, 
+					{"id": "bpawn5", "is_end": False}, {"id": "bpawn6", "is_end": False}, {"id": "bpawn7", "is_end": False}, 
+					{"id": "bpawn8", "is_end": False}
+				]
 	
 	movesdict = [
 					{"id": "wpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn2", "moves": [], "pos": None, "in_check": False}, 
@@ -139,6 +148,14 @@ class Brain(object):
 					{"id": "bhorse1", "is_first": True}, {"id": "bhorse2", "is_first": True},
 					{"id": "wking", "is_first": True}, {"id": "bking", "is_first": True},
 					{"id": "wqueen", "is_first": True}, {"id": "bqueen", "is_first": True}
+				]
+		self.pawnEnds = [
+					{"id": "wpawn1", "is_end": False}, {"id": "wpawn2", "is_end": False}, {"id": "wpawn3", "is_end": False},
+					{"id": "wpawn4", "is_end": False},  {"id": "wpawn5", "is_end": False}, {"id": "wpawn6", "is_end": False},
+					{"id": "wpawn7", "is_end": False}, {"id": "wpawn8", "is_end": False}, {"id": "bpawn1", "is_end": False}, 
+					{"id": "bpawn2", "is_end": False}, {"id": "bpawn3", "is_end": False}, {"id": "bpawn4", "is_end": False}, 
+					{"id": "bpawn5", "is_end": False}, {"id": "bpawn6", "is_end": False}, {"id": "bpawn7", "is_end": False}, 
+					{"id": "bpawn8", "is_end": False}
 				]
 		self.movesdict = [
 					{"id": "wpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn2", "moves": [], "pos": None, "in_check": False}, 
@@ -1308,13 +1325,63 @@ class Brain(object):
 			return checker5
 
 		return None
+
+	def isPawnEnd(self, state, vals, col, move):
+		pieceId = move['pieceId']
 	
-	def getPieces(self, state, col):
+		for item in vals:
+			if item is not None:
+				item_isend = item['is_end']
+				if item_isend:
+					item_id = item['id']
+					print("------------item: %s - %s"%(item['id'],item_isend))
+					if item_id == pieceId:
+						return item_id
+						
+		return None
+
+	def setPawnEnd(self, state, vals, col, move):
+		pieceId = move['pieceId']
+	
+		for item in vals:
+			if item is not None:
+				item_id = item['id']
+				if item_id == pieceId:
+					# print("PAWN END SET %s"%item_id)
+					item.update(is_end = True)
+					return True
+					
+						
+		return False
+
+
+	def findPiece(self, state, col, pid):
+		val = None
+		typ = self.getType(pid)
+		breaker = False
+		for i in range(0, 8):
+			for j in range (0, 8):
+				nextval = state[i][j]
+				if nextval is not None:
+					nextpiece = nextval['pieceId']
+					if nextpiece == pid:
+						val = nextval
+						breaker = True
+						break
+			if breaker:
+				break				
+
+		return val
+
+	
+	
+	def getPiecesIncQueens(self, state, col, p_ends, m_dict, firsts):
 		places = []
 
 		for i in range(0, 8):
 			for j in range (0, 8):
 				nextval = state[i][j]
+				self.toQueen(state, nextval, col, p_ends, places, m_dict, firsts)
 				if nextval is not None:
 					nextpiece = nextval['pieceId']
 					if nextpiece is not '':
@@ -1342,8 +1409,29 @@ class Brain(object):
 			if breaker:
 				break				
 
-
 		return king
+
+
+	def getQueenId(self, state, col):
+		breaker = False
+		counter = 0
+		for i in range(0, 8):
+			for j in range (0, 8):
+				nextval = state[i][j]
+				if nextval is not None:
+					nextpiece = nextval['pieceId']
+					if nextpiece is not '':
+						my_type = self.getType(nextpiece)
+						my_colour = self.getColour(nextpiece)
+						if my_colour == col and my_type == "queen":
+							breaker = True
+							counter = counter + 1
+							break
+			if breaker:
+				break				
+
+
+		return counter
 
 
 	def getItemPlace(self, dict_input, val_id):
@@ -1367,12 +1455,9 @@ class Brain(object):
 		for item in firsts:
 			my_id = item['id']
 			is_first = item['is_first']
-			# print("is first loop %s - %s - %s"%(input_id, my_id, is_first))
 			if my_id == input_id and is_first is True:
-				# print("is first true found  %s"%my_id)
 				return True
 			elif my_id == input_id and is_first is False:
-				# print("is first false found  %s"%my_id)
 				return False
 
 		return True
@@ -1510,10 +1595,8 @@ class Brain(object):
 				
 		return castle
 
-	
 
-
-	def getMoves(self, state, firsts, col, vals, m_dict):
+	def getMoves(self, state, firsts, col, vals, m_dict, p_ends):
 		in_check = False
 		king = self.findKing(state, col)
 		king_co = self.getCoordinates(king['placeId'])
@@ -1525,12 +1608,14 @@ class Brain(object):
 		
 		movements = []
 		# print("king: %s"%king)
+
+
 		if not in_check:
 			for item in vals:
 				item_id = item['pieceId']
 				item_co = self.getCoordinates(item['placeId'])
 				item_type = self.getType(item_id)
-				
+				print("----get moves item id: %s"%item_id)
 				in_guard_dir = self.getInGuardDir(item_co['I'], item_co['J'], state, king, item_type)
 				in_guard = self.isInGuard(item_co['I'], item_co['J'], state, col, in_guard_dir)
 				is_guard = in_guard['is_guard']
@@ -1601,10 +1686,18 @@ class Brain(object):
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# print("pawn mov %s  %s"% (item, movement))
+					
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
 					m_dict[dict_place].update(in_check = item_in_check)
+					# print("-------item_co %s col %s"% (item_co['I'], col))
+
+					my_p_end = None
+					if item_co['I'] == 0 and col == "black":
+						my_p_end = self.setPawnEnd(state, p_ends, col, item)
+					elif item_co['I'] == 7 and col == "white":
+						my_p_end = self.setPawnEnd(state, p_ends, col, item)	
 
 				if item_type == "queen":
 					movement1 = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
@@ -1710,10 +1803,17 @@ class Brain(object):
 					movement = self.getRestrictedPlaces(movement, restr)
 					# print("pawn mov %s"%movement)
 					# movements = movements + movement
+					# self.toQueen(state, item, col)
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
 					m_dict[dict_place].update(in_check = item_in_check)
+
+					my_p_end = None
+					if item_co['I'] == 0 and col == "black":
+						my_p_end = self.setPawnEnd(state, p_ends, col, item)
+					elif item_co['I'] == 7 and col == "white":
+						my_p_end = self.setPawnEnd(state, p_ends, col, item)
 
 				if item_type == "queen":
 					movement1 = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
@@ -2145,6 +2245,8 @@ class Brain(object):
 					j8 = j8 - 1
 
 		return True
+	
+	
 
 	def evaluate(self, state, m_list, col, firsts):
 		bestmove = None
@@ -2163,6 +2265,8 @@ class Brain(object):
 			pos = value['pos']
 			pos_id = pos['pieceId']
 			pos_type = self.getType(pos_id)
+			pos_place = pos['placeId']
+			pos_co = self.getCoordinates(pos_place)
 			current_c_e = self.getAssignedVal(pos, col)
 			if counter == 0:
 				bestmove = {"pos": pos, "item": item}
@@ -2177,8 +2281,7 @@ class Brain(object):
 			init_e = init_e + self.getAssignedVal(item, col)
 			item_co = self.getCoordinates(item['placeId'])
 			is_first = self.isFirst(firsts, item_id)
-			
-
+			pawnEndMove = False
 			reach_king = False
 			if pos_type == "rook" or pos_type == "queen":
 				reach_king = self.isCornerRookCheck(item_co['I'], item_co['J'], state, col, False)
@@ -2188,7 +2291,6 @@ class Brain(object):
 				reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, False)
 				if not reach_king:
 					reach_king = self.isCornerBishopCheck(item_co['I'], item_co['J'], state, col, True)
-				# print("bishop reach king: %s - %s"%(reach_king, item))
 			elif pos_type == "horse":
 				reach_king = self.isCornerHorseChecker(item_co['I'], item_co['J'], state, col, False)
 				if not reach_king:
@@ -2200,13 +2302,12 @@ class Brain(object):
 			if reach_king:
 				init_e = init_e + 900
 			check = self.inCheck(item_co['I'], item_co['J'], state , is_first ,col)
-			print("before goodmov %s init_e: %s item: %s"%(is_good_move, init_e, item))
-			
 			if check:
 				check_e = check_e + current_c_e
-			print("after goodmov %s init_e: %s item: %s"%(is_good_move, init_e, item))
+			# print("after goodmov %s init_e: %s item: %s"%(is_good_move, init_e, item))
 			nextval = init_e + check_e
-			# print("pos %s items %s nextval %s goodmov %s"%(pos, item, nextval, is_good_move))
+			# print("pos %s items %s nextval %s goodmov %s"%(pos, item, nextval, is_good_move)
+			
 			if nextval > bestval:
 				bestval = nextval
 				bestmove = {"pos": pos, "item": item}
@@ -2235,6 +2336,75 @@ class Brain(object):
 				item.update(is_first = False)
 			
 		return firsts
+
+
+	def getPieces(self, state, col):
+		places = []
+
+		for i in range(0, 8):
+			for j in range (0, 8):
+				nextval = state[i][j]
+				if nextval is not None:
+					nextpiece = nextval['pieceId']
+					if nextpiece is not '':
+						my_colour = self.getColour(nextpiece)
+						if my_colour is col:
+							places.append(nextval)
+
+		return places
+
+
+
+	def toQueen(self, state, items, col, p_ends, m_dict, firsts):
+		for item in items:
+			pos_id = item['pieceId']
+			pos_type = self.getType(pos_id)
+			pos_place = item['placeId']
+			pos_co = self.getCoordinates(pos_place)
+
+			is_first = self.isFirst(firsts, pos_id)
+			check = self.inCheck(pos_co['I'], pos_co['J'], state, is_first, col)
+
+			queen_num = self.getQueenId(state, col)
+			queen_id = ""
+			is_p_end = False
+			changed_state = {"state": None, "dict": None}
+			if pos_type == "pawn":
+				# print("hello pawnq")
+				is_p_end = self.isPawnEnd(state, p_ends, col, item)
+
+				# print("pos_type: %s is_p_ed: %s pos_co I: %s col: %s"%(pos_type, is_p_end, pos_co['I'], col))
+
+
+			if is_p_end:
+				if pos_type == "pawn" and pos_co['I'] == 0 and col == "black":
+					queen_id = "bqueen" + str(queen_num)
+
+					my_pos = {'pieceId': pos_id, "placeId": pos_place}
+					# print("queen id: %s"%queen_id)
+					m_dict.append({"id":queen_id, "moves": [], "pos": my_pos, "in_check": check})
+					my_place = self.getItemPlace(self.movesdict, pos_id)
+					del m_dict[my_place]
+
+					state[pos_co['I']][pos_co['J']].update(pieceId = queen_id)	
+					print("state %s - %s co %s - %s"%(state[pos_co['I']][pos_co['J']], self.statematrix[0][0], pos_co['I'], pos_co['J']))
+					changed_state = {"state": state, "dict": m_dict}
+
+
+				elif pos_type == "pawn" and pos_co['I'] == 7 and col == "white":
+					queen_id = "wqueen" + str(queen_num)
+
+					my_pos = {'pieceId': pos_id, "placeId": pos_place}
+					# print("queen id: %s"%queen_id)
+					m_dict.append({"id":queen_id, "moves": [], "pos": my_pos, "in_check": check})
+					my_place = self.getItemPlace(self.movesdict, pos_id)
+					del m_dict[my_place]
+			
+					state[pos_co['I']][pos_co['J']].update(pieceId = queen_id)	
+					print("state %s - %s co %s - %s"%(state[pos_co['I']][pos_co['J']], self.statematrix[0][0], pos_co['I'], pos_co['J']))
+					changed_state = {"state": state, "dict": m_dict}
+
+		return changed_state	
 	
 
 
@@ -2265,13 +2435,29 @@ class Brain(object):
 		if currentState != self.statematrix:
 			self.statematrix = currentState
 			
-			pieces = self.getPieces(self.statematrix, "black")
-			movesdic = self.getMovesDict()
 			firsts = self.getFirsts()
+			movesdic = self.getMovesDict()
+			pieces = self.getPieces(self.statematrix, "black")
+			c_state = self.toQueen(self.statematrix, pieces, "black", self.pawnEnds, movesdic, firsts)			
 
-			moves = self.getMoves(self.statematrix, firsts, "black", pieces, movesdic)
-			mov_dict = self.dictToList(moves, "black")
-			recieved = self.evaluate(self.statematrix, mov_dict, "black", firsts)
+			newstate = c_state['state']
+			newdict = c_state['dict']
+			if newstate is not None and newdict is not None:
+				self.statematrix = newstate
+				newpieces = self.getPieces(newstate, "black")
+
+				moves = self.getMoves(newstate, firsts, "black", newpieces, newdict, self.pawnEnds)
+				mov_dict = self.dictToList(moves, "black")
+				recieved = self.evaluate(newstate, mov_dict, "black", firsts)
+				dictlen = len(newdict)
+				print("--------in %s - %s - %s - %s"%( recieved, newdict[dictlen-1], self.statematrix[0][0], self.pawnEnds[8]))
+			else:
+				moves = self.getMoves(self.statematrix, firsts, "black", pieces, movesdic, self.pawnEnds)
+				mov_dict = self.dictToList(moves, "black")
+				recieved = self.evaluate(self.statematrix, mov_dict, "black", firsts)
+				print("--------in %s - %s - %s"%( recieved, self.statematrix[0][0], self.pawnEnds[8]))
+
+			
 			# print("------ recieved: %s"%recieved)
 			to_pos = recieved['item']
 			curr_pos = recieved['pos'] 
@@ -2284,7 +2470,8 @@ class Brain(object):
 			c_pl_id = curr_pos['placeId']
 			c_p_co = self.getCoordinates(c_pl_id)
 			self.inputFirst(firsts, c_p_id)
-			print("--------in %s - %s"%(c_p_id, recieved))
+			
+			
 
 			if is_rem:
 				self.compchoice = c_p_id
@@ -2372,7 +2559,6 @@ class Brain(object):
 		self.compDownInCheck = down
 		self.compRightInCheck = right
 		self.compLeftInCheck = left
-		# print("hello robot ne: %s"%self.compNEInCheck)
 
 	def setCheckInfo(self, chkmt, freemov, curdir, attarr, ingrd, pingrd, spclngth, csk, svrs, attckrs):
 		self.checkmate = chkmt
@@ -2385,8 +2571,7 @@ class Brain(object):
 		self.canSaveKing = csk
 		self.savers = svrs
 		self.attackers = attckrs
-		# if len(curdir)>=2:
-			# print("curDir array: %s"%curdir[1])
+		
 
 	def setExtraInfo(self, kmvd, r1mvd, r2mvd, pwnarr, rmvdlist):
 		self.kingHasMoved = kmvd

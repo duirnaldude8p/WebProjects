@@ -788,6 +788,7 @@ this.select = function(controlId){
         }
         if(I+2<8){
             var pawnFront2 = document.getElementById(boardMatrix[I+2][J]);
+            pawnEndNum = J; 
             if(!pawnFront2.hasChildNodes()&&uniqPawn){
                 isPawnFront2 = false;
                 allIdArr.push(boardMatrix[I+2][J]);
@@ -883,7 +884,7 @@ this.select = function(controlId){
         if(I+1<8&&J-1>-1){
             var pawntlval = document.getElementById(boardMatrix[I+1][J-1]);
             var pwntlpos = boardMatrix[I+1][J-1];
-        
+            pawntlEndNum = J-1; 
             for(var nn=0; nn<attackerArr.length; nn++){
                 if(pwntlpos==attackerArr[nn]){
                     if(pawntlval.hasChildNodes()){
@@ -942,6 +943,7 @@ this.select = function(controlId){
         if(I+1<8){
             var pawnFront = document.getElementById(boardMatrix[I+1][J]);
             var pwnfrpos = boardMatrix[I+1][J];
+            pawnEndNum = J; 
             for(var c=0; c<currDir.length; c++){
                 if(pwnfrpos==currDir[c]){   
                     if(!pawnFront.hasChildNodes()){
@@ -981,6 +983,7 @@ this.select = function(controlId){
             var pawnFront2 = document.getElementById(boardMatrix[I+2][J]);
             var pwnfr2pos = boardMatrix[I+2][J];
             //console.log("unique pawn "+uniqPawn);
+            pawnEndNum = J; 
             for(var d=0; d<currDir.length; d++){
                 if(pwnfr2pos==currDir[d]){
                     if(!pawnFront2.hasChildNodes()&&uniqPawn){
@@ -4892,20 +4895,20 @@ function finalCanCheck(controlId, posId){
         for(var i=0; i<8; i++){
 
             if(theType=='rook'&&checkColour!=colour||theType=='queen'&&checkColour!=colour){  
-            //console.log("right idd: "+rightsk.id); 
-            if(rightk>-1&&ri!=posId){
+            // console.log("down final check: "+downk); 
+            if(rightk>-1&&rightk<8&&ri!=posId){
                 ri = boardMatrix[Ik][rightk];
                 rightsk = document.getElementById(boardMatrix[Ik][rightk]);
                 rArr.push(rightsk);
-            }if(leftk<8&&le!=posId){
+            }if(leftk<8&&leftk>-1&&le!=posId){
                 le = boardMatrix[Ik][leftk];
                 leftsk = document.getElementById(boardMatrix[Ik][leftk]);
                 lArr.push(leftsk);
-            }if(upk>-1&&upp!=posId){
+            }if(upk<8&&upp!=posId){
                 upp = boardMatrix[upk][Jk];
                 upsk = document.getElementById(boardMatrix[upk][Jk]);
                 uArr.push(upsk); 
-            }if(downk<81&&dwn!=posId){
+            }if(downk<8&&downk>-1&&dwn!=posId){
                 dwn = boardMatrix[downk][Jk];
                 downsk = document.getElementById(boardMatrix[downk][Jk]);
                 dArr.push(downsk);
@@ -5699,7 +5702,7 @@ this.moveTo = function(controlId){
                     }
                     pawnIdArr.push(selected.id);
                     localStorage.setItem('hasChanged','Y');
-                    if(pawnEndNum||pawntrEndNum==0){
+                    if(pawnEndNum){
                         if(controlId==boardMatrix[7][pawnEndNum]){
                             mtCanChoose = true;
                         }
@@ -5757,7 +5760,7 @@ this.moveTo = function(controlId){
                             }
                             pawnIdArr.push(selected.id);
                             localStorage.setItem('hasChanged','Y');
-                            if(pawnEndNum||pawnEndNum==0){
+                            if(pawnEndNum){
                                 if(controlId==boardMatrix[7][pawnEndNum]){
                                     mtCanChoose = true;
                                 }
@@ -5778,7 +5781,7 @@ this.moveTo = function(controlId){
     var finishedState = localStorage.getItem("StateMatrix");
     finishedState = eval(finishedState);
 
-    console.log("finishedMove state: "+finishedState[I][J].pieceId);
+    // console.log("finishedMove state: "+finishedState[I][J].pieceId);
     if(finishedState[I][J].pieceId==""){
         localStorage.setItem("FinishedMove", "Y");
     }
@@ -6087,7 +6090,8 @@ this.remove = function(controlId){
                 statematrix[pawntrInc.I][pawntrInc.J].pieceId = selected.id; 
                 localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
             } 
-            if(pawntrEndNum||pawntrEndNum==0){
+            console.log('tr pawnendnum: '+pawntrEndNum+' - '+pawntr);
+            if(pawntrEndNum){
                 if(parentId==boardMatrix[7][pawntrEndNum]){
                     canChoose = true;
                     //console.log('pr can choose: '+canChoose);
@@ -6104,8 +6108,8 @@ this.remove = function(controlId){
                 statematrix[pawntlInc.I][pawntlInc.J].pieceId = selected.id; 
                 localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
             }
-            //console.log('pawn end num: '+pawntlEndNum);
-            if(pawntlEndNum||pawntlEndNum==0){
+            console.log('tl pawnendnum: '+pawntlEndNum+' - '+pawntl);
+            if(pawntlEndNum){
                 //console.log('pawn end num id: '+boardMatrix[7][pawntlEndNum]+' p: '+parentId);
                 if(parentId==boardMatrix[7][pawntlEndNum]){
                     canChoose = true;
@@ -6128,8 +6132,8 @@ this.remove = function(controlId){
                         localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
                     }
                     allIdArr.push(placeId);
-                
-                    if(pawntrEndNum||pawntrEndNum==0){
+                    // console.log('pawn end num: '+pawntlEndNum);
+                    if(pawntrEndNum){
                         if(parentId==boardMatrix[7][pawntrEndNum]){
                             canChoose = true;
                         }
@@ -6150,7 +6154,7 @@ this.remove = function(controlId){
                     }
                     allIdArr.push(placeId);
                 
-                    if(pawntlEndNum||pawntlEndNum==0){
+                    if(pawntlEndNum){
                         if(parentId==boardMatrix[7][pawntlEndNum]){
                             canChoose = true;
                         }

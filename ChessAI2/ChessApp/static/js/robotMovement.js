@@ -177,6 +177,7 @@ var oppColour = 'whitePiece';
 
 var nestedPieceIds = [];
 
+var livewire = new human(); 
 
 
 this.select = function(controlId){
@@ -185,7 +186,7 @@ this.select = function(controlId){
     var newVal = localStorage.getItem('hasChanged');
     //console.log('in select: '+newVal);
     if(newVal == 'Y'){
-    console.log('robot selected: '+controlId);
+    // console.log('robot selected: '+controlId);
     //console.log('select in check '+inCheck);
     selected = document.getElementById(controlId);
     type = selected.classList[1];
@@ -719,7 +720,7 @@ this.select = function(controlId){
         }
         if(I-1>-1&&J-1>-1){
             var pawntrval = document.getElementById(boardMatrix[I-1][J-1]);
-            pawntrEndNum = J+1;
+            pawntrEndNum = J-1;
             if(pawntrval.hasChildNodes()){
                 var pawntrchild = pawntrval.firstElementChild;
                 var theCol = pawntrchild.classList[0];
@@ -731,7 +732,7 @@ this.select = function(controlId){
         }
         if(I-1>-1&&J+1<8){
             var pawntlval = document.getElementById(boardMatrix[I-1][J+1]);
-            pawntlEndNum = J-1;
+            pawntlEndNum = J+1;
             if(pawntlval.hasChildNodes()){
                 var pawntlchild = pawntlval.firstElementChild;
                 var theCol = pawntlchild.classList[0];
@@ -754,6 +755,7 @@ this.select = function(controlId){
         }
         if(I-2>-1){
             var pawnFront2 = document.getElementById(boardMatrix[I-2][J]);
+            pawnEndNum = J; 
             if(!pawnFront2.hasChildNodes()&&uniqPawn){
                 isPawnFront2 = false;
                 allIdArr.push(boardMatrix[I-2][J]);                    
@@ -832,7 +834,7 @@ this.select = function(controlId){
         if(I-1>-1&&J+1<8){
             var pawntlval = document.getElementById(boardMatrix[I-1][J+1]);
             var pwntlpos = boardMatrix[I-1][J+1];
-        
+            pawntlEndNum = J+1;
             for(var nn=0; nn<attackerArr.length; nn++){
                 if(pwntlpos==attackerArr[nn]){
                     if(pawntlval.hasChildNodes()){
@@ -876,6 +878,7 @@ this.select = function(controlId){
         if(I-1>-1){
             var pawnFront = document.getElementById(boardMatrix[I-1][J]);
             var pwnfrpos = boardMatrix[I-1][J];
+            pawnEndNum = J;
             for(var c=0; c<currDir.length; c++){
                 if(pwnfrpos==currDir[c]){   
                     if(!pawnFront.hasChildNodes()){
@@ -908,6 +911,7 @@ this.select = function(controlId){
         if(I-2>-1){
             var pawnFront2 = document.getElementById(boardMatrix[I-2][J]);
             var pwnfr2pos = boardMatrix[I-2][J];
+            pawnEndNum = J;
             for(var d=0; d<currDir.length; d++){
                 if(pwnfr2pos==currDir[d]){
                     if(!pawnFront2.hasChildNodes()&&uniqPawn){
@@ -4716,19 +4720,19 @@ function finalCanCheck(controlId, posId){
 
             if(theType=='rook'&&checkColour==oppColour||theType=='queen'&&checkColour==oppColour){  
             //console.log("right idd: "+rightsk.id); 
-            if(rightk<8&&ri!=posId){
+            if(rightk>-1&&rightk<8&&ri!=posId){
                 ri = boardMatrix[Ik][rightk];
                 rightsk = document.getElementById(boardMatrix[Ik][rightk]);
                 rArrk.push(rightsk);
-            }if(leftk>-1&&le!=posId){
+            }if(leftk<8&&leftk>-1&&le!=posId){
                 le = boardMatrix[Ik][leftk];
                 leftsk = document.getElementById(boardMatrix[Ik][leftk]);
                 lArrk.push(leftsk);
-            }if(upk<8&&upp!=posId){
+            }if(upk<8&&upk>-1&&upp!=posId){
                 upp = boardMatrix[upk][Jk];
                 upsk = document.getElementById(boardMatrix[upk][Jk]);
                 uArrk.push(upsk); 
-            }if(downk>-1&&dwn!=posId){
+            }if(downk<8&&downk>-1&&dwn!=posId){
                 dwn = boardMatrix[downk][Jk];
                 downsk = document.getElementById(boardMatrix[downk][Jk]);
                 dArrk.push(downsk);
@@ -5182,23 +5186,34 @@ this.chooseNew = function(controlId){
 
 }
 
+function getQueenId(){
+    counter = 0;
+    queen_id = "bqueen";
+    var my_ids = document.querySelectorAll('*[id]:not([id=""])')
+    for(var i=0; i<my_ids.length; i++){
+        var next = my_ids[i].id;
+        // console.log("next id: "+next);
+        next = String(next);
+        var res = next.substring(0, 6);
+        if(res == "bqueen"){
+            counter++;
+        }  
+        queen_id = "bqueen"+counter;
+    }
+    return queen_id;
+}
 
 
 this.moveTo = function(controlId){
     
     nwplc = document.getElementById(controlId);
-    //console.log('in move to: '+nwplc.hasChildNodes());
-    // if(nwplc.hasChildNodes()){
-    //     var item = nwplc.firstElementChild;
-    //     var itemCol = item.classList[0];
-    //     console.log('hi item: '+itemCol);
-    // }
+   
     localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
     localStorage.setItem("KingHasMoved", localStorage.getItem("KingHasMoved"));
     localStorage.setItem("Rook1HasMoved", localStorage.getItem("Rook1HasMoved"));
     localStorage.setItem("Rook2HasMoved", localStorage.getItem("Rook2HasMoved"));
     if(!nwplc.hasChildNodes()){
-    //console.log('in empty move to');
+    // console.log('in empty move to');
     var newVal = localStorage.getItem('hasChanged');
     //console.log('in moveto: '+newVal); 
     if(newVal == 'Y'){
@@ -5359,6 +5374,7 @@ this.moveTo = function(controlId){
 
     if(type=='horse'&&freeMov){
         for(var n=0; n<horseArr.length; n++){
+            // console.log("HORSE: "+horseArr[n]+" controlId: "+controlId)
             if(controlId==horseArr[n]){
                 control.appendChild(selected);
                 if(movePrev){
@@ -5421,9 +5437,15 @@ this.moveTo = function(controlId){
                     pawnIdArr.push(selected.id);
                     localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                     localStorage.setItem('hasChanged','N');
-                    if(pawnEndNum||pawntrEndNum==0){
+                    if(pawnEndNum!=null){
                         if(controlId==boardMatrix[0][pawnEndNum]){
-                            mtCanChoose = true;
+                            var queen_id = getQueenId();
+                            var queenNode = document.createElement('DIV');
+                            queenNode.classList.add("blackPiece");
+                            queenNode.classList.add("queen");
+                            queenNode.id = queen_id;
+                            queenNode.onclick = (theHuman).remove(queen_id);
+                            control.appendChild(queenNode);
                         }
                     }
                 }
@@ -5476,9 +5498,15 @@ this.moveTo = function(controlId){
                             pawnIdArr.push(selected.id);
                             localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                             localStorage.setItem('hasChanged','N');
-                            if(pawnEndNum||pawnEndNum==0){
+                            if(pawnEndNum!=null){
                                 if(controlId==boardMatrix[0][pawnEndNum]){
-                                    mtCanChoose = true;
+                                    var queen_id = getQueenId();
+                                    var queenNode = document.createElement('DIV');
+                                    queenNode.classList.add("blackPiece");
+                                    queenNode.classList.add("queen");
+                                    queenNode.id = queen_id;
+                                    queenNode.onclick = (theHuman).remove(queen_id);
+                                    control.appendChild(queenNode);
                                 }
                             }
                         }
@@ -5488,11 +5516,7 @@ this.moveTo = function(controlId){
         }
     
     }
-    if(mtCanChoose){
-        option.style.display = 'initial';
-    }else{
-        option.style.display = 'none';
-    } 
+ 
     // console.log("in move to - rook1HasMoved: "+localStorage.getItem("Rook1HasMoved")+" rook2HasMoved: "+localStorage.getItem("Rook2HasMoved")+" kingHasMoved: "+localStorage.getItem("KingHasMoved")+" pawnIdArr: "+localStorage.getItem("PawnIDArray"));
 }
 }
@@ -5506,14 +5530,14 @@ this.remove = function(controlId){
     var parent = control.parentNode;
     var parentId = parent.id;
     var canChoose = false;
-    console.log("hello remove");
+    // console.log("hello remove");
     var nestedPieces = pieces.children;
     
     for(var q=0; q<nestedPieces.length; q++){
         //console.log("piece id: "+nestedPieces[q].id);
         nonrepeatremovedArr(nestedPieces[q].id);
     }
-    console.log("nested guys: "+nestedPieceIds);
+    // console.log("nested guys: "+nestedPieceIds);
 
     localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
     localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
@@ -5741,6 +5765,7 @@ this.remove = function(controlId){
         }
         localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
+    // console.log("remove pawn: "+parentId+' - '+pawntr+' - '+pawntl+' - '+pawntrEndNum+' - '+pawntlEndNum);
     if(type=='pawn'&&freeMov){
         if(parentId==pawntr){
             pieces.appendChild(control);
@@ -5748,10 +5773,18 @@ this.remove = function(controlId){
             parent.appendChild(selected);
             pawnIdArr.push(selected.id);
             localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
-            if(pawntrEndNum||pawntrEndNum==0){
+            // console.log("remove pawn tr: "+parentId+' - '+pawntr+' - '+pawntrEndNum);
+            if(pawntrEndNum!=null){
                 if(parentId==boardMatrix[0][pawntrEndNum]){
-                    canChoose = true;
-                    //console.log('pr can choose: '+canChoose);
+                    parent.innerHTML = '';
+                    var queen_id = getQueenId();
+                    // console.log("queen id: "+queen_id);
+                    var queenNode = document.createElement('DIV');
+                    queenNode.classList.add("blackPiece");
+                    queenNode.classList.add("queen");
+                    queenNode.id = queen_id;
+                    queenNode.onclick = (theHuman).remove(queen_id);
+                    parent.appendChild(queenNode);
                 }
             }
             localStorage.setItem('hasChanged','N');
@@ -5764,11 +5797,18 @@ this.remove = function(controlId){
             // console.log('pawn end num: '+pawntlEndNum);
             pawnIdArr.push(selected.id);
             localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
-            if(pawntlEndNum||pawntlEndNum==0){
+            if(pawntlEndNum!=null){
                 //console.log('pawn end num id: '+boardMatrix[7][pawntlEndNum]+' p: '+parentId);
                 if(parentId==boardMatrix[0][pawntlEndNum]){
-                    canChoose = true;
-                    //console.log('pl can choose: '+canChoose);
+                    parent.innerHTML = '';
+                    var queen_id = getQueenId();
+                    // console.log("queen id: "+queen_id);
+                    var queenNode = document.createElement('DIV');
+                    queenNode.classList.add("blackPiece");
+                    queenNode.classList.add("queen");
+                    queenNode.id = queen_id;
+                    queenNode.onclick = (theHuman).remove(queen_id);
+                    parent.appendChild(queenNode);
                 }
             }
             localStorage.setItem('hasChanged','N');
@@ -5791,9 +5831,17 @@ this.remove = function(controlId){
                 localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
                 allIdArr.push(placeId);
                 
-                if(pawntrEndNum||pawntrEndNum==0){
+                if(pawntrEndNum!=null){
                     if(parentId==boardMatrix[0][pawntrEndNum]){
-                        canChoose = true;
+                        parent.innerHTML = '';
+                        var queen_id = getQueenId();
+                        // console.log("queen id: "+queen_id);
+                        var queenNode = document.createElement('DIV');
+                        queenNode.classList.add("blackPiece");
+                        queenNode.classList.add("queen");
+                        queenNode.id = queen_id;
+                        queenNode.onclick = (theHuman).remove(queen_id);
+                        parent.appendChild(queenNode);
                     }
                 }
                 localStorage.setItem('hasChanged','N');
@@ -5807,9 +5855,17 @@ this.remove = function(controlId){
                 allIdArr.push(placeId);
                 pawnIdArr.push(selected.id);
                 localStorage.setItem("PawnIDArray", JSON.stringify(pawnIdArr));
-                if(pawntlEndNum||pawntlEndNum==0){
+                if(pawntlEndNum!=null){
                     if(parentId==boardMatrix[0][pawntlEndNum]){
-                        canChoose = true;
+                        parent.innerHTML = '';
+                        var queen_id = getQueenId();
+                        // console.log("queen id: "+queen_id);
+                        var queenNode = document.createElement('DIV');
+                        queenNode.classList.add("blackPiece");
+                        queenNode.classList.add("queen");
+                        queenNode.id = queen_id;
+                        queenNode.onclick = (theHuman).remove(queen_id);
+                        parent.appendChild(queenNode);
                     }
                 }
                 localStorage.setItem('hasChanged','N');
@@ -5822,15 +5878,7 @@ this.remove = function(controlId){
         }
         localStorage.setItem("RemovedPiecesList", JSON.stringify(nestedPieceIds));
     }
-    if(canChoose){
-        option.style.display = 'initial';
-        //console.log('can choose option: '+option.style.display);
-    }else{
-        //console.log('no choose: '+parentId);
-        option.style.display = 'none';
-    } 
-    // console.log("in remove - rook1HasMoved: "+localStorage.getItem("Rook1HasMoved")+" rook2HasMoved: "+localStorage.getItem("Rook2HasMoved")+" kingHasMoved: "+localStorage.getItem("KingHasMoved")+" pawnIdArr: "+localStorage.getItem("PawnIDArray"));
-    
+   
 }
 }
 }  

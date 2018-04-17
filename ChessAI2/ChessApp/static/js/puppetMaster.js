@@ -14,7 +14,7 @@ $(function(){
 
     function updateGet(){
         if(!hasGet){
-            console.log("upgt: "+changeable);
+            // console.log("upgt: "+changeable);
             if(changeable=="Y"){
                 $.ajax({
                     type: 'GET',
@@ -24,11 +24,17 @@ $(function(){
                     success: function(item){
                         var movemade = item.StateData.CompMadeMove;
                         var removemade = item.StateData.CompMadeRemove;
-                        console.log("comp moved: "+movemade+' - '+removemade);
+                        // console.log("comp moved: "+movemade+' - '+removemade);
                         if(movemade=="Y"&&removemade=="N"){ 
                             var statematrix2 = item.StateData.StateMatrix;
                             localStorage.setItem("StateMatrix", statematrix2);
                             var compchoice = item.StateData.CompChooses;
+                            // var res = compchoice.substring(0, 6);
+                            // console.log("res: "+res);
+                            // if(res == "bqueen"){
+                            //     compchoice = res;
+                            //     console.log("hello bqueen: "+compchoice)
+                            // }
                             var compmove = item.StateData.CompMovesTo;
                             console.log("compchoice: "+compchoice+" compmove: "+compmove);
                             
@@ -44,8 +50,14 @@ $(function(){
                             var compchoice = item.StateData.CompChooses;
                             var compmove = item.StateData.CompMovesTo;
                             var compremove = item.StateData.CompRemoves;
+                            // 
+                            // var res = compchoice.substring(0, 6);
+                            // console.log("res: "+res);
+                            // if(res == "bqueen"){
+                            //     compchoice = res;
+                            //     console.log("hello bqueen: "+compchoice)
+                            // }
                             console.log("compchoice: "+compchoice+" compmove: "+compmove+" compremove: "+compremove);
-                            
                             $robo.select(compchoice);
                             $robo.remove(compremove);
                             $robo.moveTo(compmove);
@@ -68,7 +80,7 @@ $(function(){
             var finmove = localStorage.getItem("FinishedMove");
             
             if(changeable=="Y"){
-                console.log("changeable: "+changeable+' finmove: '+finmove);
+                // console.log("changeable: "+changeable+' finmove: '+finmove);
                 if(finmove=="Y"){
                     var statematrix1 = localStorage.getItem("StateMatrix");
                     var stmt = eval(statematrix1);
@@ -139,7 +151,7 @@ $(function(){
                             section: 'StateMatrix'
                         },
                         success: function(item){
-                            console.log("post success hi");
+                            console.log("post success");
                             localStorage.setItem('FinishedMove', 'N');
                             hasGet = false;
                             hasStart = true;
