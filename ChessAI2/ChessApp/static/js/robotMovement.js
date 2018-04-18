@@ -1433,7 +1433,7 @@ this.select = function(controlId){
 
 
 this.kingMovement = function(controlId){
-    //console.log('king movement in check '+inCheck);
+    // console.log('in king movement');
     var kselected = document.getElementById(controlId);
     var ktype = kselected.classList[1];
     var kcolour = kselected.classList[0];
@@ -1485,7 +1485,7 @@ this.kingMovement = function(controlId){
     }
 
     if(ktype=='king'){ 
-        //console.log('hello king: ');
+        // console.log('hello king: ');
         if([Iking+1]<8&&[Jking-1]>-1){
             var seCheck = false;
             var val = document.getElementById(boardMatrix[Iking+1][Jking-1]);
@@ -1681,14 +1681,14 @@ this.kingMovement = function(controlId){
             var checked = false;
             checkArr = [];
             var pieceAr = kingIsChecked(boardMatrix[Iking][Jking], piecesChecking);
-            //console.log("pieceAr: "+pieceAr);
+            // console.log("pieceAr: "+pieceAr);
             checkArr = pieceAr;
             var val = document.getElementById(boardMatrix[Iking][Jking]);
             for(var b=0; b<pieceAr.length; b++){
                 canReach = kingCanCheck(pieceAr[b], boardMatrix[Iking][Jking]);
                 if(canReach){
                     reachable.push(pieceAr[b]);
-                    //console.log("reachable: "+pieceAr[b]);
+                    // console.log("reachable: "+pieceAr[b]);
                 }
             }
             var a = undefined;
@@ -1698,7 +1698,7 @@ this.kingMovement = function(controlId){
                 var nextAt = tempAt.parentNode.id;
                 attackerArr.push(nextAt);
                 inCheck = finalCanCheck(reachable[r], boardMatrix[Iking][Jking]);
-                
+                // console.log("reachable vals: "+reachable[r]);
                 if(inCheck){
                     localStorage.setItem("CompInCheck", "Y");
                     kcanSaveKing =  trySave();
@@ -4723,19 +4723,19 @@ function finalCanCheck(controlId, posId){
             if(rightk>-1&&rightk<8&&ri!=posId){
                 ri = boardMatrix[Ik][rightk];
                 rightsk = document.getElementById(boardMatrix[Ik][rightk]);
-                rArrk.push(rightsk);
+                rArrk.push(ri);
             }if(leftk<8&&leftk>-1&&le!=posId){
                 le = boardMatrix[Ik][leftk];
                 leftsk = document.getElementById(boardMatrix[Ik][leftk]);
-                lArrk.push(leftsk);
+                lArrk.push(le);
             }if(upk<8&&upk>-1&&upp!=posId){
                 upp = boardMatrix[upk][Jk];
                 upsk = document.getElementById(boardMatrix[upk][Jk]);
-                uArrk.push(upsk); 
+                uArrk.push(upp); 
             }if(downk<8&&downk>-1&&dwn!=posId){
                 dwn = boardMatrix[downk][Jk];
                 downsk = document.getElementById(boardMatrix[downk][Jk]);
-                dArrk.push(downsk);
+                dArrk.push(dwn);
             }
                     
                     
@@ -4789,12 +4789,12 @@ function finalCanCheck(controlId, posId){
                     nnw = boardMatrix[nwupk][nwleftk];
                     nwArk.push(boardMatrix[nwupk][nwleftk]);
                     nwk = document.getElementById(boardMatrix[nwupk][nwleftk]);
-                    nwArrk.push(nwk);
+                    nwArrk.push(nnw);
                 }if(nerightk<8&&neupk<8&&nne!=posId){
                     nne = boardMatrix[neupk][nerightk];
                     neArk.push(boardMatrix[neupk][nerightk]);
                     nek = document.getElementById(boardMatrix[neupk][nerightk]);
-                    neArrk.push(nek);
+                    neArrk.push(nne);
                 }if(swleftk>-1&&swdownk>-1&&ssw!=posId){
                     ssw = boardMatrix[swdownk][swleftk];
                     swArk.push(boardMatrix[swdownk][swleftk]);
@@ -4804,7 +4804,7 @@ function finalCanCheck(controlId, posId){
                     sse = boardMatrix[sedownk][serightk];
                     seArk.push(boardMatrix[sedownk][serightk]);
                     sek = document.getElementById(boardMatrix[sedownk][serightk]);
-                    seArrk.push(sek);
+                    seArrk.push(sse);
                 }         
 
                 

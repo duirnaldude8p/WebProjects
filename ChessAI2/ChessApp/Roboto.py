@@ -2451,6 +2451,7 @@ class Brain(object):
 				recieved = self.evaluate(newstate, mov_dict, "black", firsts)
 				dictlen = len(newdict)
 				print("--------in %s - %s - %s - %s"%( recieved, newdict[dictlen-1], self.statematrix[0][0], self.pawnEnds[8]))
+				
 			else:
 				moves = self.getMoves(self.statematrix, firsts, "black", pieces, movesdic, self.pawnEnds)
 				mov_dict = self.dictToList(moves, "black")

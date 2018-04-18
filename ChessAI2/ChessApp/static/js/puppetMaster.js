@@ -29,19 +29,13 @@ $(function(){
                             var statematrix2 = item.StateData.StateMatrix;
                             localStorage.setItem("StateMatrix", statematrix2);
                             var compchoice = item.StateData.CompChooses;
-                            // var res = compchoice.substring(0, 6);
-                            // console.log("res: "+res);
-                            // if(res == "bqueen"){
-                            //     compchoice = res;
-                            //     console.log("hello bqueen: "+compchoice)
-                            // }
+            
                             var compmove = item.StateData.CompMovesTo;
-                            console.log("compchoice: "+compchoice+" compmove: "+compmove);
+                            // console.log("compchoice: "+compchoice+" compmove: "+compmove);
                             
                             $robo.select(compchoice);
                             $robo.moveTo(compmove);
                             hasGet = true;
-                            //console.log("hasGet: "+hasGet);
                             console.log("get success");
                         }
                         else if(removemade=="Y"&&movemade=="Y"){ 
@@ -50,19 +44,12 @@ $(function(){
                             var compchoice = item.StateData.CompChooses;
                             var compmove = item.StateData.CompMovesTo;
                             var compremove = item.StateData.CompRemoves;
-                            // 
-                            // var res = compchoice.substring(0, 6);
-                            // console.log("res: "+res);
-                            // if(res == "bqueen"){
-                            //     compchoice = res;
-                            //     console.log("hello bqueen: "+compchoice)
-                            // }
-                            console.log("compchoice: "+compchoice+" compmove: "+compmove+" compremove: "+compremove);
+                            
+                            // console.log("compchoice: "+compchoice+" compmove: "+compmove+" compremove: "+compremove);
                             $robo.select(compchoice);
                             $robo.remove(compremove);
                             $robo.moveTo(compmove);
                             hasGet = true;
-                            //console.log("hasGet: "+hasGet);
                             console.log("get success");
                         }
                     },
@@ -84,8 +71,9 @@ $(function(){
                 if(finmove=="Y"){
                     var statematrix1 = localStorage.getItem("StateMatrix");
                     var stmt = eval(statematrix1);
-                    //console.log("state change: "+stmt[1][5].pieceId+" - "+stmt[3][5].pieceId)
+                    
                     $robo.kingMovement("bking");
+                    // console.log("king mov called");
                     var compcheck = localStorage.getItem("CompInCheck");
                     var compnwcheck = localStorage.getItem("CompNWInCheck");
                     var compnecheck = localStorage.getItem("CompNEInCheck");

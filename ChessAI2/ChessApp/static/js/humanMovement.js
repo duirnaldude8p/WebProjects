@@ -172,7 +172,7 @@ var oppColour = 'blackPiece';
 
 this.select = function(controlId){
     var newVal = localStorage.getItem('hasChanged');
-    //console.log('in select: '+newVal);
+    
     if(newVal == 'N'){
     //console.log('selected');
     //console.log('select in check '+inCheck);
@@ -211,6 +211,7 @@ this.select = function(controlId){
         }
     }
 
+    console.log('in select: '+controlId+' - '+I+' - '+J+' - '+boardMatrix[I][J]);
 
     left = J;
     right = J;
@@ -264,6 +265,8 @@ this.select = function(controlId){
         var lArr = [];
         var uArr = [];
         var dArr = [];
+
+        console.log("freemove: "+freeMov+' - '+type);
 
         for(var i=0; i<8; i++){
            if(type=='rook'&&freeMov||type=='queen'&&freeMov){
@@ -486,21 +489,25 @@ this.select = function(controlId){
                 //localStorage.setItem('hasSelected', 'Y');
 
                 if(nwleft>-1&&nwup<8){
+                    var nnw = boardMatrix[nwup][nwleft];
                     nw = document.getElementById(boardMatrix[nwup][nwleft]);
                     nwArr.push(nw);
                     nw.style.background = 'blue';
                     highlights.push(nw);
                 }if(neright<8&&neup<8){
+                    var nnw = boardMatrix[neup][neright];
                     ne = document.getElementById(boardMatrix[neup][neright]);
                     neArr.push(ne);
                     ne.style.background = 'blue';
                     highlights.push(ne);
                 }if(swleft>-1&&swdown>-1){
+                    var ssw = boardMatrix[swdown][swleft];
                     sw = document.getElementById(boardMatrix[swdown][swleft]);
                     swArr.push(sw);
                     sw.style.background = 'blue';
                     highlights.push(sw);
                 }if(seright<8&&sedown>-1){
+                    var sse = boardMatrix[sedown][seright];
                     se = document.getElementById(boardMatrix[sedown][seright]);
                     seArr.push(se);
                     se.style.background = 'blue';
@@ -545,6 +552,7 @@ this.select = function(controlId){
                 }
                 if((nwup-1)<8&&(nwleft+1)>-1&&(nwup-1)>-1&&(nwleft+1)<8&&!inCheck){
                     allIdArr.push(boardMatrix[nwup-1][nwleft+1]); 
+                    // console.log("select nw id: "+boardMatrix[nwup-1][nwleft+1]+' - '+nwup+' - '+nwleft+' '+controlId);
                 }
                 if((neup-1)<8&&(neright-1)<8&&(neup-1)>-1&&(neright-1)>-1&&!inCheck){
                     allIdArr.push(boardMatrix[neup-1][neright-1]);
@@ -558,16 +566,18 @@ this.select = function(controlId){
             }
              if(type=='bishop'&&!freeMov||type=='queen'&&!freeMov){
                 //localStorage.setItem('hasSelected', 'Y');
-                //console.log("!freeMov nwup: "+nwup);
+                
                 if(nwleft>-1&&nwup<8){
                     var tl = boardMatrix[nwup][nwleft];
                     var tls = document.getElementById(boardMatrix[nwup][nwleft]);
                     for(var w=0; w<currDir.length; w++){
                         if(tl==currDir[w]){
+                            // console.log("--- currDir: "+currDir[w]);
                             nw = document.getElementById(boardMatrix[nwup][nwleft]);
                             nwArr.push(nw);
                             nw.style.background = 'blue';
                             highlights.push(nw);
+                            allIdArr.push(tl); 
                         }
                     }
                     for(var nn=0; nn<attackerArr.length; nn++){
@@ -576,6 +586,7 @@ this.select = function(controlId){
                             nwArr.push(nw);
                             nw.style.background = 'blue';
                             highlights.push(nw);
+                            allIdArr.push(tl); 
                         }
                     }
                     if(tl==guardAttack&&isGuard){
@@ -583,16 +594,21 @@ this.select = function(controlId){
                         nwArr.push(nw);
                         nw.style.background = 'blue';
                         highlights.push(nw);
+                        allIdArr.push(tl); 
                     }
                 }if(neright<8&&neup<8){
+                    // console.log("---neup: "+neup+'---neright: '+neright);
                     var tr = boardMatrix[neup][neright];
+                    // console.log("----ne select: "+tr);
                     var trs = document.getElementById(boardMatrix[neup][neright]);
                     for(var y=0; y<currDir.length; y++){
                         if(tr==currDir[y]){
+                            // console.log("value: "+currDir[y]);
                             ne = document.getElementById(boardMatrix[neup][neright]);
                             neArr.push(ne);
                             ne.style.background = 'blue';
                             highlights.push(ne);
+                            allIdArr.push(tr); 
                         }
                     }
                     //console.log("tr: "+attackerArr+" - "+tr);
@@ -602,14 +618,16 @@ this.select = function(controlId){
                             neArr.push(ne);
                             ne.style.background = 'blue';
                             highlights.push(ne);
+                            allIdArr.push(tr); 
                         }
                     }
-                    // if(tr==guardAttack&&isGuard){
-                    //     ne = document.getElementById(boardMatrix[neup][neright]);
-                    //     neArr.push(ne);
-                    //     ne.style.background = 'blue';
-                    //     highlights.push(ne);
-                    // }
+                    if(tr==guardAttack&&isGuard){
+                        ne = document.getElementById(boardMatrix[neup][neright]);
+                        neArr.push(ne);
+                        ne.style.background = 'blue';
+                        highlights.push(ne);
+                        allIdArr.push(tr); 
+                    }
                 }if(swleft>-1&&swdown>-1){
                     var bl = boardMatrix[swdown][swleft];
                     var bls = document.getElementById(boardMatrix[swdown][swleft]); 
@@ -619,6 +637,7 @@ this.select = function(controlId){
                             swArr.push(sw);
                             sw.style.background = 'blue';
                             highlights.push(sw);
+                            allIdArr.push(bl); 
                         }
                     }
                     for(var nn=0; nn<attackerArr.length; nn++){
@@ -627,6 +646,7 @@ this.select = function(controlId){
                             swArr.push(sw);
                             sw.style.background = 'blue';
                             highlights.push(sw);
+                            allIdArr.push(bl); 
                         }
                     }
                     if(bl==guardAttack&&isGuard){
@@ -634,6 +654,7 @@ this.select = function(controlId){
                         swArr.push(sw);
                         sw.style.background = 'blue';
                         highlights.push(sw);
+                        allIdArr.push(bl); 
                     }
                 }if(seright<8&&sedown>-1){
                     var br = boardMatrix[sedown][seright];
@@ -644,6 +665,7 @@ this.select = function(controlId){
                             seArr.push(se);
                             se.style.background = 'blue';
                             highlights.push(se);
+                            allIdArr.push(br); 
                         }
                     }
                     for(var nn=0; nn<attackerArr.length; nn++){
@@ -652,6 +674,7 @@ this.select = function(controlId){
                             seArr.push(se);
                             se.style.background = 'blue';
                             highlights.push(se);
+                            allIdArr.push(br); 
                         }
                     }
                     if(br==guardAttack&&isGuard){
@@ -659,6 +682,7 @@ this.select = function(controlId){
                         seArr.push(se);
                         se.style.background = 'blue';
                         highlights.push(se);
+                        allIdArr.push(br); 
                     }
                 }         
 
@@ -698,18 +722,20 @@ this.select = function(controlId){
                         } 
                     }
                 }
-                if((nwup-1)<8&&(nwleft+1)>-1&&(nwup-1)>-1&&(nwleft+1)<8&&!inCheck){
-                    allIdArr.push(boardMatrix[nwup-1][nwleft+1]); 
-                }
-                if((neup-1)<8&&(neright-1)<8&&(neup-1)>-1&&(neright-1)>-1&&!inCheck){
-                    allIdArr.push(boardMatrix[neup-1][neright-1]);
-                }
-                if((swdown+1)>-1&&(swleft+1)>-1&&(swdown+1)<8&&(swleft+1)<8&&!inCheck){
-                    allIdArr.push(boardMatrix[swdown+1][swleft+1]);
-                }
-                if((sedown+1)>-1&&(seright-1)<8&&(sedown+1)<8&&(seright-1)>-1&&!inCheck){
-                    allIdArr.push(boardMatrix[sedown+1][seright-1]);                 
-                }
+                // console.log("ne in select: "+' neup: '+neup+' neright: '+neright);
+                // if((nwup-1)<8&&(nwleft+1)>-1&&(nwup-1)>-1&&(nwleft+1)<8&&!inCheck){
+                //     allIdArr.push(boardMatrix[nwup-1][nwleft+1]); 
+                // }
+                // if((neup-1)<8&&(neright-1)<8&&(neup-1)>-1&&(neright-1)>-1&&!inCheck){
+                //     allIdArr.push(boardMatrix[neup-1][neright-1]);
+                //     // console.log("ne pos in select: "+boardMatrix[neup-1][neright-1]);
+                // }
+                // if((swdown+1)>-1&&(swleft+1)>-1&&(swdown+1)<8&&(swleft+1)<8&&!inCheck){
+                //     allIdArr.push(boardMatrix[swdown+1][swleft+1]);
+                // }
+                // if((sedown+1)>-1&&(seright-1)<8&&(sedown+1)<8&&(seright-1)>-1&&!inCheck){
+                //     allIdArr.push(boardMatrix[sedown+1][seright-1]);                 
+                // }
             }          
         }     
     }  
@@ -1394,7 +1420,7 @@ this.select = function(controlId){
                 my_piece = val.firstElementChild;
                 my_piece_colour = my_piece.classList[0];
             }
-            console.log("my piece col: "+my_piece_colour+" - "+colour);
+            // console.log("my piece col: "+my_piece_colour+" - "+colour);
             for(var b=0; b<pieceArr.length; b++){
                 neCheck = canCheck(pieceArr[b], boardMatrix[I+1][J+1]);
                 //console.log('ne check: '+b+' - '+pieceArr[b]);
@@ -1425,7 +1451,8 @@ this.select = function(controlId){
             my_piece_colour = ''; 
             if(val.hasChildNodes()){
                 my_piece = val.firstElementChild;
-                my_piece_colour = my_piece.classList[0];
+                console.log("classlist king: "+my_piece.id);
+                // my_piece_colour = my_piece.classList[0];
             }
             for(var b=0; b<pieceArr.length; b++){
                 leftCheck = canCheck(pieceArr[b], boardMatrix[I][J-1]);
@@ -1643,7 +1670,7 @@ this.select = function(controlId){
 
 
 function kingMovement(controlId){
-    //console.log('king movement in check '+inCheck);
+    // console.log('in human king movement');
     var kselected = document.getElementById(controlId);
     var ktype = kselected.classList[1];
     var kcolour = kselected.classList[0];
@@ -1667,7 +1694,7 @@ function kingMovement(controlId){
     }
 
     if(ktype=='king'){ 
-        //console.log('hello king: ');
+        // console.log('hello king: ');
         if([Iking+1]<8&&[Jking-1]>-1){
             var nwCheck = false;
             var val = document.getElementById(boardMatrix[Iking+1][Jking-1]);
@@ -1895,10 +1922,10 @@ function kingMovement(controlId){
             var pieceAr = kingIsChecked(boardMatrix[Iking][Jking], piecesChecking);
             checkArr = pieceAr;
             var val = document.getElementById(boardMatrix[Iking][Jking]);
-            //console.log("pieceArr: "+pieceAr);
+            // console.log("pieceArr: "+pieceAr);
             for(var b=0; b<pieceAr.length; b++){
                 canReach = kingCanCheck(pieceAr[b], boardMatrix[Iking][Jking]);
-                //console.log("canReach: "+canReach);
+                // console.log("canReach: "+canReach);
                 if(canReach){
                     reachable.push(pieceAr[b]);
                 }
@@ -1910,8 +1937,8 @@ function kingMovement(controlId){
                 var tempAt = document.getElementById(reachable[r]);
                 var nextAt = tempAt.parentNode.id;
                 attackerArr.push(nextAt);
-                //console.log("reach: "+reachable[r])
                 inCheck = finalCanCheck(reachable[r], boardMatrix[Iking][Jking]);
+                // console.log("reach: "+reachable[r]+' - '+inCheck+' - '+boardMatrix[Iking][Jking]);
                 if(inCheck){
                     kcanSaveKing =  trySave();
                     var tempcansave =  tryGet(Iking, Jking);
@@ -1956,7 +1983,7 @@ function trySave(){
         for(var i=0; i<a.length; i++){   
             nonrepeatArr(a[i]);
         }
-        console.log("arr: "+pcarr);
+        // console.log("arr: "+pcarr);
         if(!isSet){
             for(var l=0; l<pcarr.length; l++){
                 tscanSaveKing = canSave(pcarr[l], currDir[n]);
@@ -2528,7 +2555,7 @@ function isChecked(controlId, piecesFound){
 
 function getCanSave(controlId){
     var control = document.getElementById(controlId);
-    console.log("get save id: "+controlId);
+    // console.log("get save id: "+controlId);
     var piecesFound = [];
     var horseArrk = [];
     var kingsArrayk = [];
@@ -4828,7 +4855,7 @@ function finalCanCheck(controlId, posId){
             }
         }
     } 
-    //console.log('pos: '+boardMatrix[Ik][Jk]); 
+    // console.log('pos: '+boardMatrix[Ik][Jk]); 
     var leftk = Jk;
     var rightk = Jk;
     var upk = Ik;
@@ -4899,26 +4926,28 @@ function finalCanCheck(controlId, posId){
             if(rightk>-1&&rightk<8&&ri!=posId){
                 ri = boardMatrix[Ik][rightk];
                 rightsk = document.getElementById(boardMatrix[Ik][rightk]);
-                rArr.push(rightsk);
+                rArr.push(rightsk.id);
             }if(leftk<8&&leftk>-1&&le!=posId){
                 le = boardMatrix[Ik][leftk];
                 leftsk = document.getElementById(boardMatrix[Ik][leftk]);
-                lArr.push(leftsk);
-            }if(upk<8&&upp!=posId){
+                lArr.push(leftsk.id);
+            }if(upk<8&&upk>-1&&upp!=posId){
                 upp = boardMatrix[upk][Jk];
                 upsk = document.getElementById(boardMatrix[upk][Jk]);
-                uArr.push(upsk); 
+                // console.log("place up: "+upsk.id);
+                uArr.push(upsk.id); 
             }if(downk<8&&downk>-1&&dwn!=posId){
                 dwn = boardMatrix[downk][Jk];
                 downsk = document.getElementById(boardMatrix[downk][Jk]);
-                dArr.push(downsk);
+                // console.log("place down: "+downsk.id); 
+                dArr.push(downsk.id);
             }
                             
             if(rightk<8){
                 if(rightsk!=null){
                     if(rightsk.id!=posId){
                         if(!rightsk.firstElementChild||!rstart){
-                            rightk++;
+                            rightk--;
                             rstart = true;
                         }
                     }
@@ -4928,7 +4957,7 @@ function finalCanCheck(controlId, posId){
                 if(leftsk!=null){
                     if(leftsk.id!=posId){
                         if(!leftsk.firstElementChild||!lstart){
-                            leftk--;
+                            leftk++;
                             lstart = true;
                         }
                     }
@@ -4938,7 +4967,7 @@ function finalCanCheck(controlId, posId){
                 if(upsk!=null){
                     if(upsk.id!=posId){
                         if(!upsk.firstElementChild||!ustart){
-                            upk++;
+                            upk--;
                             ustart = true;
                         }
                     }
@@ -4948,8 +4977,10 @@ function finalCanCheck(controlId, posId){
             if(downk>-1){
                 if(downsk!=null){
                     if(downsk.id!=posId){
+                        // console.log("checker id: "+downsk.id+' - '+!downsk.firstElementChild+' - '+!dstart);
                         if(!downsk.firstElementChild||!dstart){
-                            downk--;
+                            // console.log("down counter: "+downsk.id+' - '+dstart);
+                            downk++;
                             dstart = true;
                         }
                     }
@@ -4962,22 +4993,22 @@ function finalCanCheck(controlId, posId){
                     nnw = boardMatrix[nwupk][nwleftk];
                     nwAr.push(boardMatrix[nwupk][nwleftk]);
                     nwk = document.getElementById(boardMatrix[nwupk][nwleftk]);
-                    nwArrk.push(nwk);
+                    nwArrk.push(nwk.id);
                 }if(nerightk>-1&&neupk>-1&&nne!=posId){
                     nne = boardMatrix[neupk][nerightk];
                     neAr.push(boardMatrix[neupk][nerightk]);
                     nek = document.getElementById(boardMatrix[neupk][nerightk]);
-                    neArrk.push(nek);
+                    neArrk.push(nek.id);
                 }if(swleftk<8&&swdownk<8&&ssw!=posId){
                     ssw = boardMatrix[swdownk][swleftk];
                     swAr.push(boardMatrix[swdownk][swleftk]);
                     swk = document.getElementById(boardMatrix[swdownk][swleftk]);
-                    swArrk.push(swk);
+                    swArrk.push(swk.id);
                 }if(serightk>-1&&sedownk<8&&sse!=posId){
                     sse = boardMatrix[sedownk][serightk];
                     seAr.push(boardMatrix[sedownk][serightk]);
                     sek = document.getElementById(boardMatrix[sedownk][serightk]);
-                    seArrk.push(sek);
+                    seArrk.push(sek.id);
                 }         
 
                 
@@ -5075,8 +5106,8 @@ function finalCanCheck(controlId, posId){
             var valId = upsk.id;
             //console.log('up posId: '+posId+' valId: '+valId);
             if(val!=null){
-                //console.log('hi u '+val.classList[1]);
                 if(val.hasChildNodes()){
+                    // console.log("upArr: "+uArr);
                     piecesFoundc = valId;
                     currDir = uArr;
                     currDir.shift();
@@ -5087,25 +5118,21 @@ function finalCanCheck(controlId, posId){
         //}
     } 
     }
-
+    // console.log("dir: "+dirSec);
     if(dirSec=='down'){
-    if(downsk!=null){
-        //if(downsk.hasChildNodes()){
+        if(downsk!=null){
             var val = downsk;
             var valId = downsk.id;
-            //console.log('d posId: '+posId+' valId: '+valId);
             if(val!=null){
-                //console.log('hi d '+val.classList[1]);
                 if(val.hasChildNodes()){
+                    // console.log('------hi d f');
                     piecesFoundc = valId;
                     currDir = dArr;
                     currDir.shift();
-                    //attacker = thePlaceId;
-                    //console.log('d: '+downsk.id);
+                  
                 }
             } 
-        //}
-    }
+        }
     }
 
     if(dirSec=='nw'){ 
@@ -5422,6 +5449,9 @@ this.moveTo = function(controlId){
             break;
         }
     }
+    if(movePrev){
+        // console.log("prev: "+movePrev.id+' controlId: '+controlId);
+    }
     
     if(type=='rook'&&freeMov||type=='queen'&&freeMov){
         for(var j=left; j<=right; j++){
@@ -5454,6 +5484,7 @@ this.moveTo = function(controlId){
                     if(movePrev){
                         movePrev.innerHTML = '';
                     }
+                    console.log("move to freeMov up cleared");
                     if(selected.id=='wrook1'){
                         rook1HasMoved = true;
                     }
@@ -5502,6 +5533,7 @@ this.moveTo = function(controlId){
                             if(movePrev){
                                 movePrev.innerHTML = '';
                             }
+                            console.log("move to not freeMov up cleared");
                             if(selected.id=='wrook1'){
                                 rook1HasMoved = true;
                             }
@@ -6090,7 +6122,7 @@ this.remove = function(controlId){
                 statematrix[pawntrInc.I][pawntrInc.J].pieceId = selected.id; 
                 localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
             } 
-            console.log('tr pawnendnum: '+pawntrEndNum+' - '+pawntr);
+            // console.log('tr pawnendnum: '+pawntrEndNum+' - '+pawntr);
             if(pawntrEndNum){
                 if(parentId==boardMatrix[7][pawntrEndNum]){
                     canChoose = true;
