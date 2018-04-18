@@ -174,7 +174,7 @@ this.select = function(controlId){
     var newVal = localStorage.getItem('hasChanged');
     
     if(newVal == 'N'){
-    //console.log('selected');
+    // console.log('selected');
     //console.log('select in check '+inCheck);
     selected = document.getElementById(controlId);
     type = selected.classList[1];
@@ -211,7 +211,7 @@ this.select = function(controlId){
         }
     }
 
-    console.log('in select: '+controlId+' - '+I+' - '+J+' - '+boardMatrix[I][J]);
+    // console.log('in select: '+controlId+' - '+I+' - '+J+' - '+boardMatrix[I][J]);
 
     left = J;
     right = J;
@@ -266,7 +266,7 @@ this.select = function(controlId){
         var uArr = [];
         var dArr = [];
 
-        console.log("freemove: "+freeMov+' - '+type);
+        // console.log("freemove: "+freeMov+' - '+type);
 
         for(var i=0; i<8; i++){
            if(type=='rook'&&freeMov||type=='queen'&&freeMov){
@@ -496,6 +496,7 @@ this.select = function(controlId){
                     highlights.push(nw);
                 }if(neright<8&&neup<8){
                     var nnw = boardMatrix[neup][neright];
+
                     ne = document.getElementById(boardMatrix[neup][neright]);
                     neArr.push(ne);
                     ne.style.background = 'blue';
@@ -582,6 +583,7 @@ this.select = function(controlId){
                     }
                     for(var nn=0; nn<attackerArr.length; nn++){
                         if(tl==attackerArr[nn]){
+                            console.log("------tl: "+tl)
                             nw = document.getElementById(boardMatrix[nwup][nwleft]);
                             nwArr.push(nw);
                             nw.style.background = 'blue';
@@ -5452,6 +5454,9 @@ this.moveTo = function(controlId){
     if(movePrev){
         // console.log("prev: "+movePrev.id+' controlId: '+controlId);
     }
+
+    console.log(" moveTo classlist: "+selected.classList);
+    console.log("moveTo attr: "+controlId+' - '+type+' - '+freeMov);
     
     if(type=='rook'&&freeMov||type=='queen'&&freeMov){
         for(var j=left; j<=right; j++){
@@ -5834,6 +5839,9 @@ this.remove = function(controlId){
     statematrix = eval(statematrix); 
     
     statematrix[I][J].pieceId = "";
+
+    console.log("remove classlist: "+control.classList);
+    console.log("remove attr: "+controlId+' - '+type+' - '+freeMov);
 
     if(type=='rook'&&freeMov||type=='queen'&&freeMov){
         for(var a=left; a<=right; a++){

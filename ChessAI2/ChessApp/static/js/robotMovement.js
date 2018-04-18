@@ -5783,7 +5783,7 @@ this.remove = function(controlId){
                     queenNode.classList.add("blackPiece");
                     queenNode.classList.add("queen");
                     queenNode.id = queen_id;
-                    queenNode.onclick = (theHuman).remove(queen_id);
+                    queenNode.onclick = function() {(theHuman).remove(queen_id)};
                     parent.appendChild(queenNode);
                 }
             }
@@ -5807,7 +5807,7 @@ this.remove = function(controlId){
                     queenNode.classList.add("blackPiece");
                     queenNode.classList.add("queen");
                     queenNode.id = queen_id;
-                    queenNode.onclick = (theHuman).remove(queen_id);
+                    queenNode.onclick = function() {(theHuman).remove(queen_id)};
                     parent.appendChild(queenNode);
                 }
             }
@@ -5840,7 +5840,7 @@ this.remove = function(controlId){
                         queenNode.classList.add("blackPiece");
                         queenNode.classList.add("queen");
                         queenNode.id = queen_id;
-                        queenNode.onclick = (theHuman).remove(queen_id);
+                        queenNode.onclick = function() {(theHuman).remove(queen_id)};
                         parent.appendChild(queenNode);
                     }
                 }
@@ -5864,7 +5864,7 @@ this.remove = function(controlId){
                         queenNode.classList.add("blackPiece");
                         queenNode.classList.add("queen");
                         queenNode.id = queen_id;
-                        queenNode.onclick = (theHuman).remove(queen_id);
+                        queenNode.onclick = function() {(theHuman).remove(queen_id)};
                         parent.appendChild(queenNode);
                     }
                 }
