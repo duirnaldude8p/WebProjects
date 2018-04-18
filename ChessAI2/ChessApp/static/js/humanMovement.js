@@ -5380,34 +5380,121 @@ this.castleMoveR = function(){
 }
 }
 
+function getPieceId(type){
+    var counter_q = 0;
+    var counter_p = 0;
+    var counter_r = 0;
+    var counter_h = 0;
+    var counter_b = 0;
+    var queen_id = "wqueen";
+    var pawn_id = "wpawn";
+    var rook_id = "wrook";
+    var horse_id = "whorse";
+    var bishop_id = "wbishop";
+    var my_ids = document.querySelectorAll('*[id]:not([id=""])')
+    var p_type = '';
+    var pid = '';
+    for(var i=0; i<my_ids.length; i++){
+        var next = my_ids[i].id;
+        // console.log("next id: "+next);
+        next = String(next);
+        var res_queen = next.substring(0, 6);
+        var res_horse = next.substring(0, 6);
+        var res_pawn = next.substring(0, 5);
+        var res_rook = next.substring(0, 5);
+        var res_bishop = next.substring(0, 7);
+        if(res_queen == "wqueen"){
+            counter_q++;
+            p_type = 'q';
+        } 
+        if(res_horse == "whorse"){
+            counter_h++;
+            p_type = 'h';
+        }
+        if(res_pawn == "wpawn"){
+            counter_p++;
+            p_type = 'p';
+        }
+        if(res_rook == "wrook"){
+            counter_r++;
+            p_type = 'r';
+        }
+        if(res_bishop == "wbishop"){
+            counter_b++;
+            p_type = 'b';
+        }     
+    }
+    
+    if(p_type == 'q' && type == "queen"){
+        queen_id = "wqueen"+counter_q;
+        pid = queen_id;
+    }
+    if(p_type == 'p' && type == "pawn"){
+        pawn_id = "wpawn"+counter_p;
+        pid = pawn_id;
+    }
+    if(p_type == 'r' && type == "rook"){
+        rook_id = "wrook"+counter_r;
+        pid = rook_id;
+    }
+    if(p_type == 'h' && type == "horse"){
+        horse_id = "whorse"+counter_h;
+        pid = horse_id;
+    }
+    if(p_type == 'b' && type == "bishop"){
+        bishop_id = "wbishop"+counter_b;
+        pid = bishop_id;
+    }
+    return pid;
+}
 
 this.chooseNew = function(controlId){
     //console.log(controlId);
     if(controlId=='queenOp'){
-        selected.classList.remove(type);
-        selected.classList.add('queen');
-        type = 'queen';
-        //console.log('hi choose '+type+' '+selected.classList[1]);
+        var my_place = document.getElementById(placeId);
+        var queen_id = getPieceId("queen");
+        var queenNode = document.createElement('DIV');
+        queenNode.classList.add("whitePiece");
+        queenNode.classList.add("queen");
+        queenNode.id = queen_id;
+        queenNode.onclick = function() {(theHuman).remove(queen_id)};
+        my_place.appendChild(queenNode);
     } if(controlId=='pawnOp'){
-        selected.classList.remove(type);
-        selected.classList.add('pawn');
-        type = 'pawn';
-        //console.log('hi choose '+type+' '+selected.classList[1]);
+        var my_place = document.getElementById(placeId);
+        var pawn_id = getPieceId("pawn");
+        var pawnNode = document.createElement('DIV');
+        pawnNode.classList.add("whitePiece");
+        pawnnNode.classList.add("pawn");
+        pawnNode.id = pawn_id;
+        pawnNode.onclick = function() {(theHuman).remove(pawn_id)};
+        my_place.appendChild(rookNode);
     } if(controlId=='rookOp'){
-        selected.classList.remove(type);
-        selected.classList.add('rook');
-        type = 'rook';
-        //console.log('hi choose '+type+' '+selected.classList[1]);
+        var my_place = document.getElementById(placeId);
+        var rook_id = getPieceId("rook");
+        var rookNode = document.createElement('DIV');
+        rookNode.classList.add("whitePiece");
+        rookNode.classList.add("rook");
+        rookNode.id = rook_id;
+        rookNode.onclick = function() {(theHuman).remove(rook_id)};
+        my_place.appendChild(rookNode);
     } if(controlId=='horseOp'){
-        selected.classList.remove(type);
-        selected.classList.add('horse');
-        type = 'horse';
-        //console.log('hi choose '+type+' '+selected.classList[1]);
+        var my_place = document.getElementById(placeId);
+        var horse_id = getPieceId("horse");
+        var horseNode = document.createElement('DIV');
+        horseNode.classList.add("whitePiece");
+        horseNode.classList.add("horse");
+        horseNode.id = horse_id;
+        horseNode.onclick = function() {(theHuman).remove(horse_id)};
+        my_place.appendChild(horseNode);
     } if(controlId=='bishopOp'){
-        selected.classList.remove(type);
-        selected.classList.add('bishop');
-        type = 'bishop';
-        //console.log('hi choose '+type+' '+selected.classList[1]);
+        var my_place = document.getElementById(placeId);
+        var bish_id = getPieceId("bishop");
+        var bishNode = document.createElement('DIV');
+        bishNode.classList.add("whitePiece");
+        bishNode.classList.add("bishop");
+        bishNode.id = bish_id;
+        bishNode.onclick = function() {(theHuman).remove(bish_id)};
+        my_place.appendChild(bishNode);
     }
 
 }
