@@ -8,19 +8,69 @@ trainstate = brain.getTrainState()
 
 #castling 2.0
 
-trainstate[7][1].update(pieceId = "")
-trainstate[7][2].update(pieceId = "")
-trainstate[7][3].update(pieceId = "")
-# trainstate[7][5].update(pieceId = "")
-# trainstate[7][6].update(pieceId = "")
-# trainstate[1][6].update(pieceId = "")
-# trainstate[2][6].update(pieceId = "brook1")
+brain.movesdict = [
+					{"id": "wpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn2", "moves": [], "pos": None, "in_check": False}, 
+					{"id": "wpawn3", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn4", "moves": [], "pos": None, "in_check": False}, 
+					{"id": "wpawn5", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn6", "moves": [], "pos": None, "in_check": False},
+					{"id": "wpawn7", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn8", "moves": [], "pos": None, "in_check": False}, 
+					{"id": "bpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn2", "moves": [], "pos": None, "in_check": False},
+					{"id": "bpawn3", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn4", "moves": [], "pos": None, "in_check": False}, 
+					{"id": "bpawn5", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn6", "moves": [], "pos": None, "in_check": False},
+					{"id": "bpawn7", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn8", "moves": [], "pos": None, "in_check": False},
+					{"id": "wrook1", "moves": [], "pos": None, "in_check": False}, {"id": "wrook2", "moves": [], "pos": None, "in_check": False},
+					{"id": "brook1", "moves": [], "pos": None, "in_check": False}, {"id": "brook2", "moves": [], "pos": None, "in_check": False}, 
+					{"id": "wbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "wbishop2", "moves": [], "pos": None, "in_check": False},
+					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
+					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
+					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
+				]
 
-# recieved = brain.getLeftCastle(0, 4, trainstate, "white")
+trainstate[5][1].update(pieceId = "wpawn1")
+# trainstate[1][0].update(pieceId = "")
 
-recieved = brain.processState(trainstate)
+firsts = brain.getFirsts()
+movesdic = brain.getMovesDict()
+pieces = brain.getPieces(trainstate, "black")
+c_state = brain.toQueen(trainstate, pieces, "black", brain.pawnEnds, movesdic, firsts)	
+is_rem = False		
+
+newstate = c_state['state']
+newdict = c_state['dict']
+if newstate is not None and newdict is not None:
+	trainstate = newstate
+	newpieces = brain.getPieces(newstate, "black")
+
+	moves = brain.getMoves(newstate, firsts, "black", newpieces, newdict, brain.pawnEnds)
+	mov_dict = brain.dictToList(moves, "black")
+	recieved = brain.evaluate(newstate, mov_dict, "black", firsts)
+	dictlen = len(newdict)
+	# rint("--------in %s - %s - %s - %s"%( recieved, newdict[dictlen-1], self.statematrix[0][0], self.pawnEnds[8]))
+				
+else:
+	moves = brain.getMoves(trainstate, firsts, "black", pieces, movesdic, brain.pawnEnds)
+	mov_dict = brain.dictToList(moves, "black")
+	recieved = brain.evaluate(trainstate, mov_dict, "black", firsts)
+	# print("--------in %s - %s - %s"%( recieved, self.statematrix[0][0], self.pawnEnds[8]))
+
 
 print("recieved: %s"%recieved)
+
+# trainstate[7][1].update(pieceId = "")
+# trainstate[7][2].update(pieceId = "")
+# trainstate[7][3].update(pieceId = "")
+# # trainstate[7][5].update(pieceId = "")
+# # trainstate[7][6].update(pieceId = "")
+# # trainstate[1][6].update(pieceId = "")
+# # trainstate[2][6].update(pieceId = "brook1")
+
+# # recieved = brain.getLeftCastle(0, 4, trainstate, "white")
+
+# recieved = brain.processState(trainstate)
+
+# print("recieved: %s"%recieved)
 
 #game play
 # trainstate[6][0].update(pieceId = "")
@@ -250,17 +300,17 @@ print("recieved: %s"%recieved)
 # trainstate[4][2].update(pieceId = "bpawn3")
 # trainstate[1][2].update(pieceId = "")
 # trainstate[2][2].update(pieceId = "wpawn3")
-# trainstate[1][1].update(pieceId = "")
-# trainstate[2][1].update(pieceId = "wpawn2")
-# trainstate[2][0].update(pieceId = "bbishop1")
+# # trainstate[1][1].update(pieceId = "")
+# # trainstate[2][1].update(pieceId = "wpawn2")
+# # trainstate[2][0].update(pieceId = "bbishop1")
 
-# pieces = brain.getPieces(trainstate, "black")
+# pieces = brain.getPieces(trainstate, "white")
 # movesdic = brain.getMovesDict()
 # firsts = brain.getFirsts()
 
-# moves = brain.getMoves(trainstate, firsts, "black", pieces, movesdic)
-# mov_dict = brain.dictToList(moves, "black")
-# recieved = brain.evaluate(trainstate, mov_dict, "black", firsts)
+# moves = brain.getMoves(trainstate, firsts, "white", pieces, movesdic)
+# mov_dict = brain.dictToList(moves, "white")
+# recieved = brain.evaluate(trainstate, mov_dict, "white", firsts)
 # # recieved = brain.getType("")
 # print("recieved: %s"%recieved)
 
