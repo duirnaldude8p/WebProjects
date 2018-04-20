@@ -80,6 +80,8 @@
 		"CompMadeRemove": "N",
 		"CompMadeMove": "N",
 		"RemovedPieces": [],
+		"CompCastleMadeMove": "N",
+		"CompCastleSide": "right",
 		"CompInCheck": "N",
 		"CompNWInCheck": "N",
 		"CompNEInCheck": "N", 

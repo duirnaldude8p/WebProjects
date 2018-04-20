@@ -168,7 +168,8 @@ var pgarr = [];
 
 var setColour = 'whitePiece';
 var oppColour = 'blackPiece';
-
+var op_place = document.getElementById("8B");
+ 
 
 this.select = function(controlId){
     var newVal = localStorage.getItem('hasChanged');
@@ -266,7 +267,7 @@ this.select = function(controlId){
         var uArr = [];
         var dArr = [];
 
-        // console.log("freemove: "+freeMov+' - '+type);
+        // console.log("freemove: "+freeMov+' - '+type+' - '+I+' - '+J);
 
         for(var i=0; i<8; i++){
            if(type=='rook'&&freeMov||type=='queen'&&freeMov){
@@ -551,9 +552,10 @@ this.select = function(controlId){
                         } 
                     }
                 }
+                // console.log("select normal nw pos: "+nwup+' - '+nwleft+' '+controlId);
                 if((nwup-1)<8&&(nwleft+1)>-1&&(nwup-1)>-1&&(nwleft+1)<8&&!inCheck){
                     allIdArr.push(boardMatrix[nwup-1][nwleft+1]); 
-                    // console.log("select nw id: "+boardMatrix[nwup-1][nwleft+1]+' - '+nwup+' - '+nwleft+' '+controlId);
+                    // console.log("select normal nw id: "+boardMatrix[nwup-1][nwleft+1]+' - '+controlId);
                 }
                 if((neup-1)<8&&(neright-1)<8&&(neup-1)>-1&&(neright-1)>-1&&!inCheck){
                     allIdArr.push(boardMatrix[neup-1][neright-1]);
@@ -567,13 +569,12 @@ this.select = function(controlId){
             }
              if(type=='bishop'&&!freeMov||type=='queen'&&!freeMov){
                 //localStorage.setItem('hasSelected', 'Y');
-                
+                // console.log("bish pos: "+swleft+' - '+swdown);
                 if(nwleft>-1&&nwup<8){
                     var tl = boardMatrix[nwup][nwleft];
                     var tls = document.getElementById(boardMatrix[nwup][nwleft]);
                     for(var w=0; w<currDir.length; w++){
                         if(tl==currDir[w]){
-                            // console.log("--- currDir: "+currDir[w]);
                             nw = document.getElementById(boardMatrix[nwup][nwleft]);
                             nwArr.push(nw);
                             nw.style.background = 'blue';
@@ -581,6 +582,7 @@ this.select = function(controlId){
                             allIdArr.push(tl); 
                         }
                     }
+                    console.log("tl: "+attackerArr+" - "+tl);
                     for(var nn=0; nn<attackerArr.length; nn++){
                         if(tl==attackerArr[nn]){
                             console.log("------tl: "+tl)
@@ -605,7 +607,7 @@ this.select = function(controlId){
                     var trs = document.getElementById(boardMatrix[neup][neright]);
                     for(var y=0; y<currDir.length; y++){
                         if(tr==currDir[y]){
-                            // console.log("value: "+currDir[y]);
+                            // console.log("------tr: "+tr);
                             ne = document.getElementById(boardMatrix[neup][neright]);
                             neArr.push(ne);
                             ne.style.background = 'blue';
@@ -616,6 +618,7 @@ this.select = function(controlId){
                     //console.log("tr: "+attackerArr+" - "+tr);
                     for(var nn=0; nn<attackerArr.length; nn++){
                         if(tr==attackerArr[nn]){
+                            // console.log("----tr dude: "+tr);
                             ne = document.getElementById(boardMatrix[neup][neright]);
                             neArr.push(ne);
                             ne.style.background = 'blue';
@@ -633,7 +636,9 @@ this.select = function(controlId){
                 }if(swleft>-1&&swdown>-1){
                     var bl = boardMatrix[swdown][swleft];
                     var bls = document.getElementById(boardMatrix[swdown][swleft]); 
+                    // console.log("-----bl: "+bl);
                     for(var z=0; z<currDir.length; z++){
+                        // console.log("currDir: "+currDir[z]);
                         if(bl==currDir[z]){
                             sw = document.getElementById(boardMatrix[swdown][swleft]);
                             swArr.push(sw);
@@ -2172,7 +2177,7 @@ function kingGet(i, j){
             }
         }
     }
-    if([Ikg-1]>-1&&[Jkg-1]!=-1){
+    if([Ikg-1]>-1&&[Jkg-1]>-1){
         var pos = document.getElementById(boardMatrix[Ikg-1][Jkg-1]);
         if(pos!=null){
             if(pos.hasChildNodes()){
@@ -5380,7 +5385,7 @@ this.castleMoveR = function(){
 }
 }
 
-function getPieceId(type){
+function getPieceId(my_type){
     var counter_q = 0;
     var counter_p = 0;
     var counter_r = 0;
@@ -5392,24 +5397,29 @@ function getPieceId(type){
     var horse_id = "whorse";
     var bishop_id = "wbishop";
     var my_ids = document.querySelectorAll('*[id]:not([id=""])')
+    var q_type = '';
+    var r_type = '';
+    var h_type = '';
+    var b_type = '';
     var p_type = '';
     var pid = '';
     for(var i=0; i<my_ids.length; i++){
         var next = my_ids[i].id;
-        // console.log("next id: "+next);
+        console.log("next id: "+next);
         next = String(next);
         var res_queen = next.substring(0, 6);
         var res_horse = next.substring(0, 6);
         var res_pawn = next.substring(0, 5);
         var res_rook = next.substring(0, 5);
         var res_bishop = next.substring(0, 7);
+        console.log("res queen: "+res_queen);
         if(res_queen == "wqueen"){
             counter_q++;
-            p_type = 'q';
+            q_type = 'q';
         } 
         if(res_horse == "whorse"){
             counter_h++;
-            p_type = 'h';
+            h_type = 'h';
         }
         if(res_pawn == "wpawn"){
             counter_p++;
@@ -5417,31 +5427,31 @@ function getPieceId(type){
         }
         if(res_rook == "wrook"){
             counter_r++;
-            p_type = 'r';
+            r_type = 'r';
         }
         if(res_bishop == "wbishop"){
             counter_b++;
-            p_type = 'b';
+            b_type = 'b';
         }     
     }
-    
-    if(p_type == 'q' && type == "queen"){
+    console.log("p_t: "+q_type+' t: '+my_type);
+    if(q_type == 'q' && my_type == "queen"){
         queen_id = "wqueen"+counter_q;
         pid = queen_id;
     }
-    if(p_type == 'p' && type == "pawn"){
+    if(p_type == 'p' && my_type == "pawn"){
         pawn_id = "wpawn"+counter_p;
         pid = pawn_id;
     }
-    if(p_type == 'r' && type == "rook"){
+    if(r_type == 'r' && my_type == "rook"){
         rook_id = "wrook"+counter_r;
         pid = rook_id;
     }
-    if(p_type == 'h' && type == "horse"){
+    if(h_type == 'h' && my_type == "horse"){
         horse_id = "whorse"+counter_h;
         pid = horse_id;
     }
-    if(p_type == 'b' && type == "bishop"){
+    if(b_type == 'b' && my_type == "bishop"){
         bishop_id = "wbishop"+counter_b;
         pid = bishop_id;
     }
@@ -5451,49 +5461,54 @@ function getPieceId(type){
 this.chooseNew = function(controlId){
     //console.log(controlId);
     if(controlId=='queenOp'){
-        var my_place = document.getElementById(placeId);
+        var my_place = op_place;
+        my_place.innerHTML = '';
         var queen_id = getPieceId("queen");
         var queenNode = document.createElement('DIV');
         queenNode.classList.add("whitePiece");
         queenNode.classList.add("queen");
         queenNode.id = queen_id;
-        queenNode.onclick = function() {(theHuman).remove(queen_id)};
+        queenNode.onclick = function() {(theHuman).select(queen_id)};
         my_place.appendChild(queenNode);
     } if(controlId=='pawnOp'){
-        var my_place = document.getElementById(placeId);
+        var my_place = op_place;
+        my_place.innerHTML = '';
         var pawn_id = getPieceId("pawn");
         var pawnNode = document.createElement('DIV');
         pawnNode.classList.add("whitePiece");
         pawnnNode.classList.add("pawn");
         pawnNode.id = pawn_id;
-        pawnNode.onclick = function() {(theHuman).remove(pawn_id)};
+        pawnNode.onclick = function() {(theHuman).select(pawn_id)};
         my_place.appendChild(rookNode);
     } if(controlId=='rookOp'){
-        var my_place = document.getElementById(placeId);
+        var my_place = op_place;
+        my_place.innerHTML = '';
         var rook_id = getPieceId("rook");
         var rookNode = document.createElement('DIV');
         rookNode.classList.add("whitePiece");
         rookNode.classList.add("rook");
         rookNode.id = rook_id;
-        rookNode.onclick = function() {(theHuman).remove(rook_id)};
+        rookNode.onclick = function() {(theHuman).select(rook_id)};
         my_place.appendChild(rookNode);
     } if(controlId=='horseOp'){
-        var my_place = document.getElementById(placeId);
+        var my_place = op_place;
+        my_place.innerHTML = '';
         var horse_id = getPieceId("horse");
         var horseNode = document.createElement('DIV');
         horseNode.classList.add("whitePiece");
         horseNode.classList.add("horse");
         horseNode.id = horse_id;
-        horseNode.onclick = function() {(theHuman).remove(horse_id)};
+        horseNode.onclick = function() {(theHuman).select(horse_id)};
         my_place.appendChild(horseNode);
     } if(controlId=='bishopOp'){
-        var my_place = document.getElementById(placeId);
+        var my_place = op_place;
+        my_place.innerHTML = '';
         var bish_id = getPieceId("bishop");
         var bishNode = document.createElement('DIV');
         bishNode.classList.add("whitePiece");
         bishNode.classList.add("bishop");
         bishNode.id = bish_id;
-        bishNode.onclick = function() {(theHuman).remove(bish_id)};
+        bishNode.onclick = function() {(theHuman).select(bish_id)};
         my_place.appendChild(bishNode);
     }
 
@@ -5528,17 +5543,19 @@ this.moveTo = function(controlId){
     var value = '';
     var Prev = document.getElementById(prev);
     var movePrev = undefined;
-    //console.log('prev: '+prev);
+    // console.log('----moveto allIdArr: '+allIdArr+' - '+!control.hasChildNodes()+' - '+controlId);
     for(var f=0; f<allIdArr.length; f++){
         if(allIdArr[f]===controlId&&!control.hasChildNodes()){
+             // console.log('---allIdArr: '+allIdArr[f]+' - '+Prev.id);
             movePrev = Prev;
             allIdArr = [];
             break;
         }
     }
-    if(movePrev){
+    op_place = document.getElementById(controlId);
+    // if(movePrev){
         // console.log("prev: "+movePrev.id+' controlId: '+controlId);
-    }
+    // }
 
     // console.log(" moveTo classlist: "+selected.classList);
     // console.log("moveTo attr: "+controlId+' - '+type+' - '+freeMov);
@@ -5574,7 +5591,7 @@ this.moveTo = function(controlId){
                     if(movePrev){
                         movePrev.innerHTML = '';
                     }
-                    console.log("move to freeMov up cleared");
+                    // console.log("move to freeMov up cleared");
                     if(selected.id=='wrook1'){
                         rook1HasMoved = true;
                     }
@@ -5623,7 +5640,7 @@ this.moveTo = function(controlId){
                             if(movePrev){
                                 movePrev.innerHTML = '';
                             }
-                            console.log("move to not freeMov up cleared");
+                            // console.log("move to not freeMov up cleared");
                             if(selected.id=='wrook1'){
                                 rook1HasMoved = true;
                             }
@@ -5925,8 +5942,20 @@ this.remove = function(controlId){
     
     statematrix[I][J].pieceId = "";
 
-    console.log("remove classlist: "+control.classList);
-    console.log("remove attr: "+controlId+' - '+type+' - '+freeMov);
+    var Prev = document.getElementById(prev);
+    var movePrev = undefined;
+    // console.log('----remove allIdArr: '+allIdArr+' - '+controlId);
+    for(var f=0; f<allIdArr.length; f++){
+        if(allIdArr[f]===parentId){
+            // console.log('----remove found allIdArr: '+allIdArr[f]+' - '+Prev.id);
+            movePrev = Prev;
+            allIdArr = [];
+            break;
+        }
+    }
+    op_place = document.getElementById(parentId);
+    // console.log("remove classlist: "+control.classList);
+    // console.log("remove attr: "+controlId+' - '+type+' - '+freeMov);
 
     if(type=='rook'&&freeMov||type=='queen'&&freeMov){
         for(var a=left; a<=right; a++){
@@ -5935,6 +5964,9 @@ this.remove = function(controlId){
                     pieces.appendChild(control);
                     parent.innerHTML = '';
                     parent.appendChild(selected);
+                    if(movePrev){
+                        movePrev.innerHTML = '';
+                    }
                     statematrix[I][a].pieceId = selected.id;
                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
                     if(selected.id=='wrook1'){
@@ -5954,6 +5986,9 @@ this.remove = function(controlId){
                     parent.innerHTML = '';
                     parent.appendChild(selected);
                     // console.log("rook changed");
+                    if(movePrev){
+                        movePrev.innerHTML = '';
+                    }
                     statematrix[b][J].pieceId = selected.id;
                     localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
                     if(selected.id=='wrook1'){
@@ -5974,6 +6009,9 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
+                if(movePrev){
+                    movePrev.innerHTML = '';
+                }
                 var bish_breaker = false;
                 for(var t=0; t<8; t++){
                     if(bish_breaker){
@@ -5996,6 +6034,9 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
+                if(movePrev){
+                    movePrev.innerHTML = '';
+                }
                 var bish_breaker = false;
                 for(var t=0; t<8; t++){
                     if(bish_breaker){
@@ -6026,6 +6067,9 @@ this.remove = function(controlId){
                             pieces.appendChild(control);
                             parent.innerHTML = '';
                             parent.appendChild(selected);
+                            if(movePrev){
+                                movePrev.innerHTML = '';
+                            }
                             statematrix[I][j].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
                             allIdArr.push(placeId);
@@ -6050,6 +6094,9 @@ this.remove = function(controlId){
                             pieces.appendChild(control);
                             parent.innerHTML = '';
                             parent.appendChild(selected);
+                            if(movePrev){
+                                movePrev.innerHTML = '';
+                            }
                             statematrix[i][J].pieceId = selected.id;
                             localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
                             allIdArr.push(placeId);
@@ -6076,6 +6123,9 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
+                        if(movePrev){
+                            movePrev.innerHTML = '';
+                        }
                         var bish_breaker = false;
                         for(var t=0; t<8; t++){
                             if(bish_breaker){
@@ -6103,6 +6153,9 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
+                        if(movePrev){
+                            movePrev.innerHTML = '';
+                        }
                         var bish_breaker = false;
                         for(var t=0; t<8; t++){
                             if(bish_breaker){
@@ -6131,6 +6184,9 @@ this.remove = function(controlId){
                 pieces.appendChild(control);
                 parent.innerHTML = '';
                 parent.appendChild(selected);
+                if(movePrev){
+                    movePrev.innerHTML = '';
+                }
                 var king_breaker = false;
                 for(var t=0; t<8; t++){
                     if(king_breaker){
@@ -6172,8 +6228,11 @@ this.remove = function(controlId){
                         }
                     }
                 }
-                allIdArr.push(parentId);
+                allIdArr.push(placeId);
                 parent.appendChild(selected);
+                if(movePrev){
+                    movePrev.innerHTML = '';
+                }
                 localStorage.setItem('hasChanged','Y');
             }
         }
@@ -6186,6 +6245,9 @@ this.remove = function(controlId){
                         pieces.appendChild(control);
                         parent.innerHTML = '';
                         parent.appendChild(selected);
+                        if(movePrev){
+                            movePrev.innerHTML = '';
+                        }
                         var horse_breaker = false;
                         for(var t=0; t<8; t++){
                             if(horse_breaker){
@@ -6206,22 +6268,28 @@ this.remove = function(controlId){
             }
         }
     }
+    // console.log("type: "+type+' freemov: '+freeMov);
     if(type=='pawn'&&freeMov){
         if(parentId==pawntr){
             pieces.appendChild(control);
             parent.innerHTML = '';
             parent.appendChild(selected);
+            if(movePrev){
+                movePrev.innerHTML = '';
+            }
             if(pawntrInc.obj==pawntr){
                 statematrix[pawntrInc.I][pawntrInc.J].pieceId = selected.id; 
                 localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
             } 
-            // console.log('tr pawnendnum: '+pawntrEndNum+' - '+pawntr);
-            if(pawntrEndNum){
+            
+            // if(pawntrEndNum){
+                // console.log('tr pawnendnum: '+pawntrEndNum+' - '+parentId+' - '+boardMatrix[7][pawntrEndNum]);
                 if(parentId==boardMatrix[7][pawntrEndNum]){
                     canChoose = true;
+                    console.log("hello");
                     //console.log('pr can choose: '+canChoose);
                 }
-            }
+            // }
             localStorage.setItem('hasChanged','Y');
             //console.log('pr can choose: '+canChoose+' '+parentId);
         }
@@ -6229,18 +6297,22 @@ this.remove = function(controlId){
             pieces.appendChild(control);
             parent.innerHTML = '';
             parent.appendChild(selected);
+            if(movePrev){
+                movePrev.innerHTML = '';
+            }
              if(pawntlInc.obj==pawntl){
                 statematrix[pawntlInc.I][pawntlInc.J].pieceId = selected.id; 
                 localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
             }
-            // console.log('tl pawnendnum: '+pawntlEndNum+' - '+pawntl);
-            if(pawntlEndNum){
-                //console.log('pawn end num id: '+boardMatrix[7][pawntlEndNum]+' p: '+parentId);
+            console.log('tl pawnendnum: '+pawntlEndNum+' - '+pawntl);
+            // if(pawntlEndNum){
+                console.log('pawn end num id: '+pawntlEndNum+' - '+boardMatrix[7][pawntlEndNum]+' p: '+parentId);
                 if(parentId==boardMatrix[7][pawntlEndNum]){
                     canChoose = true;
+                    console.log("hi");
                     //console.log('pl can choose: '+canChoose);
                 }
-            }
+            // }
             localStorage.setItem('hasChanged','Y');
             // console.log('pl can choose: '+canChoose+' '+parentId);
         }
@@ -6252,17 +6324,21 @@ this.remove = function(controlId){
                     pieces.appendChild(control);
                     parent.innerHTML = '';
                     parent.appendChild(selected);
+                    if(movePrev){
+                        movePrev.innerHTML = '';
+                    }
                     if(pawntrInc.obj==pawntr){
                         statematrix[pawntrInc.I][pawntrInc.J].pieceId = selected.id; 
                         localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
                     }
                     allIdArr.push(placeId);
                     // console.log('pawn end num: '+pawntlEndNum);
-                    if(pawntrEndNum){
+                    // if(pawntrEndNum){
                         if(parentId==boardMatrix[7][pawntrEndNum]){
                             canChoose = true;
+                            console.log("hello");
                         }
-                    }
+                    // }
                     localStorage.setItem('hasChanged','Y');
                 }
             }
@@ -6273,17 +6349,21 @@ this.remove = function(controlId){
                     pieces.appendChild(control);
                     parent.innerHTML = '';
                     parent.appendChild(selected);
+                    if(movePrev){
+                        movePrev.innerHTML = '';
+                    }
                     if(pawntlInc.obj==pawntl){
                         statematrix[pawntlInc.I][pawntlInc.J].pieceId = selected.id; 
                         localStorage.setItem("StateMatrix", JSON.stringify(statematrix));
                     }
                     allIdArr.push(placeId);
                 
-                    if(pawntlEndNum){
+                    // if(pawntlEndNum){
                         if(parentId==boardMatrix[7][pawntlEndNum]){
                             canChoose = true;
+                            console.log("hi");
                         }
-                    }
+                    // }
                     localStorage.setItem('hasChanged','Y');
                 }
             }

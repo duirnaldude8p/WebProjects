@@ -24,6 +24,7 @@ $(function(){
                     success: function(item){
                         var movemade = item.StateData.CompMadeMove;
                         var removemade = item.StateData.CompMadeRemove;
+                        var castlemovemade = item.StateData.CompCastleMadeMove;
                         // console.log("comp moved: "+movemade+' - '+removemade);
                         if(movemade=="Y"&&removemade=="N"){ 
                             var statematrix2 = item.StateData.StateMatrix;
@@ -51,6 +52,22 @@ $(function(){
                             $robo.moveTo(compmove);
                             hasGet = true;
                             console.log("get success");
+                        }
+                        else if(castlemovemade =="Y"){
+                            var statematrix2 = item.StateData.StateMatrix;
+                            localStorage.setItem("StateMatrix", statematrix2);
+                            var castleside = item.StateData.CompCastleSide;
+
+                            if(castleside == "right"){
+                                $robo.castleMoveR();
+                                hasGet = true;
+                                console.log("get success");
+                            }else if(castleside == "left"){
+                                $robo.castleMoveL();
+                                hasGet = true;
+                                console.log("get success");
+                            }
+
                         }
                     },
                     error: function(){

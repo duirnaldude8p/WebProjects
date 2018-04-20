@@ -6,6 +6,22 @@ brain = Roboto.Brain()
 
 trainstate = brain.getTrainState()
 
+#castling 2.0
+
+trainstate[7][1].update(pieceId = "")
+trainstate[7][2].update(pieceId = "")
+trainstate[7][3].update(pieceId = "")
+# trainstate[7][5].update(pieceId = "")
+# trainstate[7][6].update(pieceId = "")
+# trainstate[1][6].update(pieceId = "")
+# trainstate[2][6].update(pieceId = "brook1")
+
+# recieved = brain.getLeftCastle(0, 4, trainstate, "white")
+
+recieved = brain.processState(trainstate)
+
+print("recieved: %s"%recieved)
+
 #game play
 # trainstate[6][0].update(pieceId = "")
 # trainstate[5][0].update(pieceId = "")

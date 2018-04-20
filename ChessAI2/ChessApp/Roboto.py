@@ -12,6 +12,8 @@ class Brain(object):
 	hasmoved = "N"
 	compremove = ''
 	hasremoved = 'N'
+	castlemademove = 'N'
+	castleside = 'right'
 	compInCheck = "N"
 	compNWInCheck = "N"
 	compNEInCheck = "N"
@@ -90,8 +92,8 @@ class Brain(object):
 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
 				]
 
@@ -108,6 +110,8 @@ class Brain(object):
 		self.hasmoved = "N"
 		self.compremove = ''
 		self.hasremoved = 'N'
+		self.castlemademove = 'N'
+		self.castleside = 'right'
 		self.compInCheck = "N"
 		self.compNWInCheck = "N"
 		self.compNEInCheck = "N"
@@ -172,8 +176,8 @@ class Brain(object):
 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
 				]
 		self.first = False
@@ -1494,11 +1498,11 @@ class Brain(object):
 						given_co = self.getCoordinates(rightplace)
 						# print("r place %s - %s"%(given_co['I'], given_co['J']))
 						if given_co['I'] == 0 and given_co['J'] == 7:
-							king_check = self.inCheck(0, 5, state, True, col)
-							rook_check = self.inCheck(0, 4, state, True, col)
+							king_check = self.inCheck(0, 6, state, True, col)
+							rook_check = self.inCheck(0, 5, state, True, col)
 							# print("check %s - %s"%(king_check, rook_check))
 							if not king_check and not rook_check:
-								castle = {"is_castle" : True, "king_pos" : state[0][5], "rook_pos": state[0][4], "rook": rightval}
+								castle = {"is_castle" : True, "king_pos" : state[0][6], "rook_pos": state[0][5], "rook": rightval}
 							break
 						else:
 							break
@@ -1516,10 +1520,10 @@ class Brain(object):
 					elif b_type == "rook" and b_colour == col:
 						given_co = self.getCoordinates(rightplace)
 						if given_co['I'] == 7 and given_co['J'] == 7:
-							king_check = self.inCheck(7, 5, state, True, col)
-							rook_check = self.inCheck(7, 4, state, True, col)
+							king_check = self.inCheck(7, 6, state, True, col)
+							rook_check = self.inCheck(7, 5, state, True, col)
 							if not king_check and not rook_check:
-								castle = {"is_castle" : True, "king_pos" : state[7][5], "rook_pos": state[7][4], "rook": rightval}
+								castle = {"is_castle" : True, "king_pos" : state[7][6], "rook_pos": state[7][5], "rook": rightval}
 							break
 						else:
 							break
@@ -1560,10 +1564,10 @@ class Brain(object):
 					elif w_type == "rook" and w_colour == col:
 						given_co = self.getCoordinates(leftplace)
 						if given_co['I'] == 0 and given_co['J'] == 0:
-							king_check = self.inCheck(0, 1, state, True, col)
-							rook_check = self.inCheck(0, 2, state, True, col)
+							king_check = self.inCheck(0, 2, state, True, col)
+							rook_check = self.inCheck(0, 3, state, True, col)
 							if not king_check and not rook_check:
-								castle = {"is_castle" : True, "king_pos" : state[0][1], "rook_pos": state[0][2], "rook": leftval}
+								castle = {"is_castle" : True, "king_pos" : state[0][2], "rook_pos": state[0][3], "rook": leftval}
 							break
 						else:
 							break
@@ -1581,10 +1585,10 @@ class Brain(object):
 					elif b_type == "rook" and b_colour == col:
 						given_co = self.getCoordinates(leftplace)
 						if given_co['I'] == 7 and given_co['J'] == 0:
-							king_check = self.inCheck(7, 1, state, True, col)
-							rook_check = self.inCheck(7, 2, state, True, col)
+							king_check = self.inCheck(7, 2, state, True, col)
+							rook_check = self.inCheck(7, 3, state, True, col)
 							if not king_check and not rook_check:
-								castle = {"is_castle" : True, "king_pos" : state[7][1], "rook_pos": state[7][2], "rook": leftval}
+								castle = {"is_castle" : True, "king_pos" : state[7][2], "rook_pos": state[7][3], "rook": leftval}
 							break
 						else:
 							break
@@ -1727,6 +1731,8 @@ class Brain(object):
 					r_castling_rook = None
 					l_castling_rook = None
 					if can_r_castle:
+						m_dict[dict_place].update(end_king = r_moves['king_pos'])
+						m_dict[dict_place].update(end_rook = r_moves['rook_pos'])
 						moves.append(r_moves['king_pos'])
 						moves.append(r_moves['rook_pos'])
 						can_c = can_r_castle
@@ -1734,11 +1740,14 @@ class Brain(object):
 
 
 					if can_l_castle:
+						m_dict[dict_place].update(end_king = l_moves['king_pos'])
+						m_dict[dict_place].update(end_rook = l_moves['rook_pos'])
 						moves.append(l_moves['king_pos'])
 						moves.append(l_moves['rook_pos'])
 						# print("k m: %s - %s"%(l_moves['king_pos'], l_moves['rook_pos']))
 						can_c = can_l_castle
 						l_castling_rook = l_moves['rook']
+					
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					# print("k moves: %s"%moves)
 					movement = moves
@@ -1748,6 +1757,7 @@ class Brain(object):
 					m_dict[dict_place].update(r_castle_rook = r_castling_rook)
 					m_dict[dict_place].update(l_castle_rook = l_castling_rook)
 					m_dict[dict_place].update(in_check = item_in_check)
+					print("----castle: %s"%m_dict[dict_place])
 
 					# movements = movements + movement
 		else:	
@@ -2128,12 +2138,25 @@ class Brain(object):
 			my_moves = value['moves']
 			pos = value['pos']	
 			in_check = value['in_check']	
+			# can_castle = value['can_castle']
 			if pos:
 				pos_id = pos['pieceId']
 				if pos_id:
 					pos_type = self.getType(pos_id)
 					for item in my_moves:
-						m_list.append({"pos":pos, "item":item, "in_check": in_check})
+						if pos_type == "king":
+							m_list.append({
+											"pos":pos, 
+											"item":item, 
+											"in_check": in_check, 
+											"can_castle": value['can_castle'],
+											"l_castle_rook": value['l_castle_rook'], 
+											"r_castle_rook": value['r_castle_rook'],
+											"end_king": value['end_king'], 
+											"end_rook": value['end_rook']
+										  })
+						else: 
+							m_list.append({"pos":pos, "item":item, "in_check": in_check})
 
 		return m_list
 
@@ -2268,8 +2291,11 @@ class Brain(object):
 			pos_place = pos['placeId']
 			pos_co = self.getCoordinates(pos_place)
 			current_c_e = self.getAssignedVal(pos, col)
+			is_castle = False
+			castle_side = "right"
+			castle_move = {"pos": pos, "start_king": None, "start_rook": None, "end_king": None, "end_rook": None, "is_castle": is_castle}
 			if counter == 0:
-				bestmove = {"pos": pos, "item": item}
+				bestmove = {"pos": pos, "item": item, "is_castle": False}
 			init_e = 0
 			check_e = 0
 			is_good_move = True
@@ -2299,6 +2325,33 @@ class Brain(object):
 				reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, False)
 				if not reach_king:
 					reach_king = self.isCornerPawnChecker(item_co['I'], item_co['J'], state, col, is_first, True)
+			elif pos_type == "king":
+				is_castle = value['can_castle']
+				st_rook = None
+				l_rook = value['l_castle_rook']
+				r_rook = value['r_castle_rook']
+
+				if r_rook:
+					st_rook = r_rook
+					castle_side = "right"
+				else:
+					st_rook = l_rook
+					castle_side = "left"
+
+				if is_castle:
+					init_e = init_e + 900
+					castle_move = {
+									"pos": pos, 
+									"start_king": pos, 
+									"start_rook": st_rook, 
+									"item": item,
+									"end_king": value['end_king'], 
+									"end_rook": value['end_rook'],
+									"is_castle": is_castle,
+									"castle_side": castle_side
+									
+								  }
+			
 			if reach_king:
 				init_e = init_e + 900
 			check = self.inCheck(item_co['I'], item_co['J'], state , is_first ,col)
@@ -2309,8 +2362,12 @@ class Brain(object):
 			# print("pos %s items %s nextval %s goodmov %s"%(pos, item, nextval, is_good_move)
 			
 			if nextval > bestval:
-				bestval = nextval
-				bestmove = {"pos": pos, "item": item}
+				if is_castle:
+					bestval = nextval
+					bestmove = castle_move
+				else:
+					bestval = nextval
+					bestmove = {"pos": pos, "item": item, "is_castle": is_castle}
 			
 			counter = counter + 1			
 		
@@ -2424,8 +2481,8 @@ class Brain(object):
 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
 				]
 		
@@ -2438,7 +2495,8 @@ class Brain(object):
 			firsts = self.getFirsts()
 			movesdic = self.getMovesDict()
 			pieces = self.getPieces(self.statematrix, "black")
-			c_state = self.toQueen(self.statematrix, pieces, "black", self.pawnEnds, movesdic, firsts)			
+			c_state = self.toQueen(self.statematrix, pieces, "black", self.pawnEnds, movesdic, firsts)	
+			is_rem = False		
 
 			newstate = c_state['state']
 			newdict = c_state['dict']
@@ -2460,34 +2518,73 @@ class Brain(object):
 
 			
 			# print("------ recieved: %s"%recieved)
-			to_pos = recieved['item']
-			curr_pos = recieved['pos'] 
-			is_rem = self.isRemove(to_pos)
+			is_castle = recieved['is_castle']
+			if is_castle:
+				to_pos = recieved['item']
+				curr_pos = recieved['pos'] 
+				start_king = recieved['start_king']
+				start_rook = recieved['start_rook']
+				end_king = recieved['end_king']
+				end_rook = recieved['end_rook']
+				castle_side = recieved['castle_side']
+				is_rem = self.isRemove(to_pos)
 
-			p_id = to_pos['pieceId']
-			pl_id = to_pos['placeId']
-			p_co = self.getCoordinates(pl_id)
-			c_p_id = curr_pos['pieceId']
-			c_pl_id = curr_pos['placeId']
-			c_p_co = self.getCoordinates(c_pl_id)
-			self.inputFirst(firsts, c_p_id)
+				st_k_id = start_king['pieceId']
+				st_k_plid = start_king['placeId']
+				st_k_co = self.getCoordinates(st_k_plid)
+				st_r_id = start_rook['pieceId']
+				st_r_plid = start_rook['placeId']
+				st_r_co = self.getCoordinates(st_r_plid)
+				end_k_id = end_king['pieceId']
+				end_k_plid = end_king['placeId']
+				end_k_co = self.getCoordinates(end_k_plid)
+				end_r_id = end_rook['pieceId']
+				end_r_plid = end_rook['placeId']
+				end_r_co = self.getCoordinates(end_r_rook)
+				self.inputFirst(firsts, st_k_id)
+				self.inputFirst(firsts, st_r_id)
 			
 			
 
-			if is_rem:
-				self.compchoice = c_p_id
-				self.compremove = p_id
-				self.compmove = pl_id
-				self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
-				self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
-				self.hasremoved = "Y"
-				self.hasmoved = "Y"	
+				
+				self.castlemademove = "Y"
+				self.castleside = castle_side
+				self.statematrix[st_k_co['I']][st_k_co['J']].update(pieceId='')
+				self.statematrix[st_r_co['I']][st_r_co['J']].update(pieceId='')  
+				self.statematrix[end_k_co['I']][end_k_co['J']].update(pieceId=st_k_id)
+				self.statematrix[end_r_co['I']][end_r_co['J']].update(pieceId=st_r_id)  	
+				
+
+
 			else:
-				self.compchoice = c_p_id
-				self.compmove = pl_id
-				self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
-				self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
-				self.hasmoved = "Y"
+				to_pos = recieved['item']
+				curr_pos = recieved['pos'] 
+				is_rem = self.isRemove(to_pos)
+
+				p_id = to_pos['pieceId']
+				pl_id = to_pos['placeId']
+				p_co = self.getCoordinates(pl_id)
+				c_p_id = curr_pos['pieceId']
+				c_pl_id = curr_pos['placeId']
+				c_p_co = self.getCoordinates(c_pl_id)
+				self.inputFirst(firsts, c_p_id)
+			
+			
+
+				if is_rem:
+					self.compchoice = c_p_id
+					self.compremove = p_id
+					self.compmove = pl_id
+					self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
+					self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
+					self.hasremoved = "Y"
+					self.hasmoved = "Y"	
+				else:
+					self.compchoice = c_p_id
+					self.compmove = pl_id
+					self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 
+					self.statematrix[p_co['I']][p_co['J']].update(pieceId=c_p_id)	
+					self.hasmoved = "Y"
 
 			return to_pos
 
@@ -2676,3 +2773,10 @@ class Brain(object):
 
 	def getMovesDict(self):
 		return self.movesdict
+
+	def getCastleMadeMove(self):
+		return self.castlemademove
+
+	def getCastleSide(self):
+		return self.castleside
+

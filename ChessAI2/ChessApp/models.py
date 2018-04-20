@@ -9,6 +9,8 @@ class StateData(models.Model):
 	CompRemoves = models.CharField(max_length=100, null=True)
 	CompMadeMove = models.CharField(max_length=100, null=True)
 	CompMadeRemove = models.CharField(max_length=100, null=True)
+	CompCastleMadeMove = models.CharField(max_length=100, null=True)
+	CompCastleSide = models.CharField(max_length=100, null=True)
 	RemovedPieces = models.CharField(max_length=1000, null=True)
 	Section = models.CharField(max_length=100, null=True)
 	CompInCheck = models.CharField(max_length=100, null=True)
