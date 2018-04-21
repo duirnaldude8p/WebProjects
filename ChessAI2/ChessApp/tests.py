@@ -8,55 +8,55 @@ trainstate = brain.getTrainState()
 
 #castling 2.0
 
-brain.movesdict = [
-					{"id": "wpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn2", "moves": [], "pos": None, "in_check": False}, 
-					{"id": "wpawn3", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn4", "moves": [], "pos": None, "in_check": False}, 
-					{"id": "wpawn5", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn6", "moves": [], "pos": None, "in_check": False},
-					{"id": "wpawn7", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn8", "moves": [], "pos": None, "in_check": False}, 
-					{"id": "bpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn2", "moves": [], "pos": None, "in_check": False},
-					{"id": "bpawn3", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn4", "moves": [], "pos": None, "in_check": False}, 
-					{"id": "bpawn5", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn6", "moves": [], "pos": None, "in_check": False},
-					{"id": "bpawn7", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn8", "moves": [], "pos": None, "in_check": False},
-					{"id": "wrook1", "moves": [], "pos": None, "in_check": False}, {"id": "wrook2", "moves": [], "pos": None, "in_check": False},
-					{"id": "brook1", "moves": [], "pos": None, "in_check": False}, {"id": "brook2", "moves": [], "pos": None, "in_check": False}, 
-					{"id": "wbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "wbishop2", "moves": [], "pos": None, "in_check": False},
-					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
-					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
-					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
-				]
+# brain.movesdict = [
+# 					{"id": "wpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn2", "moves": [], "pos": None, "in_check": False}, 
+# 					{"id": "wpawn3", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn4", "moves": [], "pos": None, "in_check": False}, 
+# 					{"id": "wpawn5", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn6", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "wpawn7", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn8", "moves": [], "pos": None, "in_check": False}, 
+# 					{"id": "bpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn2", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "bpawn3", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn4", "moves": [], "pos": None, "in_check": False}, 
+# 					{"id": "bpawn5", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn6", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "bpawn7", "moves": [], "pos": None, "in_check": False}, {"id": "bpawn8", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "wrook1", "moves": [], "pos": None, "in_check": False}, {"id": "wrook2", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "brook1", "moves": [], "pos": None, "in_check": False}, {"id": "brook2", "moves": [], "pos": None, "in_check": False}, 
+# 					{"id": "wbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "wbishop2", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
+# 					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+# 					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+# 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
+# 				]
 
-trainstate[5][1].update(pieceId = "wpawn1")
-# trainstate[1][0].update(pieceId = "")
+# trainstate[5][1].update(pieceId = "wpawn1")
+# # trainstate[1][0].update(pieceId = "")
 
-firsts = brain.getFirsts()
-movesdic = brain.getMovesDict()
-pieces = brain.getPieces(trainstate, "black")
-c_state = brain.toQueen(trainstate, pieces, "black", brain.pawnEnds, movesdic, firsts)	
-is_rem = False		
+# firsts = brain.getFirsts()
+# movesdic = brain.getMovesDict()
+# pieces = brain.getPieces(trainstate, "black")
+# c_state = brain.toQueen(trainstate, pieces, "black", brain.pawnEnds, movesdic, firsts)	
+# is_rem = False		
 
-newstate = c_state['state']
-newdict = c_state['dict']
-if newstate is not None and newdict is not None:
-	trainstate = newstate
-	newpieces = brain.getPieces(newstate, "black")
+# newstate = c_state['state']
+# newdict = c_state['dict']
+# if newstate is not None and newdict is not None:
+# 	trainstate = newstate
+# 	newpieces = brain.getPieces(newstate, "black")
 
-	moves = brain.getMoves(newstate, firsts, "black", newpieces, newdict, brain.pawnEnds)
-	mov_dict = brain.dictToList(moves, "black")
-	recieved = brain.evaluate(newstate, mov_dict, "black", firsts)
-	dictlen = len(newdict)
-	# rint("--------in %s - %s - %s - %s"%( recieved, newdict[dictlen-1], self.statematrix[0][0], self.pawnEnds[8]))
+# 	moves = brain.getMoves(newstate, firsts, "black", newpieces, newdict, brain.pawnEnds)
+# 	mov_dict = brain.dictToList(moves, "black")
+# 	recieved = brain.evaluate(newstate, mov_dict, "black", firsts)
+# 	dictlen = len(newdict)
+# 	# rint("--------in %s - %s - %s - %s"%( recieved, newdict[dictlen-1], self.statematrix[0][0], self.pawnEnds[8]))
 				
-else:
-	moves = brain.getMoves(trainstate, firsts, "black", pieces, movesdic, brain.pawnEnds)
-	mov_dict = brain.dictToList(moves, "black")
-	recieved = brain.evaluate(trainstate, mov_dict, "black", firsts)
-	# print("--------in %s - %s - %s"%( recieved, self.statematrix[0][0], self.pawnEnds[8]))
+# else:
+# 	moves = brain.getMoves(trainstate, firsts, "black", pieces, movesdic, brain.pawnEnds)
+# 	mov_dict = brain.dictToList(moves, "black")
+# 	recieved = brain.evaluate(trainstate, mov_dict, "black", firsts)
+# 	# print("--------in %s - %s - %s"%( recieved, self.statematrix[0][0], self.pawnEnds[8]))
 
 
-print("recieved: %s"%recieved)
+# print("recieved: %s"%recieved)
 
 # trainstate[7][1].update(pieceId = "")
 # trainstate[7][2].update(pieceId = "")
@@ -78,16 +78,16 @@ print("recieved: %s"%recieved)
 # # trainstate[4][0].update(pieceId = "bpawn1")
 # trainstate[1][4].update(pieceId = "")
 # trainstate[2][4].update(pieceId = "wpawn5")
-# trainstate[1][3].update(pieceId = "")
-# trainstate[2][3].update(pieceId = "wpawn4")
+trainstate[1][3].update(pieceId = "")
+trainstate[2][3].update(pieceId = "wpawn4")
 # trainstate[0][3].update(pieceId = "")
 # trainstate[4][7].update(pieceId = "wqueen")
-# # trainstate[3][7].update(pieceId = "wrook1")
-# # trainstate[0][3].update(pieceId = "")
-# # trainstate[2][5].update(pieceId = "bqueen")
-# recieved = brain.processState(trainstate)
+# trainstate[3][7].update(pieceId = "wrook1")
+# trainstate[0][3].update(pieceId = "")
+# trainstate[2][5].update(pieceId = "bqueen")
+recieved = brain.processState(trainstate)
 
-# print("test recieved: %s"%recieved)
+print("recieved: %s"%recieved)
 
 #horse checker
 # trainstate[5][4].update(pieceId = "whorse1")

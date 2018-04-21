@@ -1,4 +1,5 @@
 import json
+import copy
 
 class Brain(object):
 	data = open('static\json\playing_data.json')
@@ -1338,7 +1339,7 @@ class Brain(object):
 				item_isend = item['is_end']
 				if item_isend:
 					item_id = item['id']
-					print("------------item: %s - %s"%(item['id'],item_isend))
+					# print("------------item: %s - %s"%(item['id'],item_isend))
 					if item_id == pieceId:
 						return item_id
 						
@@ -1619,7 +1620,7 @@ class Brain(object):
 				item_id = item['pieceId']
 				item_co = self.getCoordinates(item['placeId'])
 				item_type = self.getType(item_id)
-				print("----get moves item id: %s"%item_id)
+				# print("----get moves item id: %s"%item_id)
 				in_guard_dir = self.getInGuardDir(item_co['I'], item_co['J'], state, king, item_type)
 				in_guard = self.isInGuard(item_co['I'], item_co['J'], state, col, in_guard_dir)
 				is_guard = in_guard['is_guard']
@@ -1757,7 +1758,7 @@ class Brain(object):
 					m_dict[dict_place].update(r_castle_rook = r_castling_rook)
 					m_dict[dict_place].update(l_castle_rook = l_castling_rook)
 					m_dict[dict_place].update(in_check = item_in_check)
-					print("----castle: %s"%m_dict[dict_place])
+					# print("----castle: %s"%m_dict[dict_place])
 
 					# movements = movements + movement
 		else:	
@@ -2445,7 +2446,7 @@ class Brain(object):
 					del m_dict[my_place]
 
 					state[pos_co['I']][pos_co['J']].update(pieceId = queen_id)	
-					print("state %s - %s co %s - %s"%(state[pos_co['I']][pos_co['J']], self.statematrix[0][0], pos_co['I'], pos_co['J']))
+					# print("state %s - %s co %s - %s"%(state[pos_co['I']][pos_co['J']], self.statematrix[0][0], pos_co['I'], pos_co['J']))
 					changed_state = {"state": state, "dict": m_dict}
 
 
@@ -2528,7 +2529,7 @@ class Brain(object):
 
 
 	def makeMove(self, state, recieved):
-
+		firsts = self.getFirsts()
 		is_castle = recieved['is_castle']
 		if is_castle:
 			to_pos = recieved['item']
@@ -2573,7 +2574,13 @@ class Brain(object):
 					"end_rook_co": end_r_co,
 					"king_piece": st_k_id,
 					"rook_piece": st_r_id,
-					"state": state
+					"pos": curr_pos,
+					"item": to_pos,
+					"start_king": start_king,
+					"start_rook": start_rook,
+					"end_king": end_king,
+					"end_rook": end_rook,
+					"castle_side": castle_side
 					}
 
 		else:
@@ -2603,28 +2610,29 @@ class Brain(object):
 					"start_co": c_p_co, 
 					"end_co": p_co, 
 					"piece_id": c_p_id,
-					"state": state
+					"pos": curr_pos,
+					"item": to_pos
 					}
 
 
 
 
 
-	def minimax(depth, isMaxPlayer, ValueOfMove, state):
-		
+	def minimax(self, depth, isMaxPlayer, ValueOfMove, state):
+		depth = depth - 1
 		if depth == 0:
-			ValueOfMove
+			return ValueOfMove
 
 		if isMaxPlayer:
 			nextmove = self.evaluateBoard(state, "black")
 			self.makeMove(state, nextmove)
 			nextval = nextmove['value']
-			return  ValueOfMove - self.minimax(depth - 1, not isMaxPlayer, nextval, state)
+			return  ValueOfMove - self.minimax(depth, not isMaxPlayer, nextval, state)
 		else:
 			nextmove = self.evaluateBoard(state, "white")
 			self.makeMove(state, nextmove)
 			nextval = nextmove['value']
-			return  ValueOfMove + self.minimax(depth - 1, not isMaxPlayer, nextval, state)
+			return  ValueOfMove + self.minimax(depth, not isMaxPlayer, nextval, state)
 
 	
 	def undoMove(self, state, moveval):
@@ -2661,19 +2669,21 @@ class Brain(object):
 		bestmove = None
 		
 		for item in m_list:
-			moveval = self.makeMove(state, item)
-			nextval = self.minimax(2, True, 0, state)
-			# newstate = moveval['state']
-			self.undoMove(state, moveval)
-
+			my_state = copy.deepcopy(state)
+			moveval = self.makeMove(my_state, item)
+			nextval = self.minimax(2, True, 0, my_state)
+			self.undoMove(my_state, moveval)
+			
 			if nextval > bestval:
 				bestval = nextval
-				bestmove = item
-
-		return bestMove
+				bestmove = moveval
+				
+		return bestmove
 
 
 	def processState(self, currentState):
+	
+
 		self.movesdict = [
 					{"id": "wpawn1", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn2", "moves": [], "pos": None, "in_check": False}, 
 					{"id": "wpawn3", "moves": [], "pos": None, "in_check": False}, {"id": "wpawn4", "moves": [], "pos": None, "in_check": False}, 
@@ -2714,15 +2724,17 @@ class Brain(object):
 
 				moves = self.getMoves(newstate, firsts, "black", newpieces, newdict, self.pawnEnds)
 				mov_dict = self.dictToList(moves, "black")
+				my_state = newstate
 				recieved = self.getBestMove(newstate, mov_dict)
 				dictlen = len(newdict)
-				print("--------in %s - %s - %s - %s"%( recieved, newdict[dictlen-1], self.statematrix[0][0], self.pawnEnds[8]))
+				print("--------in %s"%recieved['pos'])
 				
 			else:
 				moves = self.getMoves(self.statematrix, firsts, "black", pieces, movesdic, self.pawnEnds)
 				mov_dict = self.dictToList(moves, "black")
-				recieved = self.getBestmove(self.statematrix, mov_dict)
-				print("--------in %s - %s - %s"%( recieved, self.statematrix[0][0], self.pawnEnds[8]))
+				my_state =  self.statematrix
+				recieved = self.getBestMove(my_state, mov_dict)
+				print("--------in %s"% recieved['pos'])
 
 
 			
@@ -2773,7 +2785,7 @@ class Brain(object):
 				p_id = to_pos['pieceId']
 				pl_id = to_pos['placeId']
 				p_co = self.getCoordinates(pl_id)
-				c_p_id = curr_pos['pieceId']
+				c_p_id = to_pos['pieceId']
 				c_pl_id = curr_pos['placeId']
 				c_p_co = self.getCoordinates(c_pl_id)
 				self.inputFirst(firsts, c_p_id)
