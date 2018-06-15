@@ -1,0 +1,154 @@
+/*!
+ * Start Bootstrap - Half Slider (https://startbootstrap.com/template-overviews/half-slider)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-half-slider/blob/master/LICENSE)
+ */
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}
+
+.slide-image{
+	width: 100%;
+  	height: 100%;
+  	/*min-height: 300px;*/
+ 
+}
+
+.comment-grid{
+	list-style: none;
+	/*background-color: orange;*/	
+	/*max-width: 98%;*/
+	/*position: relative;*/
+}
+
+
+#logo-con{
+	border-radius: 50%;
+	height: 40px;
+	width: 40px;
+	background-color: grey;
+	/*display: inline-block;*/
+	/*max-height: 40px;*/
+	/*max-width: 40px;*/
+    margin-right: 12px;
+    float: left;
+    position: relative;
+}
+
+
+#logo-con > #logo{
+	border-radius: 50%;
+	height: 100%;
+	width: 100%;
+}
+
+/*.no-margin-r{
+	margin-right: 0px;
+	padding-right: 0px;
+}*/
+
+.nav-format{
+	/*display: inline-block;*/
+	margin: 0px 0px;
+	padding: 0px;
+}
+	
+
+/*#nav-con{
+	padding: 0px;
+}*/
+
+#home-page-comments{
+	list-style: none;
+	margin-top: 5%;
+
+}
+
+#image-col{
+	column-width: 10%;
+}
+
+.bord{
+	outline: 1px solid;
+}
+
+.my_row{
+	min-height: 70px;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.nested_row{
+	min-height: 22px;
+	width: 100%;
+}
+
+.nested_comment_row{
+	min-height: 66px;
+	width: 100%;
+	display: block;
+}
+
+.button_row{
+	text-align: center;
+	display: inline-block;
+}
+
+.pic-div{
+	padding: 0px;
+}
+
+
+.text_top{
+	vertical-align:top;
+}
+
+.orange{
+	background-color: orange; 
+}
+
+.purple{
+	background-color: purple; 
+}
+
+.blue{
+	background-color: blue; 
+}
+
+.brown{
+	background-color: brown; 
+}
+
+.black{
+	background-color: black; 
+}
+
+.image_circle{
+	width:  70%;
+	height: 70%;
+	border-radius: 50%;
+	overflow: hidden;
+	
+}
+
+.square {
+    background: red;
+  	width: 100%;
+  	height: 100%;
+}
+
+.my_image{
+	width: 100%;
+    height: 100%;
+    display: block;
+
+}

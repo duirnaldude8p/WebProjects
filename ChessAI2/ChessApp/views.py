@@ -108,10 +108,12 @@ def download_page(request):
 		if restart:	
 			if val!='':	
 				raw_data = serializers.serialize('python', val)
-				actual_data = raw_data[0]['fields']
-				output = json.dumps(actual_data)
-				newdata = json.loads(output)
-				obj.update(StateData=newdata)
+				rawlen = len(raw_data)
+				if rawlen > 0:
+					actual_data = raw_data[0]['fields']
+					output = json.dumps(actual_data)
+					newdata = json.loads(output)
+					obj.update(StateData=newdata)
 		#'''
 
 		return JsonResponse(obj, safe=False)
@@ -170,7 +172,7 @@ def create_page(request):
 				brain.setCheckInfo(cmpmate, cmpfreemove, cmpcurrdir, cmpattarr, cmpingrd, cmppingrd, cmpspclnght, cmpcsk, cmpsavers, cmpatkrs)
 				brain.setExtraInfo(cmpkmvd, cmpr1mvd, cmpr2mvd, cmppwnarr, cmprmvdlist)
 				brain.processState(statematrix)
-				#print("compchoice: %s"%brain.getChoice())
+				# print("----view choice move: %s - %s"%(brain.getChoice(), brain.getMove()))
 				
 				StateData.objects.all().delete()
 				StateData.objects.create(

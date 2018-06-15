@@ -2,10 +2,10 @@ import json
 import copy
 
 class Brain(object):
-	data = open('static\json\playing_data.json')
+	data = open('ChessApp\static\json\playing_data.json')
 	dictdata = json.load(data)
 	statematrix = dictdata['StateData']['StateMatrix']
-	data2 = open('static\json\playing_data2.json')
+	data2 = open('ChessApp\static\json\playing_data2.json')
 	dictdata2 = json.load(data2)
 	trainstatemat = dictdata2['StateData']['StateMatrix']
 	compchoice = ''
@@ -36,7 +36,7 @@ class Brain(object):
 	move10 = False
 	move11 = False
 	move12 = False
-	checkmate = 'N'
+	checkmate = False
 	freemove = 'Y'
 	piecesRemovedList = []
 	currentDirectionArray = []
@@ -93,17 +93,20 @@ class Brain(object):
 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, 
+					"end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, 
+					"end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
 				]
+	
 
 
 	def _init_(self):
-		data = open('static\json\playing_data.json')
+		data = open('ChessApp\static\json\playing_data.json')
 		dictdata = json.load(data)
 		self.statematrix = dictdata['StateData']['StateMatrix']
-		data2 = open('static\json\playing_data2.json')
+		data2 = open('ChessApp\static\json\playing_data2.json')
 		dictdata2 = json.load(data2)
 		self.trainstatemat = dictdata2['StateData']['StateMatrix']
 		self.compchoice = ''
@@ -122,7 +125,7 @@ class Brain(object):
 		self.compDownInCheck = "N"
 		self.compRightInCheck = "N"
 		self.compLeftInCheck = "N"
-		self.checkmate = 'N'
+		self.checkmate = False
 		self.freemove = 'Y'
 		self.piecesRemovedList = []
 		self.currentDirectionArray = []
@@ -177,10 +180,13 @@ class Brain(object):
 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None,
+					 "end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None,
+					 "end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
 				]
+		
 		self.first = False
 		self.sec = True
 		self.third = True
@@ -1600,10 +1606,13 @@ class Brain(object):
 				
 		return castle
 
+	def removeKingMove(self, m_list):
+		return [val for val in m_list if self.getType(val['pieceId']) != "king"]
 
 	def getMoves(self, state, firsts, col, vals, m_dict, p_ends):
 		in_check = False
 		king = self.findKing(state, col)
+		# print("king get move: %s"%king)
 		king_co = self.getCoordinates(king['placeId'])
 		# print("col: %s"%col)
 		in_check = False
@@ -1658,6 +1667,7 @@ class Brain(object):
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# print("rook mov %s - %s"%(movement, item))
 					# movements = movements + movement
+					movement = self.removeKingMove(movement)
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1670,6 +1680,7 @@ class Brain(object):
 					movement = self.smoothenArray(movement, item)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
+					movement = self.removeKingMove(movement)
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1681,17 +1692,19 @@ class Brain(object):
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# print("horse mov %s"%movement)
 					# movements = movements + movement
+					movement = self.removeKingMove(movement)
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
 					m_dict[dict_place].update(in_check = item_in_check)
 
 				if item_type == "pawn":
+					# print("----pawn is first: %s"%is_first)
 					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first , col)
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# print("pawn mov %s  %s"% (item, movement))
-					
+					movement = self.removeKingMove(movement)
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1715,6 +1728,7 @@ class Brain(object):
 					if is_guard:
 						movement = self.getRestrictedPlaces(movement, g_path)
 					# movements = movements + movement
+					movement = self.removeKingMove(movement)
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1752,6 +1766,7 @@ class Brain(object):
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					# print("k moves: %s"%moves)
 					movement = moves
+					movement = self.removeKingMove(movement)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
 					m_dict[dict_place].update(can_castle = can_c)
@@ -1775,14 +1790,15 @@ class Brain(object):
 				is_first = self.isFirst(firsts, item_id)
 				# item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 				# item = {"pieceId": item['pieceId'], "placeId": item['placeId'], "inCheck": item_in_check}
-				
+				movements = []
 
 				if item_type == "rook":
 					movement = self.basicRookMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.smoothenArray(movement, item)
 					movement = self.getRestrictedPlaces(movement, restr)
+					movement = self.removeKingMove(movement)
 					# print("rook mov %s - %s"%(movement, item))
-					# movements = movements + movement
+					movements = movements + movement
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1792,7 +1808,8 @@ class Brain(object):
 					movement = self.basicBishopMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.smoothenArray(movement, item)
 					movement = self.getRestrictedPlaces(movement, restr)
-					# movements = movements + movement
+					movement = self.removeKingMove(movement)
+					movements = movements + movement
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1802,7 +1819,8 @@ class Brain(object):
 					movement = self.basicHorseMovement(item_co['I'], item_co['J'], state, col)
 					movement = self.getRestrictedPlaces(movement, restr)
 					# print("horse mov %s"%movement)
-					# movements = movements + movement
+					movement = self.removeKingMove(movement)
+					movements = movements + movement
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1813,7 +1831,8 @@ class Brain(object):
 					movement = self.basicPawnMovement(item_co['I'], item_co['J'], state, is_first, col)
 					movement = self.getRestrictedPlaces(movement, restr)
 					# print("pawn mov %s"%movement)
-					# movements = movements + movement
+					movement = self.removeKingMove(movement)
+					movements = movements + movement
 					# self.toQueen(state, item, col)
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
@@ -1833,7 +1852,7 @@ class Brain(object):
 					movement2 = self.smoothenArray(movement2, item)
 					movement = movement1 + movement2
 					movement = self.getRestrictedPlaces(movement, restr)
-					# movements = movements + movement
+					movements = movements + movement
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
@@ -1854,10 +1873,17 @@ class Brain(object):
 							movement2.append(val)
 
 					movement = self.getRestrictedPlaces(movement, movement2)
+					movement = self.removeKingMove(movement)
+					movements = movements + movement
+					movelen = len(movements)
+					checkmate = False
+					if movelen == 0:
+						checkmate = True
 					item_in_check = self.inCheck(item_co['I'], item_co['J'], state, is_first, col)
 					m_dict[dict_place].update(moves = movement)
 					m_dict[dict_place].update(pos = item)
 					m_dict[dict_place].update(in_check = item_in_check)
+					m_dict[dict_place].update(checkmate = checkmate)
 					# movements = movements + movement
 
 
@@ -2144,6 +2170,20 @@ class Brain(object):
 				pos_id = pos['pieceId']
 				if pos_id:
 					pos_type = self.getType(pos_id)
+					if pos_type == "king":
+						checkmate = value['checkmate']
+						if checkmate:
+							m_list.append({
+											"pos":pos, 
+											"item":item, 
+											"in_check": in_check, 
+											"is_castle": value['can_castle'],
+											"l_castle_rook": value['l_castle_rook'], 
+											"r_castle_rook": value['r_castle_rook'],
+											"end_king": value['end_king'], 
+											"end_rook": value['end_rook'],
+											"checkmate":checkmate
+										  })
 					for item in my_moves:
 						if pos_type == "king":
 							m_list.append({
@@ -2154,7 +2194,8 @@ class Brain(object):
 											"l_castle_rook": value['l_castle_rook'], 
 											"r_castle_rook": value['r_castle_rook'],
 											"end_king": value['end_king'], 
-											"end_rook": value['end_rook']
+											"end_rook": value['end_rook'],
+											"checkmate":checkmate
 										  })
 						else: 
 							m_list.append({"pos":pos, "item":item, "is_castle": False, "in_check": in_check})
@@ -2280,10 +2321,13 @@ class Brain(object):
 		king_co = self.getCoordinates(king['placeId'])
 
 		counter = 0
+		value_list = []
 
 		
 		for value in m_list:
 			# print("value: %s"%value)
+			
+			checkmate = None
 			item = value['item']
 			item_id = item['pieceId']
 			pos = value['pos']
@@ -2331,6 +2375,7 @@ class Brain(object):
 				st_rook = None
 				l_rook = value['l_castle_rook']
 				r_rook = value['r_castle_rook']
+				checkmate = value['checkmate']
 
 				if r_rook:
 					st_rook = r_rook
@@ -2349,9 +2394,13 @@ class Brain(object):
 									"end_king": value['end_king'], 
 									"end_rook": value['end_rook'],
 									"is_castle": is_castle,
-									"castle_side": castle_side
-									
+									"castle_side": castle_side,
+									"checkmate": checkmate
 								  }
+
+				if checkmate:
+					init_e = init_e - 900
+
 			
 			if reach_king:
 				init_e = init_e + 900
@@ -2363,16 +2412,25 @@ class Brain(object):
 			# print("pos %s items %s nextval %s goodmov %s"%(pos, item, nextval, is_good_move)
 			
 			if nextval > bestval:
+
 				if is_castle:
 					bestval = nextval
 					bestmove = castle_move
+					value_list.append(bestmove)
 				else:
 					bestval = nextval
-					bestmove = {"pos": pos, "item": item, "is_castle": is_castle, "value": bestval}
+					bestmove = {
+								"pos": pos, 
+								"item": item, 
+								"is_castle": is_castle, 
+								"value": bestval, 
+								"checkmate": checkmate
+								}
+					value_list.append(bestmove)
 			
 			counter = counter + 1			
 		
-		return bestmove
+		return value_list
 
 			
 
@@ -2483,8 +2541,10 @@ class Brain(object):
 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None,
+					 "end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None,
+					 "end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
 				]
 
@@ -2532,6 +2592,7 @@ class Brain(object):
 		firsts = self.getFirsts()
 		is_castle = recieved['is_castle']
 		if is_castle:
+			checkmate = recieved['checkmate']
 			to_pos = recieved['item']
 			curr_pos = recieved['pos'] 
 			start_king = recieved['start_king']
@@ -2580,10 +2641,12 @@ class Brain(object):
 					"start_rook": start_rook,
 					"end_king": end_king,
 					"end_rook": end_rook,
-					"castle_side": castle_side
+					"castle_side": castle_side,
+					"checkmate": checkmate
 					}
 
 		else:
+			
 			to_pos = recieved['item']
 			curr_pos = recieved['pos'] 
 			is_rem = self.isRemove(to_pos)
@@ -2611,28 +2674,54 @@ class Brain(object):
 					"end_co": p_co, 
 					"piece_id": c_p_id,
 					"pos": curr_pos,
-					"item": to_pos
+					"item": to_pos,
+					"checkmate": False
 					}
 
 
 
 
 
-	def minimax(self, depth, isMaxPlayer, ValueOfMove, state):
-		depth = depth - 1
+	def minimax(self, depth, isMaxPlayer, ValueOfMove, my_state, alpha, beta):
 		if depth == 0:
 			return ValueOfMove
 
 		if isMaxPlayer:
-			nextmove = self.evaluateBoard(state, "black")
-			self.makeMove(state, nextmove)
-			nextval = nextmove['value']
-			return  ValueOfMove - self.minimax(depth, not isMaxPlayer, nextval, state)
+			# my_state = copy.deepcopy(state)
+			moves = self.evaluateBoard(my_state, "black")
+			for move in moves:
+				moveval = self.makeMove(my_state, move)
+				nextval = move['value']
+				checkmate = move['checkmate']
+				m_value = self.minimax(depth - 1, not isMaxPlayer, nextval, my_state, alpha, beta)
+				alpha = max(m_value, alpha)
+				self.undoMove(my_state, moveval)
+				
+				if checkmate:
+					return nextval
+				else:	
+					return  ValueOfMove - m_value
+
+				if beta <= alpha:
+					break
 		else:
-			nextmove = self.evaluateBoard(state, "white")
-			self.makeMove(state, nextmove)
-			nextval = nextmove['value']
-			return  ValueOfMove + self.minimax(depth, not isMaxPlayer, nextval, state)
+			# my_state = copy.deepcopy(state)
+			moves = self.evaluateBoard(my_state, "white")
+			for move in moves:
+				moveval = self.makeMove(my_state, move)
+				nextval = move['value']
+				checkmate = move['checkmate']
+				m_value = self.minimax(depth - 1, not isMaxPlayer, nextval, my_state, alpha, beta)
+				beta = min(m_value, beta)
+				self.undoMove(my_state, moveval)
+				
+				if checkmate:
+					return -nextval
+				else:
+					return  ValueOfMove + m_value
+
+				if beta <= alpha:
+					break
 
 	
 	def undoMove(self, state, moveval):
@@ -2669,14 +2758,14 @@ class Brain(object):
 		bestmove = None
 		
 		for item in m_list:
-			my_state = copy.deepcopy(state)
-			moveval = self.makeMove(my_state, item)
-			nextval = self.minimax(2, True, 0, my_state)
-			self.undoMove(my_state, moveval)
+			# my_state = copy.deepcopy(state)
+			moveval = self.makeMove(state, item)
+			nextval = self.minimax(4, True, 0, state, float("-inf"), float("+inf"))
+			self.undoMove(state, moveval)
 			
 			if nextval > bestval:
 				bestval = nextval
-				bestmove = moveval
+				bestmove = item
 				
 		return bestmove
 
@@ -2699,8 +2788,10 @@ class Brain(object):
 					{"id": "bbishop1", "moves": [], "pos": None, "in_check": False}, {"id": "bbishop2", "moves": [], "pos": None, "in_check": False},
 					{"id": "whorse1", "moves": [], "pos": None, "in_check": False}, {"id": "whorse2", "moves": [], "pos": None, "in_check": False},
 					{"id": "bhorse1", "moves": [], "pos": None, "in_check": False}, {"id": "bhorse2", "moves": [], "pos": None, "in_check": False},
-					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
-					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, "end_king": None, "end_rook": None, "pos": None, "in_check": False},
+					{"id": "wking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None, 
+					"end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
+					{"id": "bking", "moves": [], "can_castle": False, "r_castle_rook": None, "l_castle_rook": None,
+					 "end_king": None, "end_rook": None, "pos": None, "in_check": False, "checkmate": False},
 					{"id": "wqueen", "moves": [], "pos": None, "in_check": False}, {"id": "bqueen", "moves": [], "pos": None, "in_check": False}
 				]
 		
@@ -2708,6 +2799,7 @@ class Brain(object):
 		self.hasremoved = "N"
 		print("--------out %s"%(currentState != self.statematrix))
 		if currentState != self.statematrix:
+			# print("current state: %s"%currentState)
 			self.statematrix = currentState
 			
 			firsts = self.getFirsts()
@@ -2724,17 +2816,17 @@ class Brain(object):
 
 				moves = self.getMoves(newstate, firsts, "black", newpieces, newdict, self.pawnEnds)
 				mov_dict = self.dictToList(moves, "black")
-				my_state = newstate
-				recieved = self.getBestMove(newstate, mov_dict)
+				# my_state = copy.deepcopy(newstate)
+				recieved = self.getBestMove(state, mov_dict)
 				dictlen = len(newdict)
-				print("--------in %s"%recieved['pos'])
+				print("--------in new state: %s"%recieved)
 				
 			else:
 				moves = self.getMoves(self.statematrix, firsts, "black", pieces, movesdic, self.pawnEnds)
 				mov_dict = self.dictToList(moves, "black")
-				my_state =  self.statematrix
-				recieved = self.getBestMove(my_state, mov_dict)
-				print("--------in %s"% recieved['pos'])
+				my_state = copy.deepcopy(self.statematrix)
+				recieved = self.getBestMove(self.statematrix, mov_dict)
+				print("--------in %s"% recieved)
 
 
 			
@@ -2775,7 +2867,7 @@ class Brain(object):
 				self.statematrix[end_k_co['I']][end_k_co['J']].update(pieceId=st_k_id)
 				self.statematrix[end_r_co['I']][end_r_co['J']].update(pieceId=st_r_id)  	
 				
-				return to_pos
+				return 
 
 			else:
 				to_pos = recieved['item']
@@ -2785,7 +2877,7 @@ class Brain(object):
 				p_id = to_pos['pieceId']
 				pl_id = to_pos['placeId']
 				p_co = self.getCoordinates(pl_id)
-				c_p_id = to_pos['pieceId']
+				c_p_id = curr_pos['pieceId']
 				c_pl_id = curr_pos['placeId']
 				c_p_co = self.getCoordinates(c_pl_id)
 				self.inputFirst(firsts, c_p_id)
@@ -2801,6 +2893,7 @@ class Brain(object):
 					self.hasremoved = "Y"
 					self.hasmoved = "Y"	
 				else:
+					# print("----compchoice: %s"%c_p_id)
 					self.compchoice = c_p_id
 					self.compmove = pl_id
 					self.statematrix[c_p_co['I']][c_p_co['J']].update(pieceId='') 

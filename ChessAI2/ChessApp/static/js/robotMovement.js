@@ -244,7 +244,7 @@ this.select = function(controlId){
 
 
 
-    //console.log("freeMov: "+freeMov);
+    console.log("freeMov: "+freeMov+' - '+type);
     var nwleft = J;
     var nwup = I;
     var neright = J;
@@ -277,25 +277,21 @@ this.select = function(controlId){
 
         for(var i=0; i<8; i++){
             // console.log("type: "+type+" is freemov: "+freeMov);
-           if(type=='rook'&&freeMov||type=='queen'&&freeMov){
-            //localStorage.setItem('hasSelected', 'N');
-            //console.log('guard: '+isGuard+' check: '+inCheck);
-            if(right>-1){
-                //console.log('count right: '+right);
-                rights = document.getElementById(boardMatrix[I][right]);
-             
-            }if(left<8){
-                lefts = document.getElementById(boardMatrix[I][left]);
-              
-            }if(up>-1){
-                ups = document.getElementById(boardMatrix[up][J]); 
-               
-                // console.log('place: '+boardMatrix[up][J]);
-            }if(down<8){
-                downs = document.getElementById(boardMatrix[down][J]);
-                
-                //console.log('movable: '+boardMatrix[down][J]);
-            }
+            if(type=='rook'&&freeMov||type=='queen'&&freeMov){
+                //localStorage.setItem('hasSelected', 'N');
+                //console.log('guard: '+isGuard+' check: '+inCheck);
+                if(right>-1){
+                    rights = document.getElementById(boardMatrix[I][right]);
+                }if(left<8){
+                    lefts = document.getElementById(boardMatrix[I][left]);
+                    // console.log('left: '+lefts.id);
+                }if(up>-1){
+                    ups = document.getElementById(boardMatrix[up][J]); 
+                // console.log('up: '+boardMatrix[up][J]);
+                }if(down<8){
+                    downs = document.getElementById(boardMatrix[down][J]);
+                    // console.log('d: '+boardMatrix[down][J]);
+                }
                     
                
            
@@ -481,19 +477,20 @@ this.select = function(controlId){
         
                 if(nwleft<8&&nwup>-1){
                     nw = document.getElementById(boardMatrix[nwup][nwleft]);
-                    nwArr.push(nw);
-                   
+                    // console.log("nw: "+nw.id)
+                    nwArr.push(nw);            
                 }if(neright>-1&&neup>-1){
                     ne = document.getElementById(boardMatrix[neup][neright]);
-                    neArr.push(ne);
-                    
+                    // console.log("ne: "+ne.id)
+                    neArr.push(ne);                  
                 }if(swleft<8&&swdown<8){
                     sw = document.getElementById(boardMatrix[swdown][swleft]);
+                    // console.log("sw: "+sw.id)
                     swArr.push(sw);
                 }if(seright>-1&&sedown<8){
                     se = document.getElementById(boardMatrix[sedown][seright]);
-                    seArr.push(se);
-                  
+                    // console.log("se: "+se.id)
+                    seArr.push(se);             
                 }         
 
                 if(nwleft<8&&nwup>-1){

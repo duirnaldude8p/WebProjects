@@ -275,23 +275,28 @@ this.select = function(controlId){
             //console.log('guard: '+isGuard+' check: '+inCheck);
             if(right<8){
                 //console.log('count right: '+right);
+                
+
                 rights = document.getElementById(boardMatrix[I][right]);
+                // console.log("right count id: "+rights.id);
                 rights.style.background = 'blue';
                 highlights.push(rights);
             }if(left>-1){
                 lefts = document.getElementById(boardMatrix[I][left]);
+                // console.log("left count id: "+lefts.id);
                 lefts.style.background = 'blue';
                 highlights.push(lefts);
             }if(up<8){
                 ups = document.getElementById(boardMatrix[up][J]); 
+                // consol.log("right count id: "+rights.id);
                 ups.style.background = 'blue';
                 highlights.push(ups);
-                //console.log('place: '+boardMatrix[up][J]);
+                // console.log('up count id: '+boardMatrix[up][J]);
             }if(down>-1){
                 downs = document.getElementById(boardMatrix[down][J]);
                 downs.style.background = 'blue';
                 highlights.push(downs);
-                //console.log('movable: '+boardMatrix[down][J]);
+                // console.log('down count id: '+boardMatrix[down][J]);
             }
                     
                
@@ -495,21 +500,24 @@ this.select = function(controlId){
                     nwArr.push(nw);
                     nw.style.background = 'blue';
                     highlights.push(nw);
+                    // console.log("nw count id: "+nnw);
                 }if(neright<8&&neup<8){
-                    var nnw = boardMatrix[neup][neright];
-
+                    var nne = boardMatrix[neup][neright];
+                    // console.log("ne count id: "+nne);
                     ne = document.getElementById(boardMatrix[neup][neright]);
                     neArr.push(ne);
                     ne.style.background = 'blue';
                     highlights.push(ne);
                 }if(swleft>-1&&swdown>-1){
                     var ssw = boardMatrix[swdown][swleft];
+                    // console.log("sw count id: "+ssw);
                     sw = document.getElementById(boardMatrix[swdown][swleft]);
                     swArr.push(sw);
                     sw.style.background = 'blue';
                     highlights.push(sw);
                 }if(seright<8&&sedown>-1){
                     var sse = boardMatrix[sedown][seright];
+                    // console.log("se count id: "+sse);
                     se = document.getElementById(boardMatrix[sedown][seright]);
                     seArr.push(se);
                     se.style.background = 'blue';

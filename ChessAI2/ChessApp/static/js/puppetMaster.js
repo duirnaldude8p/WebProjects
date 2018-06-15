@@ -32,7 +32,7 @@ $(function(){
                             var compchoice = item.StateData.CompChooses;
             
                             var compmove = item.StateData.CompMovesTo;
-                            // console.log("compchoice: "+compchoice+" compmove: "+compmove);
+                            console.log("compchoice: "+compchoice+" compmove: "+compmove);
                             
                             $robo.select(compchoice);
                             $robo.moveTo(compmove);
@@ -77,14 +77,17 @@ $(function(){
             }
         }
     }
-    setInterval(updateGet, 1000);
+    function getInterval(){
+        setInterval(updateGet, 1000);
+    }
+    setTimeout(getInterval, 1050);
 
     function updatePost(){
         if(!hasStart||hasGet){
             var finmove = localStorage.getItem("FinishedMove");
             
             if(changeable=="Y"){
-                // console.log("changeable: "+changeable+' finmove: '+finmove);
+                console.log("changeable: "+changeable+' finmove: '+finmove);
                 if(finmove=="Y"){
                     var statematrix1 = localStorage.getItem("StateMatrix");
                     var stmt = eval(statematrix1);
@@ -169,7 +172,11 @@ $(function(){
             }
         }
     }
-    setInterval(updatePost, 1000);
+    function postInterval(){
+        setInterval(updatePost, 1000);
+    }
+    setTimeout(postInterval, 1050);
+
 
 });
 
