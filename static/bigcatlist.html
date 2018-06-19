@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Half Slider - Start Bootstrap Template</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/half-slider.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+      <!-- Navigation -->
+        <nav id="navig" class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
+            <div id="nav-con" class="container"> 
+                <div id="logo-con">
+                    <img id="logo" src="pics/profile_pic.jpeg"  alt="http://placehold.it/152x198"/>
+                </div>
+                <div class="nav-format">
+                    <a class="navbar-brand" href="#">Big Cats</a>
+                </div>
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls=" navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul id="page_nav_list" class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Home
+                            <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cat List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Log In</a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+             
+        </nav>
+
+
+    <!-- Page Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="card card-outline-secondary my-4">
+                <div class="card-header">
+                    Comments
+                </div>
+                <div class="card-body"> 
+                    <ul id="cat_list_objects">
+                        <li>
+                            <div class="row cat-image-row">
+                                <div id="cat_image" class="image_rectangle" onclick="">
+                                    <img class="cat_image img-fluid" src="pics/Tiger1.jpg" alt="">
+                                    <div class="centered"></div>
+                                </div>
+                            </div>
+                            <div class="row cat-detail-row">
+                                 <div id="square-box" class="col col-xl-1 col-lg-1 col-md-2 col-sm-2 col-3 pic-div">
+                                    <div class="square">
+                                        <div class="image-circle-post">
+                                            <img class="my_image img-fluid" src="pics/profile_pic.jpeg"  alt=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-xl-9 col-lg-9 col-md-6 col-sm-6 col-3"></div>
+                                <div class="col col-xl-2 col-lg-2 col-md-4 col-sm-4 col-6 cat-post-name">
+                                    Samuel
+                                </div>
+                            </div>
+                            <div class="row nested_row orange button_row">
+                                Remove
+                            </div>
+                            <hr>
+                        </li>
+                    </ul>
+                    <button id="cat_form_btn" href="#" class="btn btn-primary">Cat Form</button>
+                    <form id="cat_list_form" class="form collapse card-body"  method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Cat's Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label for="breed">Breed</label>
+                            <input type="text" class="form-control" id="breed" placeholder="Enter breed">
+                        </div>
+                        <div class="form-group">
+                            <label for="pic" >Upload Cat Pic  </label>
+                            <input type="file" class="" id="pic" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label for="cat_text" >Tell a short story </label>
+                            <textarea class="form-control" id="cat_text" placeholder="Enter text"></textarea>
+                        </div> 
+                        <button  id="cat_submit_btn" type="submit" href="#" class="btn btn-primary">Add New Cat</button>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/js/square.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
