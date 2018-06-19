@@ -13,6 +13,7 @@ from .models import Main
 from .models import Comment
 
 from .serializers import ProfileSerializer
+from .serializers import MainSerializer
 
 
 def main(request):
@@ -47,7 +48,9 @@ class ProfileGetData(generics.RetrieveAPIView):
 class ProfilePostData(generics.CreateAPIView):
 	queryset = Profile.objects.all()
 	serializer_class = ProfileSerializer
+
 	
+	# one_objs = One.objects.all().prefetch_related('many_set')
 	print("in postdata")
 	def post(self, request):
 		serializer_class = ProfileSerializer(data=request.data)
@@ -60,7 +63,31 @@ class ProfilePostData(generics.CreateAPIView):
 		return Response(serializer_class._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class MainGetData(generics.RetrieveAPIView):
+	queryset = Main.objects.all()
+	serializer_class = MainSerializer
 
+	def get(self, request):
+		queryset = Main.objects.all()
+		serializer_class = MainSerializer(queryset, many=True)
+		
+		return Response(serializer_class.data)
+
+	
+class MainPostData(generics.CreateAPIView):
+	queryset = Main.objects.all()
+	serializer_class = MainSerializer
+	
+	print("in postdata")
+	def post(self, request):
+		serializer_class = MainSerializer(data=request.data)
+		if serializer_class.is_valid():
+			print("in is valid ")
+			#serializer_class.create(serializer_class.validated_data)
+			serializer_class.save()
+			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
+		print("errors: %s"%serializer_class._errors)
+		return Response(serializer_class._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

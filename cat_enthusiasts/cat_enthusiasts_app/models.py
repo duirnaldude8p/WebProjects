@@ -14,7 +14,12 @@ def profile_image_path(instance, filename):
 #     return os.path.join('catpageapp\static\pics\main', str(instance.id), filename)
 
 class Main(models.Model):
-	title = models.CharField(max_length=30, null=True)
+	name = models.CharField(max_length=20, null=True)
+	section = models.CharField(max_length=20, null=True)
+	
+	def __str__(self):
+		return self.name	
+
 
 class Profile(models.Model):
 	# comment = models.OneToOneField(Comment, on_delete=models.CASCADE, null=True)

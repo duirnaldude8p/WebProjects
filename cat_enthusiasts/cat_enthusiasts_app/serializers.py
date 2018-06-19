@@ -12,16 +12,6 @@ import os
 from django.core.files.storage import default_storage
 from pathlib import Path
 
-# class MainSerializer(serializers.ModelSerializer):
-#     cats = CatSerializer(many=True, required=False)
-#     comments = CommentSerializer(many=True, required=False)
-#     profiles = ProfileSerializer(many=True, required=False)     
-    
-#     class Meta:
-#         model = Main
-#         fields = ('id', 'cats', 'comments', 'profiles')
-
-
 class ProfileSerializer(serializers.ModelSerializer):
 	# cat = CatSerializer(many=True, required=False)
 	# comment = CommentSerializer(many=True, required=False)
@@ -38,9 +28,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 		if section == "new profile":
 			print("in new profile")
+			# f_main = Main.objects.filter(name="First Main")
+			# profiles = f_main.profile_set.objects.all()
+			# print("profiles - %s"%profiles)
+			prof = Main.objects.all().prefetch_related('profile_set')
+			prof2 = prof.filter(id=4).values("profile").profile_name
+			print("profils - %s"%prof2)
 			profile = Profile.objects.create(
 				profile_name = validated_data['profile_name'],
-				email = validated_data['email'],
+				username = validated_data['username'],
 				password = validated_data['password'],
 				profile_pic = validated_data['profile_pic'],
 				section = 'new',
@@ -56,6 +52,36 @@ class ProfileSerializer(serializers.ModelSerializer):
 				break
 			return profile
 		return profile
+
+class MainSerializer(serializers.ModelSerializer):
+    # cats = CatSerializer(many=True, required=False)
+    # comments = CommentSerializer(many=True, required=False)
+    # profile = ProfileSerializer(many=True, required=False)     
+    
+	class Meta:
+		model = Main
+		fields = ('__all__')
+
+	def create(self, validated_data):
+		print("in main create serializer")
+		section = validated_data['section']
+		main = Main.objects.all()
+		if not main:
+			if section == 'new':
+				main = Main.objects.create(
+					name = validated_data['name']	
+				)
+			return main	
+		else:
+			if section == 'update name':
+				main = Main.objects.create(
+					name = validated_data['name']        			
+				)
+			return main
+		return main
+
+
+
 
 
 # class CatSerializer(serializers.ModelSerializer):
