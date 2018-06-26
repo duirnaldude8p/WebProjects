@@ -70,8 +70,8 @@
                     <div class="row reg-cols-con">
                         <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
                         <div class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8  steel-blue reg-con">
-                            <div class="container reg-con">
-                                <form enctype="multipart/form-data" method="POST">
+                            <div class="container">
+                                <form enctype="multipart/form-data" method="POST" class="reg-con">
                                     {% csrf_token %}
                                     <div class="row top-reg-row dynamic-font">
                                         Register
@@ -81,7 +81,7 @@
                                             Userame:
                                         </div>
                                         <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 reg-col-input"">
-                                           {{ user_form.username }}
+                                            {{ user_form.username }}
                                         </div> 
                                     </div>
                                     <div class="row reg-row">
