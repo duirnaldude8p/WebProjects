@@ -16,6 +16,7 @@ from .forms import UserForm
 from .forms import UserProfileInfoForm
 # Create your views here.
 
+registered = False
 
 def login_page(request):
 	return render(request,'login_app/login.html')
@@ -26,68 +27,62 @@ def profile_page(request):
 # def register_page(request):
 # 	return render(request,'login_app/register.html')
 
+class Register_Data(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'login_app/register.html'
+    queryset = UserProfileInfo.objects.all()
+    serializer_class = RegisterSerializer
+    
+    
+    def get(self, request):
+
+        user_form = UserForm()
+        profile_form = UserProfileInfoForm()
+        queryset = UserProfileInfo.objects.all()
+        # formdict = {
+        #     'user_form': user_form ,
+        #     'profile_form': profile_form ,
+        #     'registered': registered
+        # }
+        serializer_class = RegisterSerializer(queryset, many=True)
+        return Response({'serializer': serializer_class, 'user_form':user_form, 'profile_form': profile_form, 'registered': registered})
 
 
+    def post(self, request):
+        global registered
+        registered = False
 
-def register_page(request):
-
-    registered = False
-
-    if request.method == 'POST':
-
-        # Get info from "both" forms
-        # It appears as one form to the user on the .html page
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileInfoForm(data=request.POST)
 
-        # Check to see both forms are valid
         if user_form.is_valid() and profile_form.is_valid():
 
-            # Save User Form to Database
             user = user_form.save()
-
-            # Hash the password
             user.set_password(user.password)
-
-            # Update with Hashed password
             user.save()
 
-            # Now we deal with the extra info!
-
-            # Can't commit yet because we still need to manipulate
             profile = profile_form.save(commit=False)
 
-            # Set One to One relationship between
-            # UserForm and UserProfileInfoForm
+        
             profile.user = user
 
-            # Check if they provided a profile picture
             if 'profile_pic' in request.FILES:
                 print('found it')
-                # If yes, then grab it from the POST form reply
                 profile.profile_pic = request.FILES['profile_pic']
 
-            # Now save model
             profile.save()
-
-            # Registration Successful!
             registered = True
 
         else:
-            # One of the forms was invalid if this else gets called.
             print(user_form.errors,profile_form.errors)
 
-    else:
-        # Was not an HTTP post so we just render the forms as blank.
-        user_form = UserForm()
-        profile_form = UserProfileInfoForm()
+        serializer_class = RegisterSerializer(data=request.data)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            return Response({'serializer': serializer_class, 'user_form':user_form, 'profile_form': profile_form, 'registered': registered}, status=status.HTTP_201_CREATED)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # This is the render and context dictionary to feed
-    # back to the registration.html file page.
-    return render(request,'login_app/register.html',
-          	{
-          		'user_form':user_form,
-                'profile_form':profile_form,
-                'registered':registered,
-            })
+    
+
+    
 
