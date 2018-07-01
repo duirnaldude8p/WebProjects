@@ -14,6 +14,13 @@ from .models import UserProfileInfo
 from .serializers import RegisterSerializer
 from .forms import UserForm
 from .forms import UserProfileInfoForm
+
+
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 registered = False
@@ -26,6 +33,29 @@ def profile_page(request):
 
 # def register_page(request):
 # 	return render(request,'login_app/register.html')
+
+class Login_Data(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'login_app/login.html'
+    queryset = UserProfileInfo.objects.all()
+    serializer_class = RegisterSerializer
+
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('register'))
+            else:
+                return HttpResponse('Inactive account')
+        else:
+            HttpResponse('incorrect login details provided')
+
 
 class Register_Data(APIView):
     renderer_classes = [TemplateHTMLRenderer]
