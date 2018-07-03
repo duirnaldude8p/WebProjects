@@ -70,7 +70,8 @@
                     <div class="row log-cols-con">
                         <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
                         <div class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8  steel-blue log-con">
-                            <div class="container log-con">
+                            <form class="container log-con"  method="POST">
+                                {% csrf_token %}
                                 <div class="row top-log-row dynamic-font">
                                     Login
                                 </div>
@@ -79,7 +80,7 @@
                                         Username:
                                     </div>
                                     <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 log-col-input"">
-                                        <input class="form-control expnd dynamic-font log-col-input-in" type="text" placeholder="Enter Username" id="">
+                                        <input class="form-control expnd dynamic-font log-col-input-in" type="text" placeholder="Enter Username" id="" name='username'>
                                     </div> 
                                 </div>
                                 <div class="row log-row">
@@ -87,17 +88,15 @@
                                         Password:
                                     </div>
                                     <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 log-col-input">
-                                        <input class="form-control expnd dynamic-font log-col-input-in" type="text" placeholder="Enter Password" id="">
+                                        <input class="form-control expnd dynamic-font log-col-input-in" type="text" placeholder="Enter Password" id="" name='password'>
                                     </div> 
                                 </div>
                                 <div class="row log-row">
                                     <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
-                                    <div class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 tomato log-col log-button-col button-col">
-                                        Log In
-                                    </div>
+                                    <input type="submit" value="Log In" class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 tomato log-col log-button-col button-col"/>
                                     <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div> 
                                 </div>
-                            </div>
+                            </form>
                         </div>   
                         <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
                     </div>

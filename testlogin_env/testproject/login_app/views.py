@@ -15,7 +15,7 @@ from .serializers import RegisterSerializer
 from .forms import UserForm
 from .forms import UserProfileInfoForm
 
-
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -34,11 +34,26 @@ def profile_page(request):
 # def register_page(request):
 # 	return render(request,'login_app/register.html')
 
+
+@login_required
+class Profile_Data(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'login_app/profile.html'
+    queryset = UserProfileInfo.objects.all() 
+    serializer_class = RegisterSerializer 
+
+    
+
+
 class Login_Data(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'login_app/login.html'
     queryset = UserProfileInfo.objects.all()
     serializer_class = RegisterSerializer
+
+    def get(self, request):
+        user = User
+        return Response({'url':'login_app:login', 'user':user}) 
 
     def post(self, request):
         username = request.POST.get('username')
@@ -50,11 +65,11 @@ class Login_Data(APIView):
             
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('register'))
+                return Response({ 'url': reverse('login_app:register'),'resp_message':'succesful login', 'user':user})
             else:
-                return HttpResponse('Inactive account')
+                return Response({'resp_message':'Inactive account', 'user':user})
         else:
-            HttpResponse('incorrect login details provided')
+            return Response({'resp_message':'incorrect login details provided', 'user':user})
 
 
 class Register_Data(APIView):
@@ -65,15 +80,11 @@ class Register_Data(APIView):
     
     
     def get(self, request):
-
+        
         user_form = UserForm()
         profile_form = UserProfileInfoForm()
         queryset = UserProfileInfo.objects.all()
-        # formdict = {
-        #     'user_form': user_form ,
-        #     'profile_form': profile_form ,
-        #     'registered': registered
-        # }
+      
         serializer_class = RegisterSerializer(queryset, many=True)
         return Response({'serializer': serializer_class, 'user_form':user_form, 'profile_form': profile_form, 'registered': registered})
 

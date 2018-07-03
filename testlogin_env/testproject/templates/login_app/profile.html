@@ -25,7 +25,7 @@
         <nav id="navig" class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
             <div id="nav-con" class="container"> 
                 <div id="logo-con">
-                    <img id="logo" src='{% static "pics/profile_pic.jpeg" %}'  alt=""/>
+                    <img id="logo" src="/media/images/profile_pic.jpeg"  alt=""/>
                 </div>
                 <div class="nav-format">
                     <a class="navbar-brand" href="#">Yo Cool Cats</a>
@@ -65,7 +65,7 @@
     <!-- Page Content -->
     <section class="py-5">
         <div class="container">
-            <div class="card card-outline-secondary my-4">
+            <div class="card my-4 reg-card">
                 <div class="card-body">
                     <div class="row prof-con">
                         <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
@@ -75,46 +75,47 @@
                                 <div id="square-box" class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 pic-div">
                                     <div class="square">
                                         <div class="image-circle-post">
-                                            <img class="my_image img-fluid" src='{% static "pics/profile_pic.jpeg" %}'  alt=""/>
+                                            <img class="my_image img-fluid" src="/media/images/profile_pic.jpeg"  alt=""/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>    
                             </div>
-                            <div class="row prof-row">
+                            <!-- <div class="row prof-row">
                                 <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font">
                                     Name:
                                 </div>
                                 <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 dynamic-font prof-col">
                                     Samuel
                                 </div> 
-                            </div>
+                            </div> -->
                             <div class="row prof-row">
                                 <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font">
-                                    Email:
+                                    Username:
                                 </div>
                                 <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 dynamic-font prof-col">
-                                    samueljegede@77outlook.com
+                                    {{ user.username }}
                                 </div> 
                             </div>
-                            <div class="row prof-row">
+                            <!-- <div class="row prof-row">
                                 <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 dynamic-font">
                                     <input class="form-control expnd" type="text" placeholder="Enter New Name" id="">
                                 </div>
                                 <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font tomato button-col">
                                     Enter
                                 </div> 
-                            </div>
+                            </div> -->
+                            <form method="POST">
+                            {% csrf_token %}
                             <div class="row prof-row">
                                 <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
                                     <label class="btn button-col sky-blue dynamic-font">
-                                        Choose Picture <input type="file" hidden>
+                                        Choose Picture <input type="file" hidden name="profile_pic">
                                     </label>
                                 </div>
-                                <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font tomato button-col">
-                                    Upload
-                                </div> 
+                                <input type="submit" value="Upload" class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font tomato button-col">
                             </div>
+                            </form>
                         </div>   
                         <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
                     </div>
