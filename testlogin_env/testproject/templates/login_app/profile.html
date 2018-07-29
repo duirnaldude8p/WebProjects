@@ -70,6 +70,13 @@
                     <div class="row prof-con">
                         <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
                         <div class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8  steel-blue ">
+                            <div class="row prof-username-row">
+                                <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4"></div>
+                                <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 prof-text dynamic-font white envelope">
+                                    Samuel            
+                                </div>
+                                <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4"></div>
+                            </div>
                             <div class="row prof-pic-row">
                                 <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
                                 <div id="square-box" class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 pic-div">
@@ -81,40 +88,20 @@
                                 </div>
                                 <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>    
                             </div>
-                            <!-- <div class="row prof-row">
-                                <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font">
-                                    Name:
-                                </div>
-                                <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 dynamic-font prof-col">
-                                    Samuel
-                                </div> 
-                            </div> -->
-                            <div class="row prof-row">
-                                <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font">
-                                    Username:
-                                </div>
-                                <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 dynamic-font prof-col">
-                                    {{ user.username }}
-                                </div> 
-                            </div>
-                            <!-- <div class="row prof-row">
-                                <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 dynamic-font">
-                                    <input class="form-control expnd" type="text" placeholder="Enter New Name" id="">
-                                </div>
-                                <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font tomato button-col">
-                                    Enter
-                                </div> 
-                            </div> -->
                             <form method="POST">
-                            {% csrf_token %}
-                            <div class="row prof-row">
-                                <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
-                                    <label class="btn button-col sky-blue dynamic-font">
-                                        Choose Picture <input type="file" hidden name="profile_pic">
-                                    </label>
+                                {% csrf_token %}
+                                <div class="row prof-row">
+                                    <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
+                                        <label class="button-col sky-blue dynamic-font">
+                                            Choose Picture <input type="file" hidden name="profile_pic">
+                                        </label>
+                                    </div>
+                                    <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                                        <label class="dynamic-font tomato button-col">
+                                            Upload <input type="submit" hidden>
+                                        </label>
+                                    </div>
                                 </div>
-                                <input type="submit" value="Upload" class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font tomato button-col">
-                            </div>
                             </form>
                         </div>   
                         <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>

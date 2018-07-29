@@ -31,8 +31,11 @@ def login_page(request):
 def profile_page(request):
 	return render(request,'login_app/profile.html')
 
-# def register_page(request):
-# 	return render(request,'login_app/register.html')
+def register_page(request):
+	return render(request,'login_app/register.html')
+
+def home_page(request):
+	return render(request,'login_app/index.html')
 
 
 @login_required
@@ -42,6 +45,15 @@ class Profile_Data(APIView):
     queryset = UserProfileInfo.objects.all() 
     serializer_class = RegisterSerializer 
 
+    
+
+    def get(self, request):
+        user = User
+        return Response({'url':'login_app:profile', 'user':user}) 
+    
+    def post(self, request):
+        user = User
+        
     
 
 
