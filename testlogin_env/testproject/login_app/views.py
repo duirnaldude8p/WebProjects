@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -38,7 +39,7 @@ def home_page(request):
 	return render(request,'login_app/index.html')
 
 
-@login_required
+@method_decorator(login_required, name='post')
 class Profile_Data(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'login_app/profile.html'
