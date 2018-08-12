@@ -236,7 +236,7 @@
 }
 
 .prof-username-row{
-	margin-top: 4%;
+	margin-top: 6%;
 	height: 10%;
 	width: 100%;
 	margin-left: auto;
@@ -253,8 +253,8 @@
 }
 
 .prof-pic-row{
-	margin-top: 4%;
-	height: 36%;
+	margin-top: 6%;
+	height: 45%;
 }
 
 .prof-row{
@@ -306,6 +306,24 @@
 		margin-top: 6%;
    		/*background-color: purple;*/
    }
+
+   .prof-username-row{
+		margin-top: 6%;
+		height: 9%;
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.prof-con{
+		min-height: 200px;
+	}
+
+	.prof-pic-row{
+		margin-top: 4%;
+		height: 60%;
+	}
+
 }
 
 .log-con{
