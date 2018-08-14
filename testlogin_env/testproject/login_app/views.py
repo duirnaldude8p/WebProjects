@@ -17,7 +17,7 @@ from .forms import UserProfileInfoForm
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -67,7 +67,7 @@ class Login_Data(APIView):
     def get(self, request):
         user = User
         print("In Login!")
-        return Response({'url':'login', 'user':user}) 
+        return Response({'url':'login'}) 
 
     def post(self, request):
         username = request.POST.get('username')
@@ -79,11 +79,11 @@ class Login_Data(APIView):
             if user.is_active:
                 login(request, user)
                 print("Login successfull!")
-                return  Response({'url':'register', 'resp_message':'succesful login', 'user':user})
+                return  HttpResponseRedirect(reverse('register'))
             else:
-                return Response({'url':'login', 'resp_message':'Inactive account', 'user':user})
+                return Response({'resp_message':'Inactive account'})
         else:
-            return Response({'url':'login', 'resp_message':'incorrect login details provided', 'user':user})
+            return Response({'resp_message':'incorrect login details provided'})
 
 
 class Register_Data(APIView):
@@ -122,18 +122,21 @@ class Register_Data(APIView):
             profile.user = user
 
             if 'profile_pic' in request.FILES:
-                print('found it')
+                # print('found it')
                 profile.profile_pic = request.FILES['profile_pic']
 
             profile.save()
             registered = True
+            return Response({'user_form':user_form, 'profile_form': profile_form, 'registered': registered})
 
         else:
             print(user_form.errors,profile_form.errors)
+            return Response({'user_form':user_form, 'profile_form': profile_form, 'registered': registered})
 
         serializer_class = RegisterSerializer(data=request.data)
         if serializer_class.is_valid():
             serializer_class.save()
+            print("valid user_form %s"%user_form)
             return Response({'serializer': serializer_class, 'user_form':user_form, 'profile_form': profile_form, 'registered': registered}, status=status.HTTP_201_CREATED)
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 

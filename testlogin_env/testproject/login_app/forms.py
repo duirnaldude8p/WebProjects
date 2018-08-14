@@ -16,6 +16,7 @@ class UserForm(forms.ModelForm):
 			'username': forms.TextInput(attrs = {
 				'class': 'form-control expnd dynamic-font reg-col-input-in',
 				'placeholder': 'Enter username',
+				'onsubmit':'this.submit(); this.reset(); return false;',
 			}),
 		}
 
