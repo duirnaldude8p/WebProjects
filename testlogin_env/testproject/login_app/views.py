@@ -41,19 +41,25 @@ def home_page(request):
 
 @method_decorator(login_required, name="post")
 class Profile_Data(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'login_app/profile.html'
-    queryset = UserProfileInfo.objects.all() 
-    serializer_class = RegisterSerializer 
+	renderer_classes = [TemplateHTMLRenderer]
+	template_name = 'login_app/profile.html'
+	queryset = UserProfileInfo.objects.all() 
+	serializer_class = RegisterSerializer 
+	user = User
+	# prof = UserProfileInfo.objects.get(user=request.user)
+	# username = prof.username    
 
+	def get(self, request):
+		user = User
+		user_form = UserForm
+		prof = UserProfileInfo.objects.get(user=request.user)
+		username = prof.user.username 
+		profile_pic = prof.profile_pic
+		print("username %s"%username)
+		return Response({'profile_pic':profile_pic, 'username':username}) 
     
-
-    def get(self, request):
-        user = User
-        return Response({'url':'login_app:profile', 'user':user}) 
-    
-    def post(self, request):
-        user = User
+	def post(self, request):
+		user = User
         
     
 
@@ -66,7 +72,7 @@ class Login_Data(APIView):
 
     def get(self, request):
         user = User
-        print("In Login!")
+        # print("In Login!")
         return Response({'url':'login'}) 
 
     def post(self, request):
@@ -78,8 +84,8 @@ class Login_Data(APIView):
         if user:  
             if user.is_active:
                 login(request, user)
-                print("Login successfull!")
-                return  HttpResponseRedirect(reverse('register'))
+                # print("Login successfull!")
+                return  HttpResponseRedirect(reverse('profile'))
             else:
                 return Response({'resp_message':'Inactive account'})
         else:

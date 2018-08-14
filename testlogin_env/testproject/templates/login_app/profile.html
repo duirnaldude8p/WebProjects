@@ -73,7 +73,7 @@
                             <div class="row prof-username-row">
                                 <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4"></div>
                                 <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 prof-text dynamic-font white envelope">
-                                    Samuel            
+                                    {{  username }}        
                                 </div>
                                 <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4"></div>
                             </div>
@@ -82,7 +82,10 @@
                                 <div id="square-box" class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 pic-div">
                                     <div class="square">
                                         <div class="image-circle-post">
-                                            <img class="my_image img-fluid" src="/media/images/profile_pic.jpeg"  alt=""/>
+                                            <img class="my_image img-fluid" src="{{ profile_pic }}"  alt=""/>
+                                            <!-- <div class="my_image img-fluid"> -->
+                                                <!-- {{ profile_pic }} -->
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                 </div>
