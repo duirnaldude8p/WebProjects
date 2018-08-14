@@ -21,13 +21,15 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileInfoForm(forms.ModelForm):
-	profile_pic = forms.ImageField(widget=forms.HiddenInput())
+	# profile_pic = forms.ImageField(widget=forms.HiddenInput())
+	
 	class Meta():
 		model = UserProfileInfo
 		fields = ('profile_pic',)
 		widgets = {
 			    'profile_pic': forms.FileInput(attrs = {
 				'id':'profile_pic_input',
+				'class': 'hide'
 			}),
 		}
 	

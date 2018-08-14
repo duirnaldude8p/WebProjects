@@ -276,19 +276,18 @@
 }
 
 .expnd{
-	/*height: 100%;*/
 	width: 100%;
 	vertical-align: middle;
-	margin-top: 4%;
+
 }
 
-.reg-choose-button{
-	/*position: relative;*/
+.dynamic-button{
+	line-height: 290%;
 	text-align: center;
-	vertical-align: middle;
-	/*line-height: 150%;*/
-	margin-top: 3.5%;
-	/*background-color: orange;*/
+}
+
+.hide{
+	display: none;
 }
 
 @media only screen and (max-width: 420px) {
@@ -299,14 +298,7 @@
     	/*overflow: hidden;*/
    }
 
-   .reg-choose-button{
-   		/*text-align: center;*/
-		/*vertical-align: middle;*/
-		/*line-height: 150%;*/
-		margin-top: 6%;
-   		/*background-color: purple;*/
-   }
-
+   
    .prof-username-row{
 		margin-top: 6%;
 		height: 9%;
@@ -391,6 +383,7 @@
 .reg-row{
 	margin-top: 3%;
 	height: 16.6%;
+	/*display: inline-block;*/
 }
 
 .reg-col{

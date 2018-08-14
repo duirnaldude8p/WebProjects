@@ -39,7 +39,7 @@ def home_page(request):
 	return render(request,'login_app/index.html')
 
 
-@method_decorator(login_required, name='post')
+@method_decorator(login_required, name="post")
 class Profile_Data(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'login_app/profile.html'
@@ -66,7 +66,8 @@ class Login_Data(APIView):
 
     def get(self, request):
         user = User
-        return Response({'url':'login_app:login', 'user':user}) 
+        print("In Login!")
+        return Response({'url':'login', 'user':user}) 
 
     def post(self, request):
         username = request.POST.get('username')
@@ -74,15 +75,15 @@ class Login_Data(APIView):
 
         user = authenticate(username=username, password=password)
 
-        if user:
-            
+        if user:  
             if user.is_active:
                 login(request, user)
-                return Response({ 'url': reverse('login_app:register'),'resp_message':'succesful login', 'user':user})
+                print("Login successfull!")
+                return  Response({'url':'register', 'resp_message':'succesful login', 'user':user})
             else:
-                return Response({'resp_message':'Inactive account', 'user':user})
+                return Response({'url':'login', 'resp_message':'Inactive account', 'user':user})
         else:
-            return Response({'resp_message':'incorrect login details provided', 'user':user})
+            return Response({'url':'login', 'resp_message':'incorrect login details provided', 'user':user})
 
 
 class Register_Data(APIView):
