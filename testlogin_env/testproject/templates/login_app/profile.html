@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load rest_framework %}
 <html lang="en">
 
     <head>
@@ -83,20 +84,17 @@
                                     <div class="square">
                                         <div class="image-circle-post">
                                             <img class="my_image img-fluid" src="../../media/{{ profile_pic }}"  alt=""/>
-                                            <!-- <div class="my_image img-fluid"> -->
-                                                <!-- {{ profile_pic }} -->
-                                            <!-- </div> -->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>    
                             </div>
-                            <form method="POST">
+                            <form action="{% url 'profile' %}"  method="POST">
                                 {% csrf_token %}
                                 <div class="row prof-row">
                                     <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
                                         <label class="button-col sky-blue dynamic-font">
-                                            Choose Picture <input type="file" hidden name="profile_pic">
+                                            Choose Picture{{ profile_form.profile_pic }}
                                         </label>
                                     </div>
                                     <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
