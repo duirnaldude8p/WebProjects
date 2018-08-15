@@ -25,7 +25,7 @@
         <nav id="navig" class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
             <div id="nav-con" class="container"> 
                 <div id="logo-con">
-                    <img id="logo" src="/media/images/profile_pic.jpeg"  alt=""/>
+                    <!-- <img id="logo" src="/media/images/profile_pic.jpeg"  alt=""/> -->
                 </div>
                 <div class="nav-format">
                     <a class="navbar-brand" href="#">Yo Cool Cats</a>
@@ -82,7 +82,7 @@
                                 <div id="square-box" class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 pic-div">
                                     <div class="square">
                                         <div class="image-circle-post">
-                                            <img class="my_image img-fluid" src="{{ profile_pic }}"  alt=""/>
+                                            <img class="my_image img-fluid" src="../../media/{{ profile_pic }}"  alt=""/>
                                             <!-- <div class="my_image img-fluid"> -->
                                                 <!-- {{ profile_pic }} -->
                                             <!-- </div> -->
@@ -117,7 +117,7 @@
 
     <!-- Bootstrap core JavaScript -->
     <script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
-    <script src='{% static "vendor/js/square.js" %}'></script>
+    <script src='{% static "js/square.js" %}'></script>
     <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}'></script>
 
   </body>

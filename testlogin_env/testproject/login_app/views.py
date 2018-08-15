@@ -50,8 +50,6 @@ class Profile_Data(APIView):
 	# username = prof.username    
 
 	def get(self, request):
-		user = User
-		user_form = UserForm
 		prof = UserProfileInfo.objects.get(user=request.user)
 		username = prof.user.username 
 		profile_pic = prof.profile_pic
@@ -59,7 +57,11 @@ class Profile_Data(APIView):
 		return Response({'profile_pic':profile_pic, 'username':username}) 
     
 	def post(self, request):
-		user = User
+		prof = UserProfileInfo.objects.get(user=request.user)
+		username = prof.user.username 
+		profile_pic = prof.profile_pic
+		recieved_pic = request.POST.get('profile_pic')
+		return Response({'profile_pic':profile_pic, 'username':username}) 
         
     
 
