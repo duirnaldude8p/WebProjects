@@ -63,58 +63,57 @@ def home_page(request):
 # 		recieved_pic = request.POST.get('profile_pic')
 # 		return Response({'profile_pic':profile_pic, 'username':username}) 
 	
-class Profile_Data(APIView):
-	renderer_classes = [TemplateHTMLRenderer]
-	template_name = 'login_app/profile.html'
-	queryset = UserProfileInfo.objects.all() 
-	serializer_class = RegisterSerializer 
-    # permission_classes = (permissions.IsAuthenticated,)
-	def get(self, request):
-		prof = UserProfileInfo.objects.get(user=request.user)
-		username = prof.user.username 
-		profile_pic = prof.profile_pic
-		profile_form = UserProfileInfoForm()
-		# print("username %s"%username)
-		return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username}) 
+# class Profile_Data(APIView):
+# 	renderer_classes = [TemplateHTMLRenderer]
+# 	template_name = 'login_app/profile.html'
+# 	queryset = UserProfileInfo.objects.all() 
+# 	serializer_class = RegisterSerializer 
+#     # permission_classes = (permissions.IsAuthenticated,)
+    
+# 	def get(self, request):
+# 		prof = UserProfileInfo.objects.get(user=request.user)
+# 		username = prof.user.username 
+# 		profile_pic = prof.profile_pic
+# 		profile_form = UserProfileInfoForm()
+# 		# print("username %s"%username)
+# 		return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username}) 
     
 
-	def update(self, request, *args, **kwargs):
+# 	def update(self, request, *args, **kwargs):
 
-		prof = UserProfileInfo.objects.get(user=request.user)
-		username = prof.user.username 
-		profile_pic = prof.profile_pic
+# 		prof = UserProfileInfo.objects.get(user=request.user)
+# 		username = prof.user.username 
+# 		profile_pic = prof.profile_pic
 
-		profile_form = UserProfileInfoForm(data=request.POST)
-		print("update called")
-		if profile_form.is_valid():
+# 		profile_form = UserProfileInfoForm(data=request.POST)
+# 		print("update called")
+# 		if profile_form.is_valid():
 
-			user = user_form.save()
-			user.save()
+# 			user = user_form.save()
+# 			user.save()
 
-			profile = profile_form.save(commit=False)
-
+# 			profile = profile_form.save(commit=False)
         
-			profile.user = user
-
+# 			profile.user = user
 			
-			if 'profile_pic' in request.FILES:
-				print('found it')
-				profile.profile_pic = request.FILES['profile_pic']
-				profile_pic = request.FILES['profile_pic']
+# 			if 'profile_pic' in request.FILES:
+# 				print('found it')
+# 				profile.profile_pic = request.FILES['profile_pic']
+# 				profile_pic = request.FILES['profile_pic']
 			
 
-			profile.save()
-			return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username})
-		else:
-			print(user_form.errors,profile_form.errors)
-			return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username})
+# 			profile.save()
+# 			return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username})
+# 		else:
+# 			print(user_form.errors,profile_form.errors)
+# 			return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username})
 
-		serializer_class = RegisterSerializer(data=request.data)
-		if serializer_class.is_valid():
-			serializer_class.save()
-			print("valid user_form %s"%user_form)
-			return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username}, status=status.HTTP_201_CREATED)
-		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+# 		serializer_class = RegisterSerializer(data=request.data)
+# 		if serializer_class.is_valid():
+# 			serializer_class.save()
+# 			print("valid user_form %s"%user_form)
+# 			return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username}, status=status.HTTP_201_CREATED)
+# 		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Login_Data(APIView):

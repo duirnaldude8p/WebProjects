@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rest_framework %}
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, ,maximum-scale=1 ,shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Half Slider - Start Bootstrap Template</title>
+
+         <!-- Bootstrap core CSS -->
+        <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href='{% static "css/half-slider.css" %}' rel="stylesheet">
+
+    </head>
+
+    <body>
+
+      <!-- Navigation -->
+        <nav id="navig" class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
+            <div id="nav-con" class="container"> 
+                <div id="logo-con">
+                    <!-- <img id="logo" src="/media/images/profile_pic.jpeg"  alt=""/> -->
+                </div>
+                <div class="nav-format">
+                    <a class="navbar-brand" href="#">Yo Cool Cats</a>
+                </div>
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls=" navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul id="page_nav_list" class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Home
+                            <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cat List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Log In</a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+             
+        </nav>
+
+      
+
+    <!-- Page Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="card my-4 reg-card">
+                <div class="card-body">
+                    <div class="row prof-con">
+                        <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
+                        <div class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8  steel-blue ">
+                            
+                                
+                                <div class="row prof-username-row">
+                                    <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4"></div>
+                                    <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 prof-text dynamic-font white envelope">
+                                        {{  username }}     
+                                    </div>
+                                    <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4"></div>
+                                </div>
+                                <div class="row prof-pic-row">
+                                    <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
+                                    <div id="square-box" class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 pic-div">
+                                        <div class="square">
+                                            <div class="image-circle-post">
+                                                <img class="my_image img-fluid" src="../../media/{{ profile_pic }}"  alt=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>   
+                                </div> 
+                                <form action="{% url 'profile' %}"  method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row prof-row">
+                                        <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
+                                            <label for="profile_pic_update" class="button-col sky-blue dynamic-font">
+                                                <!-- Test: <input id="t_text" type="text" name="test_text"> -->
+                                                Choose Picture<input id="profile_pic_update" type="file" name="profile_pic" hidden class="form-control">
+                                            </label>
+                                        </div>
+                                        <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                                            <label class="dynamic-font tomato button-col">
+                                                Upload<input id="submit_profile" type="submit" hidden>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+                               
+                        <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </section>
+
+
+    <!--Core JavaScript -->
+    <!-- <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}'></script> -->
+    <script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
+    <script src='{% static "js/square.js" %}'></script>
+    <script src='{% static "js/profile.js" %}'></script>
+  </body>
+
+</html>
