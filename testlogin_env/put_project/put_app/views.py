@@ -6,43 +6,44 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import status
+from rest_framework.renderers import TemplateHTMLRenderer
 
 from .models import PutModel
+
 
 class Put_Data(APIView):
 	renderer_classes = [TemplateHTMLRenderer]
 	template_name = 'put_app.html'
 	queryset = PutModel.objects.all() 
-	put_model = PutModel.objects.all() 
+	put_model = PutModel.objects.all()
+	# put_id = PutModel.objects.get(name='firstname')
     # serializer_class = RegisterSerializer 
     # permission_classes = (permissions.IsAuthenticated,)
 	
     
-    def get(self, request):
-		query = request.GET.get("firstname")
-		if query:
-			put_model = PutModel.objects.filter(firstname = self.id).order_by('id')
+	def get(self, request):
 
-		my_put = PutModel.objects.all()[:1].get()
-		firstname = my_put.firstname 
-		lastname = my_put.lastname 
+		# put_model = PutModel.objects.filter(put_id = self.put_id)
+		# my_put = PutModel.objects.all()[:1].get()
+		# firstname = put_model.firstname 
+		# lastname = put_model.lastname
+		firstname = "hello" 
+		lastname = "hello"
 
 		return Response({'firstname':firstname, 'lastname': lastname}) 
     
     
     # print("in postdata")
-	def post(self, request):
-		query = request.GET.get("firstname")
-		if query:
-			put_model = PutModel.objects.filter(firstname = self.id).order_by('id')
+	# def post(self, request):
+	# 	put_model = PutModel.objects.filter(put_id = self.put_id)
 
-		my_put = PutModel.objects.all()[:1].get()
-		my_put.firstname = request.POST.get("firstname")
-		my_put.lastname = request.POST.get("lastname")
-		firstname = my_put.firstname 
-		lastname = my_put.lastname 
-
-		return Response({'firstname':firstname, 'lastname': lastname}) 
+	# 	# my_put = PutModel.objects.all()[:1].get()
+	# 	put_model.firstname = request.POST.get("firstname")
+	# 	put_model.lastname = request.POST.get("lastname")
+	# 	# firstname = put_model.firstname 
+	# 	# lastname = put_model.lastname 
+		
+	# 	return Response({'firstname':firstname, 'lastname': lastname}) 
 	
         
 		
