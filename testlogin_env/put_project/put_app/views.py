@@ -57,44 +57,58 @@ registered = False
 
 @method_decorator(login_required, name="get") 
 class Profile_Data(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'login_app/profile.html'
-    queryset = UserProfileInfo.objects.all() 
-    serializer_class = RegisterSerializer 
+	renderer_classes = [TemplateHTMLRenderer]
+	template_name = 'login_app/profile.html'
+	queryset = UserProfileInfo.objects.all() 
+	serializer_class = RegisterSerializer 
     # permission_classes = (permissions.IsAuthenticated,)
     
-    def get(self, request):
-        prof = UserProfileInfo.objects.get(user=request.user)
-        username = prof.user.username 
-        profile_pic = prof.profile_pic
-        profile_form = UserProfileInfoForm()
+	def get(self, request):
+		prof = UserProfileInfo.objects.get(user=request.user)
+		username = prof.user.username 
+		profile_pic = prof.profile_pic
+		profile_form = UserProfileInfoForm()
         # print("username %s"%username)
-        return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username}) 
+		return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username}) 
     
     
     # print("in postdata")
-    def post(self, request):
-        profile = UserProfileInfo.objects.get(user=request.user)
-        username = profile.user.username 
-        profile_pic = profile.profile_pic
+    # def post(self, request):
+    #     profile = UserProfileInfo.objects.get(user=request.user)
+    #     username = profile.user.username 
+    #     profile_pic = profile.profile_pic
 
         
-        if 'profile_pic' in request.FILES:
-            # print('found it')
-            profile.profile_pic = request.FILES['profile_pic']
+    #     if 'profile_pic' in request.FILES:
+    #         # print('found it')
+    #         profile.profile_pic = request.FILES['profile_pic']
 
-        profile.save()
+    #     profile.save()
+    # return Response({'profile_pic':profile.profile_pic, 'username':username})
+
+	def put(self, request, pk, format=None):
+		prof = UserProfileInfo.objects.get(user=request.user)
+		username = prof.user.username 
+		profile_pic = prof.profile_pic
+		profile_form = UserProfileInfoForm()
+
+		reg = self.get_object(pk)
+		serializer = RegisterSerializer(reg, data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response({'data': serializer_class.data, 'profile_pic':profile.profile_pic, 'username':username}, status=status.HTTP_201_CREATED)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        return Response({'profile_pic':profile.profile_pic, 'username':username})
+        
 
        
 
-        serializer_class = ProfileSerializer(data=request.data)
-        if serializer_class.is_valid():
-            serializer_class.save()
-            return Response({'data': serializer_class.data, 'profile_pic':profile.profile_pic, 'username':username}, status=status.HTTP_201_CREATED)
-        print("errors: %s"%serializer_class._errors)
-        return Response(serializer_class._errors, status=status.HTTP_400_BAD_REQUEST)
+        # serializer_class = ProfileSerializer(data=request.data)
+        # if serializer_class.is_valid():
+        #     serializer_class.save()
+        #     return Response({'data': serializer_class.data, 'profile_pic':profile.profile_pic, 'username':username}, status=status.HTTP_201_CREATED)
+        # print("errors: %s"%serializer_class._errors)
+        # return Response(serializer_class._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
