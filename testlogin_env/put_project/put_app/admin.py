@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import PutModel
+from .models import UserProfileInfo
 
 
-admin.site.register(PutModel)
+admin.site.register(UserProfileInfo)
 # Register your models here.
