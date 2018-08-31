@@ -24,34 +24,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+import json
 
 
-# class Put_Data(APIView):
-# 	renderer_classes = [TemplateHTMLRenderer]
-# 	template_name = 'put_app.html'
-# 	queryset = Put.objects.all() 
-#     # serializer_class = RegisterSerializer 
-#     # permission_classes = (permissions.IsAuthenticated,)
-    
-# 	def get(self, request):
-# 		put_model = Put.objects.get(user=request.user)
-#         # username = prof.user.username 
-# 		name = put_model.my_name
-# 		return Response({'name':name}) 
-    
-    
-#     # print("in postdata")
-# 	def post(self, request):
-# 		put_model = Put.objects.get(user=request.user)
-# 		# username = profile.user.username 
-# 		# profile_pic = profile.profile_pic
-# 		put_model.my_name = request.POST.get('putname')
-# 		name = put_model.my_name
-# 		put_model.save()
-
-
-        
-		# return Response({'name':name}) 
 
 registered = False
 
@@ -68,48 +43,26 @@ class Profile_Data(APIView):
 		username = prof.user.username 
 		profile_pic = prof.profile_pic
 		profile_form = UserProfileInfoForm()
+		current_user_id = request.user.id
         # print("username %s"%username)
-		return Response({'profile_pic':profile_pic, 'profile_form': profile_form, 'username':username}) 
+		return Response({'profile_pic':profile_pic, 'username':username, 'current_user_id': current_user_id}) 
     
-    
-    # print("in postdata")
-    # def post(self, request):
-    #     profile = UserProfileInfo.objects.get(user=request.user)
-    #     username = profile.user.username 
-    #     profile_pic = profile.profile_pic
-
-        
-    #     if 'profile_pic' in request.FILES:
-    #         # print('found it')
-    #         profile.profile_pic = request.FILES['profile_pic']
-
-    #     profile.save()
-    # return Response({'profile_pic':profile.profile_pic, 'username':username})
-
 	def put(self, request, pk, format=None):
 		prof = UserProfileInfo.objects.get(user=request.user)
 		username = prof.user.username 
 		profile_pic = prof.profile_pic
 		profile_form = UserProfileInfoForm()
+		current_user_id = request.user.id
 
 		reg = self.get_object(pk)
 		serializer = RegisterSerializer(reg, data=request.data)
+		profile_pic = serializer.profile_pic
 		if serializer.is_valid():
 			serializer.save()
-			return Response({'data': serializer_class.data, 'profile_pic':profile.profile_pic, 'username':username}, status=status.HTTP_201_CREATED)
+			return Response({'data': serializer_class.data, 'profile_pic':profile_pic, 'username':username, 'current_user_id': current_user_id}, status=status.HTTP_201_CREATED)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        
-
-       
-
-        # serializer_class = ProfileSerializer(data=request.data)
-        # if serializer_class.is_valid():
-        #     serializer_class.save()
-        #     return Response({'data': serializer_class.data, 'profile_pic':profile.profile_pic, 'username':username}, status=status.HTTP_201_CREATED)
-        # print("errors: %s"%serializer_class._errors)
-        # return Response(serializer_class._errors, status=status.HTTP_400_BAD_REQUEST)
-
+      
 
 
 

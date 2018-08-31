@@ -1,0 +1,9 @@
+.post-box{
+	width: 800px;
+	height: 400px;
+	background-color: blue;
+}
+
+.wid-max{
+	width: 100%;
+}

@@ -7,7 +7,7 @@ import os
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.user.id, "images")
+    return '{0}'.format(instance.id)
 
 class UserProfileInfo(models.Model):
 	user = models.OneToOneField(User)
@@ -15,6 +15,15 @@ class UserProfileInfo(models.Model):
 
 	def __str__(self):
 		return self.user.username
+
+	def save(self, *args, **kwargs):
+		if self.pk is None:
+			saved_image = self.profile_pic
+			self.profile_pic = None
+			super(UserProfileInfo, self).save(*args, **kwargs)
+			self.profile_pic = saved_image
+
+		super(UserProfileInfo, self).save(*args, **kwargs)
 
 	
  
