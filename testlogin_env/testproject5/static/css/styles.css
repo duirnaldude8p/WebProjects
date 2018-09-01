@@ -4,6 +4,27 @@
 	background-color: blue;
 }
 
-.wid-max{
+.width-max{
 	width: 100%;
+}
+
+.post-list{
+	width: 850px;
+	height: 1600px;
+	background-color: grey; 
+}
+
+.green{
+	background-color: green;
+}
+
+.pcc-button{
+	background-color: green;
+	height: 30px;
+	width: 100px;
+}
+.empty-button{
+	background-color: grey;
+	height: 30px;
+	width: 100px;
 }

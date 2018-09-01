@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<header>
+	 <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	 <link href="../static/css/styles.css" rel="stylesheet">
+</header>
+<body>
+	<div class="container">
+		<ul class="container post-list">
+			<div class="row container post-box">
+				<div class="col">
+					Add Pencil Case
+				</div>
+				<div class="w-100"></div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					Pencil: 
+				</div>
+
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					<div style="display: none">
+						pencil-text
+					</div>
+					<form style="display: initial" class="width-max height-max">
+						{% csrf_token %}
+						<input type="text"  class="width-max">
+					</form>
+				</div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					<button class="pcc-button">Submit</button>
+				</div>
+				<div class="w-100"></div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					Rubber:
+				</div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					<div style="display: none">
+						rubber-text
+					</div>
+					<form style="display: initial" class="width-max">
+						{% csrf_token %}
+						<input type="text" class="width-max height-max">
+					</form>
+				</div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					<button class="pcc-button">Submit</button>
+				</div>
+				<div class="w-100"></div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					Pen:
+				</div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					<div style="display: none">
+						pen-text
+					</div>
+					<form style="display: initial" class="width-max">
+						{% csrf_token %}
+						<input type="text" class="width-max">
+					</form>
+				</div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					<button class="pcc-button">Submit</button>
+				</div>
+			</div>
+		</ul>
+	</div>
+</body>
