@@ -2,15 +2,22 @@
 	width: 800px;
 	height: 400px;
 	background-color: blue;
+	position: relative;
 }
 
+.case_box{
+	width: 800px;
+	height: 400px;
+	background-color: green;
+	/*position: relative;*/
+}
 .width-max{
 	width: 100%;
 }
 
 .post-list{
-	width: 850px;
-	height: 1600px;
+	width: 800px;
+	height: 2000px;
 	background-color: grey; 
 }
 
@@ -27,4 +34,14 @@
 	background-color: grey;
 	height: 30px;
 	width: 100px;
+}
+
+.case_field{
+	float: left;
+}
+
+.case_title{
+	width: 700px;
+	height: 100px;
+	background-color: green;
 }

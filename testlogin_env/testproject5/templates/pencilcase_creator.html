@@ -1,36 +1,52 @@
 <!DOCTYPE html>
-<header>
-	 <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	 <link href="../static/css/styles.css" rel="stylesheet">
-</header>
-<body>
-	<div class="container">
-		<div class="row  container post-box">
-			<div class="col">
-				Add Pencil Case
-			</div>
-			<div class="w-100"></div>
-			<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
-				Pencil: 
-			</div>
-			<div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8">
-				<input type="text" class="width-max">
-			</div>
-			<div class="w-100"></div>
-			<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
-				Rubber:
-			</div>
-			<div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8">
-			<input type="text" class="width-max">
-			</div>
-			<div class="w-100"></div>
-			<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
-				Pen:
-			</div>
-			<div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8">
-				<input type="text" class="width-max height-button">
-			</div>
+{% load staticfiles %}
+{% load rest_framework %}
+<html>
+	<header>
+		<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+		<title>PostPencilCase</title>
+	</header>
+	<body>
+		<div class="container">
+			<form id="pencilcase_form" class="row  container post-box" method="post" action="">
+				{% csrf_token %}
+				<div class="col-12">
+					<h3>
+						Add Pencil Case
+					</h3>
+				</div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					Pencil: 
+				</div>
+				<div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8">
+					<input id="pencil_input" type="text" class="width-max">
+				</div>
+				<div class="w-100"></div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					Rubber:
+				</div>
+				<div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8">
+					<input id="rubber_input" type="text" class="width-max">
+				</div>
+				<div class="w-100"></div>
+				<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">
+					Pen:
+				</div>
+				<div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8">
+					<input id="pen_input" type="text" class="width-max height-button">
+				</div>
+				<div class="w-100"></div>
+				<div class="col-8">
+					
+				</div>
+				<div class="col-4">
+					<button id="case_submit" type="submit" class="width-max height-button green">Submit</button>
+				</div>
+			</form>
 		</div>
-	</div>
-</body>
+	</body>
+	<script type="text/javascript" src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/pencilcase_creator.js' %}"></script>
+</html>
 
