@@ -41,10 +41,19 @@ class PutPencilCaseData(generics.UpdateAPIView):
 	queryset = PencilCase.objects.all()
 	serializer_class = PencilCaseSerializer
 
-	def put(self, request, pk, format=None):
+	def get_object(self, pk):
+		try:
+			# print("pk: %s"%pk)
+			return PencilCase.objects.get(pk=pk)
+		except PencilCase.DoesNotExist:
+			raise Http404
+
+	def put(self, request, pk):
+		# print("IN PUT REQUEST: %s"%pk)
 		pencil_case = self.get_object(pk)
-		serializer_class = PencilCaseSerializer(pencil_case, data=request.data)
-		if serializer_class.is_valid():
-			serializer_class.save()
-			return Response(serializer_class.data, status=status.HTTP_201_CREATED)
-		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+		serializer = PencilCaseSerializer(pencil_case, data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			# print("view pencil: %s"%PencilCase.objects.get(pk=3).pencil)
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

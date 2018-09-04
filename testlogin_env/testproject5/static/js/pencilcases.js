@@ -3,6 +3,7 @@ $(function(){
  	var data_isrecieved = false;
  	var current_id = 0;
  	var data = 0;
+ 	var vals = {};
  	$currentPencil = null;
  	$currentPen = null;
  	$currentRubber = null;
@@ -19,6 +20,7 @@ $(function(){
  	function hide(first_arg, sec_arg){
  		first_arg.hide();
  		sec_arg.show();
+ 		console.log("hiding");
  	}
  	
 
@@ -36,12 +38,12 @@ $(function(){
 						'<div id="pencil_text'+myid+'" style="display: initial">\n'+
 							pencil+
 						'</div>\n'+
-						'<div style="display: none" class="width-max height-max">\n'+
-							'<input  id="pencil_input'+myid+'" type="text"  class="width-max">\n'+
+						'<div class="width-max height-max">\n'+
+							'<input  id="pencil_input'+myid+'" style="display: none" type="text"  class="width-max">\n'+
 						'</div>\n'+
 					'</div>\n'+
 					'<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">\n'+
-						'<button id="pencil_button'+myid+'" class="pcc-button">Update</button>\n'+
+						'<button id="pencil_button'+myid+'" style="display: initial" class="pcc-button">Update</button>\n'+
 						'<button id="pencil_update_btn'+myid+'" style="display: none" class="pcc-button">Change</button>\n'+
 					'</div>\n'+
 					'<div class="w-100"></div>\n'+
@@ -53,12 +55,12 @@ $(function(){
 							rubber+
 						'</div>\n'+
 						'<div style="display: none" class="width-max">\n'+
-							'<input id="rubber_input'+myid+'" type="text" class="width-max height-max">\n'+
-							'<button id="rubber_update_btn'+myid+'" style="display: none" class="pcc-button">Change</button>\n'+
+							'<input id="rubber_input'+myid+'" style="display: none" type="text" class="width-max height-max">\n'+			
 						'</div>\n'+
 					'</div>\n'+
 					'<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">\n'+
-						'<button id="rubber_button'+myid+'" class="pcc-button">Update</button>\n'+
+						'<button id="rubber_button'+myid+'" style="display: initial" class="pcc-button">Update</button>\n'+
+						'<button id="rubber_update_btn'+myid+'" style="display: none" class="pcc-button">Change</button>\n'+
 					'</div>\n'+
 					'<div class="w-100"></div>\n'+
 					'<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">\n'+
@@ -69,11 +71,11 @@ $(function(){
 							pen+
 						'</div>\n'+
 						'<div style="display: none" class="width-max">\n'+
-							'<input id="pencil_input'+myid+'" type="text" class="width-max">\n'+
+							'<input id="pencil_input'+myid+'" style="display: none" type="text" class="width-max">\n'+
 						'</div>\n'+
 					'</div>\n'+
 					'<div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4">\n'+
-						'<button id="pen_button'+myid+'" class="pcc-button">Update</button>\n'+
+						'<button id="pen_button'+myid+'"  style="display: initial" class="pcc-button">Update</button>\n'+
 						'<button id="pen_update_btn'+myid+'" style="display: none" class="pcc-button">Change</button>\n'+
 					'</div>\n'+
 				'</div>';
@@ -101,8 +103,7 @@ $(function(){
 	});
 
 	function sendPutRequests(){
-
- 		if(data_recieved == true){
+		if(data_recieved == true){
  			$.each(data, function(i, item){
  				$('#pencil_button'+item.id).on('click', function(e){
  					e.preventDefault();
@@ -110,85 +111,89 @@ $(function(){
  					$currentPencilTxt = $('#pencil_text'+item.id);
  					$currentPencilChangeBtn = $('#pencil_update_btn'+item.id);
  					$currentPencilBtn = $('#pencil_button'+item.id);
+ 					// console.log("hello pencil button");
+ 					var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
 
  					hide($currentPencilTxt, $currentPencil);
  					hide($currentPencilBtn, $currentPencilChangeBtn);
 
- 					console.log("hello put");
+ 					console.log("hello put: "+$currentPencil.val());
  					$currentPencilChangeBtn.on('click', function(e){
+ 						vals = {pencil : $currentPencil.val(), my_field : "p"};
+ 						my_val = "p";
  						e.preventDefault();
  						$.ajax({
  							type: 'PUT',
  							url: '/pencil_case_app/putcasedata/'+item.id,
  							data: 'pencil='+$currentPencil.val(),
+    						headers:{"X-CSRFToken": $crf_token},
  							success: function(){
+ 								// hide($currentPencil, $currentPencilTxt);
+ 								// hide($currentPencilChangeBtn, $currentPencilBtn);
  								console.log("pencil put success");
  							},
  							error: function(){
  								console.log("pencil put error");
  							}
  						});
- 					});
-
- 					hide($currentPencil, $currentPencilTxt);
- 					hide($currentPencilChangeBtn, $currentPencilBtn);
+ 					});				
  				});
- 				$('#rubber_button'+item.id).on('click', function(e){
- 					e.preventDefault();
- 					$currentRubber = $('#rubber_input'+item.id);
- 					$currentRubberTxt = $('#rubber_text'+item.id);
- 					$currentRubberChangeBtn = $('#rubber_update_btn'+item.id);
- 					$currentRubberBtn = $('#rubber_button'+item.id);
+ 			// 	$('#rubber_button'+item.id).on('click', function(e){
+ 			// 		e.preventDefault();
+ 			// 		$currentRubber = $('#rubber_input'+item.id);
+ 			// 		$currentRubberTxt = $('#rubber_text'+item.id);
+ 			// 		$currentRubberChangeBtn = $('#rubber_update_btn'+item.id);
+ 			// 		$currentRubberBtn = $('#rubber_button'+item.id);
 
- 					hide($currentRubberTxt, $currentRubber);
- 					hide($currentRubberBtn, $currentRubberChangeBtn);
- 					$currentRubberChangeBtn.on('click', function(e){
- 						e.preventDefault();
- 						$.ajax({
- 							type: 'PUT',
- 							url: '/pencil_case_app/putcasedata/'+item.id,
- 							data: 'rubber='+$currentRubber.val(),
- 							success: function(){
- 								console.log("rubber put success");
- 							},
- 							error: function(){
- 								console.log("rubber put error");
- 							}
- 						});
- 					});
+ 			// 		hide($currentRubberTxt, $currentRubber);
+ 			// 		hide($currentRubberBtn, $currentRubberChangeBtn);
+ 			// 		$currentRubberChangeBtn.on('click', function(e){
+ 			// 			e.preventDefault();
+ 			// 			$.ajax({
+ 			// 				type: 'PUT',
+ 			// 				url: '/pencil_case_app/putcasedata/'+item.id,
+ 			// 				data: 'rubber='+$currentRubber.val(),
+ 			// 				success: function(){
+ 			// 					console.log("rubber put success");
+ 			// 				},
+ 			// 				error: function(){
+ 			// 					console.log("rubber put error");
+ 			// 				}
+ 			// 			});
+ 			// 		});
 
- 					hide($currentRubber, $currentRubberTxt);
- 					hide($currentRubberChangeBtn, $currentRubberBtn);
- 				});
-				$('#pen_button'+item.id).on('click', function(e){
- 					e.preventDefault();
- 					$currentPen = $('#pen_input'+item.id);
- 					$currentPenTxt = $('#pen_text'+item.id);
- 					$currentPenChangeBtn = $('#pen_update_btn'+item.id);
- 					$currentPenBtn = $('#pen_button'+item.id);
+ 			// 		hide($currentRubber, $currentRubberTxt);
+ 			// 		hide($currentRubberChangeBtn, $currentRubberBtn);
+ 			// 	});
+				// $('#pen_button'+item.id).on('click', function(e){
+ 			// 		e.preventDefault();
+ 			// 		$currentPen = $('#pen_input'+item.id);
+ 			// 		$currentPenTxt = $('#pen_text'+item.id);
+ 			// 		$currentPenChangeBtn = $('#pen_update_btn'+item.id);
+ 			// 		$currentPenBtn = $('#pen_button'+item.id);
 
- 					hide($currentPenTxt, $currentPen);
- 					hide($currentPenBtn, $currentPenChangeBtn);
+ 			// 		hide($currentPenTxt, $currentPen);
+ 			// 		hide($currentPenBtn, $currentPenChangeBtn);
 
 
- 					$currentPenChangeBtn.on('click', function(e){
- 						e.preventDefault();
- 						$.ajax({
- 							type: 'PUT',
- 							url: '/pencil_case_app/putcasedata/'+item.id,
- 							data: 'pen='+$currentPen.val(),
- 							success: function(){
- 								console.log("pen put success");
- 							},
- 							error: function(){
- 								console.log("pen put error");
- 							}
- 						});
- 					});
+ 			// 		$currentPenChangeBtn.on('click', function(e){
+ 			// 			e.preventDefault();
+ 			// 			$.ajax({
+ 			// 				type: 'PUT',
+ 			// 				url: '/pencil_case_app/putcasedata/'+item.id,
+ 			// 				data: 'pen='+$currentPen.val(),
+ 			// 				success: function(){
+ 			// 					console.log("pen put success");
+ 			// 				},
+ 			// 				error: function(){
+ 			// 					console.log("pen put error");
+ 			// 				}
+ 			// 			});
+ 			// 		});
 
- 					hide($currentPen, $currentPenTxt);
- 					hide($currentPenChangeBtn, $currentPenBtn);
- 				});
+ 			// 		hide($currentPen, $currentPenTxt);
+ 			// 		hide($currentPenChangeBtn, $currentPenBtn);
+ 			// 	});
 			});
  		}
  	}
