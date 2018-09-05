@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rest_framework %}
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, ,maximum-scale=1 ,shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Half Slider - Start Bootstrap Template</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href='{% static "css/half-slider.css" %}' rel="stylesheet">
+    </head>
+
+    <body>
+
+      <!-- Navigation -->
+        <nav id="navig" class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
+            <div id="nav-con" class="container"> 
+                <div id="logo-con">
+                    <!-- <img id="logo" src="/media/images/profile_pic.jpeg" alt=""/> -->
+                </div>
+                <div class="nav-format">
+                    <a class="navbar-brand" href="#">Yo Cool Cats</a>
+                </div>
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls=" navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul id="page_nav_list" class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Home
+                            <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Cat List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Log In</a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+             
+        </nav>
+
+      
+
+    <!-- Page Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="card my-4 reg-card">
+                <div class="card-body">
+                    <div class="row reg-cols-con">
+                        <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
+                        <div class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8  steel-blue reg-con">
+                            <div class="container">
+                                <form enctype="multipart/form-data" method="POST" class="reg-con">
+                                    {% csrf_token %}
+                                    <div class="row top-reg-row dynamic-font">
+                                        Register
+                                    </div>
+                                    <div class="row reg-row">
+                                        <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font reg-col">
+                                            Username:
+                                        </div>
+                                        <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 reg-col-input"">
+                                            <input id="reg_usr" type="text" class="form-control expnd dynamic-font reg-col-input-i" placeholder="Enter Username" onsubmit="this.submit(); this.reset(); return false;"/>
+                                        </div> 
+                                    </div>
+                                    <div class="row reg-row">
+                                        <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 dynamic-font reg-col">
+                                            Password:
+                                        </div>
+                                        <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8 reg-col-input">
+                                            <input id="reg_pwd" type="password" class="form-control expnd dynamic-font reg-col-input-in" placeholder="Enter Password" />
+                                            userform-password
+                                        </div> 
+                                    </div>
+                                    <div class="row reg-row blue">
+                                        <label for="profile_pic_input" class="envelope dynamic-button no-border sky-blue">
+                                             Choose Picture <input id="profile_pic_input" type="file" class="hide"/>
+                                        </label>
+                                    </div>
+                                    <div class="row space-reg-row"></div>
+                                    <div class="row reg-row">
+                                        <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
+                                        <input type="submit" value="Enter" class="col col-xl-4 col-lg-4 col-md-6 col-sm-6 col-8 tomato reg-col reg-button-col button-col"/>
+                                        <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div> 
+                                    </div>
+                                </form>
+                            </div>
+                        </div>   
+                        <div class="col col-xl-4 col-lg-4 col-md-3 col-sm-3 col-2"></div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Bootstrap template JavaScript -->
+    <script src='{% static "vendor/jquery/jquery.min.js" %}'></script>
+    <script src='{% static "js/square.js" %}'></script>
+    <script src='{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}'></script>
+
+  </body>
+
+</html>
