@@ -12,6 +12,7 @@ from rest_framework import status
 
 from django.contrib.auth.models import User
 from .models import UserProfileInfo
+from .serializers import ProfileSerializer
 
 
 
@@ -29,4 +30,26 @@ def userregister(request):
 
 def userprofile(request):
 	return render(request,'login_app/profile.html')
+
+class GetProfileData(generics.RetrieveAPIView):
+	queryset = UserProfileInfo.objects.all()
+	serializer_class = ProfileSerializer
+
+	def get(self, request):
+		queryset = UserProfileInfo.objects.all()
+		serializer_class = ProfileSerializer(queryset, many=True)
+
+		return Response(serializer_class.data)
+
+class PostProfileData(generics.CreateAPIView):
+	queryset = UserProfileInfo.objects.all()
+	serializer_class = ProfileSerializer
+
+	def post(self, request):
+		serializer_class = ProfileSerializer(data=request.data)
+		if serializer_class.is_valid():
+			serializer_class.save()
+			print("post view user object usrnm: %s"%UserProfileInfo.objects.get(username="sam").username)
+			return Response(serializer_class.data, status.HTTP_201_CREATED)
+		return Response(serializer_class.errors, status.HTTP_400_BAD_REQUEST)
 

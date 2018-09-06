@@ -119,8 +119,7 @@ $(function(){
 
  					console.log("hello put: "+$currentPencil.val());
  					$currentPencilChangeBtn.on('click', function(e){
- 						vals = {pencil : $currentPencil.val(), my_field : "p"};
- 						my_val = "p";
+ 						
  						e.preventDefault();
  						$.ajax({
  							type: 'PUT',
