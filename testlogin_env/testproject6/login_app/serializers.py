@@ -9,25 +9,33 @@ class ProfileSerializer(serializers.ModelSerializer):
 	# password = serializers.CharField(source='user.password')	
 	# profile_pic = serializers.ImageField(required=False, max_length=None, 
  #                                     allow_empty_file=True, use_url=True)
+
+	def create(self, validated_data):
+		print("IN CREATE before")
+		
+		# # user = User.objects.create_user(
+		# # 	username = validated_data['username'],
+  # #           password = validated_data['password'],
+  # #       )
+
+		# # user.save()
+
+		profile = UserProfileInfo.objects.create(
+			profile_pic = validated_data['profile_pic'],
+			username  = validated_data['username'],
+			
+		)
+
+
+		# # profile.user = user 
+		profile.save()
+		# print("IN CREATE")
+		return profile
+
 	
 
 	class Meta:
 		model = UserProfileInfo
 		fields = ('__all__')
 
-
-	def create(self, validated_data):
-		print("IN CREATE before")
-		user = User
-		user.username = validated_data['username']
-		user.set_password(validated_data['password'])
-
-
-		profile = UserProfileInfo.objects.create(
-			profile_pic = validated_data['profile_pic'],
-		)
-
-		profile.user = user 
-		profile.save()
-		print("IN CREATE")
-		return profile
+	

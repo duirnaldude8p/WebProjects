@@ -12,7 +12,7 @@ class PencilCaseSerializer(serializers.ModelSerializer):
 		fields = ('__all__')
 
 	def create(self, validated_data):
-		
+		print("hello create pencil")
 		pencilcase = PencilCase.objects.create(
 			pencil = validated_data['pencil'],
 			rubber = validated_data['rubber'],
