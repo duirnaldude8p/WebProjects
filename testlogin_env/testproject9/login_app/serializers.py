@@ -11,20 +11,20 @@ class ProfileSerializer(serializers.ModelSerializer):
 		fields = ('__all__')
 
 	def create(self, validated_data):
-		print("hello create user profile: %s"%validated_data.get('usrnm'))
+		print("create user profile: %s"%validated_data.get('username'))
 
 		user = User.objects.create_user(
-		 	validated_data.get('usrnm'),
-            validated_data.get('pwd')
+		 	validated_data.get('username'),
+            validated_data.get('password')
         )
 
 		user.save()
 
 		profile = UserProfileInfo.objects.create(
-			# user = user,
+			user = user,
 			profile_pic = validated_data['profile_pic'],			
 		)
-		profile.save(commit=False)
+		# profile.save(commit=False)
 
 		# profile.user = user
 

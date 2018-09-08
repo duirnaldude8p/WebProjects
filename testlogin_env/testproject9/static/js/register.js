@@ -2,7 +2,7 @@ $(function(){
 	var $pic = $('#profile_pic_input');
 	var $usrnm = $('#reg_usr');
 	var $pwd = $('#reg_pwd');
-    form_data = null;
+    var form_data = null;
 		
 	
 	$("#reg_submit").on('click', function(e){
