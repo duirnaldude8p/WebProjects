@@ -1,8 +1,8 @@
-$(function(){
-	var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+// $(function(){
+// 	var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
 
-	$.ajax({
+// 	$.ajax({
 		
-	});
+// 	});
 
-});
+// });

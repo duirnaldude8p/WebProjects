@@ -9,21 +9,34 @@ from .serializers import ProfileSerializer
 
 from .models import UserProfileInfo
 
+
 def login(request):
-	return render(request, 'pencilcase_creator.html')
+	return render(request, 'login_app/login.html')
 
 def register(request):
-	return render(request, 'pencilcases.html')
+	return render(request, 'login_app/register.html')
 
 def profile(request):
-	return render(request, 'pencilcases.html')
+	return render(request, 'login_app/profile.html')
 
-class GetPencilCaseData(generics.RetrieveAPIView):
-	queryset = PencilCase.objects.all()
-	serializer_class = PencilCaseSerializer
+class GetProfileData(generics.RetrieveAPIView):
+	queryset = UserProfileInfo.objects.all()
+	serializer_class = ProfileSerializer
 
 	def get(self, request):
-		queryset = PencilCase.objects.all()
-		serializer_class = PencilCaseSerializer(queryset, many=True)
+		queryset = UserProfileInfo.objects.all()
+		serializer_class = ProfileSerializer(queryset, many=True)
 
 		return Response(serializer_class.data)
+
+class PostProfileData(generics.CreateAPIView):
+	queryset = UserProfileInfo.objects.all()
+	serializer_class = ProfileSerializer
+
+	def post(self, request):
+		serializer_class = ProfileSerializer(data=request.data)
+		if serializer_class.is_valid():
+			serializer_class.save()
+			return Response(serializer_class.data, status.HTTP_201_CREATED)
+		return Response(serializer_class.errors, status.HTTP_400_BAD_REQUEST)
+
