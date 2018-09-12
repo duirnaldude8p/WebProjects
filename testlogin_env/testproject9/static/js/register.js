@@ -8,8 +8,8 @@ $(function(){
 	$("#reg_submit").on('click', function(e){
         e.preventDefault();
 		form_data = new FormData();
-        form_data.append('username', $usrnm.val());
-        form_data.append('password', $pwd.val());
+        // form_data.append('username', $usrnm.val());
+        // form_data.append('password', $pwd.val());
         form_data.append('profile_pic', $pic.get(0).files[0]);
         form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
         
