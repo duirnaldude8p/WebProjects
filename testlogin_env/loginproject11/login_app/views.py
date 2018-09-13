@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 # Create your views here.
 from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer2
 
 from .models import UserProfileInfo
 
@@ -38,7 +39,18 @@ class PostProfileData(generics.CreateAPIView):
 		if serializer_class.is_valid():
 			serializer_class.save()
 			return Response(serializer_class.data, status.HTTP_201_CREATED)
-		return Response(serializer_class.errors, status.HTTP_400_BAD_REQUEST)
+		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PostProfileData2(generics.CreateAPIView):
+	queryset = UserProfileInfo.objects.all()
+	serializer_class = ProfileSerializer2
+
+	def post(self, request):
+		serializer_class = ProfileSerializer2(data=request.data)
+		if serializer_class.is_valid():
+			serializer_class.save()
+			return Response(serializer_class.data, status.HTTP_201_CREATED)
+		return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

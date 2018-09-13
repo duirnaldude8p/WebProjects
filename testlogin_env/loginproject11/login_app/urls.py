@@ -8,6 +8,7 @@ urlpatterns = [
 	url(r'^profile/$', views.profile, name='profile'),
 	url(r'^getprofiledata/$', views.GetProfileData.as_view(), name='getprofiledata'),
 	url(r'^postprofiledata/$', views.PostProfileData.as_view(), name='postprofiledata'),
+	url(r'^postprofiledata2/$', views.PostProfileData2.as_view(), name='postprofiledata2'),
 ]
 
 

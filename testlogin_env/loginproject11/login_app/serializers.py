@@ -34,3 +34,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 		return profile
 		
+
+class ProfileSerializer2(serializers.ModelSerializer):
+
+	class Meta:
+		model = UserProfileInfo
+		fields = ('__all__')
