@@ -111,7 +111,7 @@ $(function(){
  					$currentPencilTxt = $('#pencil_text'+item.id);
  					$currentPencilChangeBtn = $('#pencil_update_btn'+item.id);
  					$currentPencilBtn = $('#pencil_button'+item.id);
- 					// console.log("hello pencil button");
+ 					console.log("hello pencil button");
  					var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
 
  					hide($currentPencilTxt, $currentPencil);

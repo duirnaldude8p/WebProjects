@@ -9,7 +9,7 @@
 	</header>
 	<body>
 		<div class="container">
-			<form id="pencilcase_form" class="row  container post-box" method="post" action="">
+			<form id="pencilcase_form" class="row  container post-box" method="post" action="" enc="multipart/form-data">
 				{% csrf_token %}
 				<div class="col-12">
 					<h3>
@@ -40,6 +40,7 @@
 				<div class="col-8">
 					
 				</div>
+				 <input id="pic_input" type="file" name="pic" accept="image/*">
 				<div class="col-4">
 					<button id="case_submit" type="submit" class="width-max height-button green">Submit</button>
 				</div>
