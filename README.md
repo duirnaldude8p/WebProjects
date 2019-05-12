@@ -1,3 +1,4 @@
-"# WebProjects" 
+# WebProject
+<br>
+<p>Here I was experimenting mainly with django</p>
 
-You may need to clear your web cache to get html to work
